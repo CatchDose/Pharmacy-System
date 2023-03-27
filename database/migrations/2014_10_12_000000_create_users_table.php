@@ -16,14 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('avatar_image');
-
             $table->string('national_id')->unique();
             $table->string('email')->unique();
-            $table->tinyInteger('gender')->nullable();
+            $table->tinyInteger('gender');
             $table->tinyInteger('phone')->nullable();
             $table->tinyInteger('address')->nullable();
-            $table->unsignedBigInteger("pharmacy_id")->nullable();
-
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
