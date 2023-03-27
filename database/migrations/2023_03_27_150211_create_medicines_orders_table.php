@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("order_id");
             $table->unsignedBigInteger("medicine_id");
+            $table->integer("quantity");
             $table->timestamps();
         });
     }

@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('avatar_image');
             $table->string('national_id')->unique();
             $table->string('email')->unique();
+            $table->date("date_of_birth");
             $table->tinyInteger('gender');
-            $table->tinyInteger('phone')->nullable();
-            $table->tinyInteger('address')->nullable();
+            $table->tinyInteger('phone');
+            $table->tinyInteger('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
