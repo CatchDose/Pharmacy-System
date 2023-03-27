@@ -9,7 +9,6 @@ class Pharmacy extends Model
 {
     use HasFactory;
 
-
     public function doctors()
     {
         return $this->hasMany(Doctor::class,'pharmacy_id');
