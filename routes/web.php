@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $types = ["Tablet","Capsule","Injection","Syrup"];
+    return $types[array_rand($types)];
 })->name("index");
 
 

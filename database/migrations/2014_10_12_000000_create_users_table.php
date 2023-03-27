@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->date("date_of_birth");
             $table->tinyInteger('gender');
-            $table->tinyInteger('phone');
+            $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
