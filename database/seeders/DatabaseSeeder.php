@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
            MedicineSeeder::class,
            AreaSeeder::class,
-           UserSeeder::class
+           UserSeeder::class,
+           PharmacySeeder::class,
+           OrderSeeder::class,
+           AddressSeeder::class
         ]);
     }
 }
