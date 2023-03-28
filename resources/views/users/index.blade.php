@@ -1,22 +1,22 @@
 @extends("layouts.app")
 
-@section("title","Home")
+@section("title","Users")
 
 @section("style")
 
-{{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />--}}
-
 @endsection
 
-@section("header","Home page")
+@section("header","Users")
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">users</a></li>
 
 @endsection
 
 @section("content")
+
     {{ $dataTable->table() }}
 
 @endsection
