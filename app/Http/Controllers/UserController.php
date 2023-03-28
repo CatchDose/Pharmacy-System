@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        return view("users.index");
+        return $dataTable->render('users.index');
     }
 
     /**
