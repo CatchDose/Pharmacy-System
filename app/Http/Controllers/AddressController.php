@@ -34,12 +34,12 @@ class AddressController extends Controller
         return redirect()->route('addresses.index');
     }
 
-    public function show(Address $address) {
-
+    public function show(Address $address) { //Model pinding
+        return view('addresses.show' , ['address'=> $address]);
     }
 
     public function edit(Address $address) {
-
+        return view('addresses.edit');
     }
 
     public function update(UpdateAddressRequest $request, Address $address) {
