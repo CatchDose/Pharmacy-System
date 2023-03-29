@@ -11,6 +11,15 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status',
+        "pharmacy_id",
+        "user_id",
+        "doctor_id",
+        "is_insured",
+
+    ];
+
 
     public function medicines()
     {
@@ -34,13 +43,48 @@ class Order extends Model
         return $this->belongsTo(User::class,"user_id");
     }
 
-    protected function created_at(): Attribute
+    protected function createdAt(): Attribute
     {
         return Attribute::make(
 
-            // get: fn (string $value) => Carbon::createFromFormat('Y-m-d H', $value)->toDateTimeString(),
+            // get: fn (string $value) => Carbon::createFromFormat('Y-m-d', $value)->toDateTimeString(),
             
         );
+    }
+
+    protected function isInsured(): Attribute
+    {
+        return Attribute::make(
+           
+            set: fn (string $value) => $value =  $value == "Yes" ? 1 : 0,
+        );
+    }
+
+
+    public static function totalPrice($qty , $med){
+
+        $total = 0;
+
+        for($x=0 ; $x < count($med) ; $x++){
+
+            $price = Medicine::all()->where('name' , $med[$x] )->first()->price;
+            $total = $total + ($price * $qty[$x] );
+
+        }
+
+        return $total ;
+
+    }
+
+    public static function createOrderMedicine($order , $med , $qty ){
+
+        for($x=0 ; $x < count($med) ; $x++){
+
+            $id = Medicine::all()->where('name' , $med[$x] )->first()->id;
+            
+            $order->medicines($id)->attach(1 , ['quantity' => $qty[$x] , 'created_at'=>$order->created_at]);
+        }
+
     }
   
 }
