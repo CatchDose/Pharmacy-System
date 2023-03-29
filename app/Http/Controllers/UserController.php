@@ -45,7 +45,10 @@ class UserController extends Controller
 
         $data["password"] = Hash::make($data["password"]);
 
-        User::create($data);
+        $user = User::create($data);
+
+        $user->assignRole("admin");
+
 
         return redirect()->route("users.index");
     }
