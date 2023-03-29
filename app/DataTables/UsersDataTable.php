@@ -22,7 +22,12 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
+            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <a class="btn btn-success" id="option_a1" href="{{Route("users.edit",$id)}}"> edit
+                </label>
+                <a class="btn btn-danger" id="option_a3" href="{{Route("users.destroy",$id)}}"> delete
+                </label>
+                </div>')
             ->setRowId('id');
     }
 
@@ -73,7 +78,7 @@ class UsersDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(300)
+                ->width(60)
                 ->addClass('text-center'),
 
         ];
