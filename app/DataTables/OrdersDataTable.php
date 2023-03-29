@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class OrdersDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,22 +22,26 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("users.edit",$id)}}"> edit </a>
-                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("users.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
-                    </form>
-                </div>')
+            ->addColumn('action', 'orders.action')
+            ->addColumn('Pharmacy', function(Order $order){
+                return $order->pharmacy->name;
+            })
+            ->addColumn('User', function(Order $order){
+                return $order->user->name;
+            })
+            // ->addColumn('Address', function(Order $order){
+            //     return $order->user->addresses->street_name;
+            // })
+            // ->addColumn('Doctor', function(Order $order){
+            //     return $order->doctor->user_id;
+            // })
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(User $model): QueryBuilder
+    public function query(Order $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -48,14 +52,13 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('users-table')
+                    ->setTableId('orders-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-//                    ->dom('Bfrtip')
+                    //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
-
-            ->buttons([
+                    ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
                         Button::make('pdf'),
@@ -70,19 +73,23 @@ class UsersDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        return [  
+
             Column::make('id'),
-            Column::make('name'),
-            Column::make('national_id'),
-            Column::make('email'),
+            Column::make('status'),
+            Column::make('is_insured'),
+            Column::computed('Pharmacy' , 'Assigned Pharmacy'),
+            Column::computed('User' , 'User Name'),
+            Column::computed('Address' , 'User Address'),
+            Column::make('doctor_id'),
             Column::make('created_at'),
             Column::make('updated_at'),
-
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->addClass('text-center'),
-
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+                  
         ];
     }
 
@@ -91,6 +98,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Users_' . date('YmdHis');
+        return 'Orders_' . date('YmdHis');
     }
 }

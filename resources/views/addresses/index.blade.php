@@ -1,25 +1,31 @@
 @extends("layouts.app")
 
-@section("title","Users")
+@section("title","Addresses")
 
 @section("style")
 
 @endsection
 
-@section("header","Users")
+@section("header","Addresses")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{route("users.index")}}">users</a></li>
+    <li class="breadcrumb-item"><a href="#">addresses</a></li>
 
 @endsection
 
 @section("content")
 
     {{ $dataTable->table() }}
+
 @endsection
 
+
+
+@push('scripts')
+    {{ $dataTable->scripts() }}
+@endpush
 
 @section("extra")
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -41,9 +47,9 @@
     </div>
 @endsection
 
+
 @section('scripts')
     {{ $dataTable->scripts() }}
-
     <script>
         function modalShow(event){
             event.preventDefault();
@@ -53,5 +59,4 @@
             })
         }
     </script>
-
 @endsection
