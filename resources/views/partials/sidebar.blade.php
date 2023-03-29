@@ -180,13 +180,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route("areas.index")}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>all users</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('areas.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>add user</p>
                             </a>
