@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date("date_of_birth");
             $table->tinyInteger('gender');
             $table->string('phone');
+            $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
