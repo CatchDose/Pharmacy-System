@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -31,9 +32,15 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        dd($request);
 
-        User::create($request->validated());
+        $data = $request->validated();
+
+        $path = $request->file("avatar_image")
+                ->store('',["disk"=>"avatars"]);
+
+        $data["avatar_images"] = $path;
+
+        User::create($data);
 
         return redirect()->route("users.index");
     }
