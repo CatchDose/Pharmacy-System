@@ -199,7 +199,7 @@
 
 
                 {{-- Addresses Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('addresses.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -210,13 +210,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('addresses.index')}}" class="nav-link active">
+                            <a href="{{route('addresses.index')}}" class="nav-link {{ Route::currentRouteNamed('addresses.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All addresses</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('addresses.create')}}" class="nav-link">
+                            <a href="{{route('addresses.create')}}" class="nav-link {{ Route::currentRouteNamed('addresses.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add address</p>
                             </a>
