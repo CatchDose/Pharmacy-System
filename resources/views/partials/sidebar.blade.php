@@ -229,7 +229,7 @@
 
 
                 {{-- Medicines Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('medicines.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -240,15 +240,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route("medicines.index")}}" class="nav-link {{Route::is('medicines.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>All medicines</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route("medicines.create")}}" class="nav-link {{Route::is('medicines.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>add medicine</p>
                             </a>
                         </li>
 
