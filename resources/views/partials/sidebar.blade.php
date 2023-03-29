@@ -85,15 +85,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route("pharmacies.index")}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>all pharmacies</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route("pharmacies.create")}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>add pharmacy</p>
                             </a>
                         </li>
 
