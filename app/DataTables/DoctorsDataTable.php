@@ -2,9 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Pharmacy;
+use App\Models\Doctor;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Notifications\Action;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -13,14 +12,13 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PharmaciesDataTable extends DataTable
+class DoctorsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
      */
-
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
@@ -34,21 +32,21 @@ class PharmaciesDataTable extends DataTable
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
                 </div>')
-            ->setRowId('id')->addColumn('owner_name', function (Pharmacy $pharmacy) {
-                return $pharmacy->owner->name;
-            })->addColumn('area_name', function (Pharmacy $pharmacy) {
-                return $pharmacy->area->name;
-            })->addColumn('phone', function (Pharmacy $pharmacy) {
-                return $pharmacy->owner->phone;
-            })->addColumn('email', function (Pharmacy $pharmacy) {
-                return $pharmacy->owner->email;
+            ->setRowId('id')->addColumn('name', function (Doctor $Doctor) {
+                return $Doctor->user->name;
+            })->addColumn('pharmacy_name', function (Doctor $Doctor) {
+                return $Doctor->Pharmacy->name;
+            })->addColumn('phone', function (Doctor $Doctor) {
+                return $Doctor->user->phone;
+            })->addColumn('email', function (Doctor $Doctor) {
+                return $Doctor->user->email;
             });
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Pharmacy $model): QueryBuilder
+    public function query(Doctor $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -59,7 +57,7 @@ class PharmaciesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('pharmacies-table')
+            ->setTableId('doctors-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -83,22 +81,22 @@ class PharmaciesDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('area_name'),
-            Column::make('owner_name'),
-            Column::make('priority'),
             Column::make('phone'),
             Column::make('email'),
+            Column::make('pharmacy_name'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
+
         ];
     }
+
     /**
      * Get the filename for export.
      */
     protected function filename(): string
     {
-        return 'Pharmacies_' . date('YmdHis');
+        return 'Doctors_' . date('YmdHis');
     }
 }

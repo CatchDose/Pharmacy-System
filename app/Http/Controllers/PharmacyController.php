@@ -84,12 +84,8 @@ class PharmacyController extends Controller
     public function update(UpdatePharmacyRequest $request, Pharmacy $pharmacy)
     {
 
+        // $data = $request->validated();
 
-        $pharmacy->update($request->validated());
-        $pharmacy->save();
-        $owner = $pharmacy->owner;
-        $owner->update($request->validated());
-        $owner->save();
         return view("pharmacy.show", ["pharmacy" => $pharmacy]);
     }
 
@@ -98,7 +94,6 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        $pharmacy->delete();
-        return Redirect::route('pharmacies.index');
+        return view("pharmacy.show", ["pharmacy" => $pharmacy]);
     }
 }
