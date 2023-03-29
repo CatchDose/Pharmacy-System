@@ -22,13 +22,15 @@ class AddressesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <a class="btn btn-success" id="option_a1" href="{{Route("addresses.edit",$id)}}"> edit
-                </label>
-                <a class="btn btn-primary" id="option_a2" href="{{Route("addresses.show",$id)}}"> show
-                </label>
-                <a class="btn btn-danger" id="option_a3" href="{{Route("addresses.destroy",$id)}}"> delete
-                </label>
+            ->addColumn('action', '
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <a class="btn btn-success" id="option_a1" href="{{Route("addresses.edit",$id)}}"> edit </a>
+                    <a class="btn btn-primary" id="option_a2" href="{{Route("addresses.show",$id)}}"> show </a>
+                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("addresses.destroy",$id)}}">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                    </form>
                 </div>')
             ->setRowId('id');
     }
