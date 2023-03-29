@@ -36,10 +36,13 @@ class UserController extends Controller
 
         $data = $request->validated();
 
-        $path = $request->file("avatar_image")
+        if($request->hasFile("avatar_image")){
+            $path = $request->file("avatar_image")
                 ->store('',["disk"=>"avatars"]);
 
-        $data["avatar_images"] = $path;
+            $data["avatar_image"] = $path;
+        }
+
         $data["password"] = Hash::make($data["password"]);
 
         User::create($data);
