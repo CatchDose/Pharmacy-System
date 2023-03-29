@@ -10,7 +10,7 @@
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route('areas.index')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="#">edit User</a></li>
 
 @endsection
@@ -23,15 +23,17 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form action="{{route('areas.update',$area->id)}}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method("put")
                     <div class="card-body">
                         <div class="form-group">
                             <label >Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" value="">
+                            <input type="text" class="form-control" id="exampleInputEmail1" value="{{$area->name}} " name="name">
                         </div>
                         <div class="form-group">
                             <label for="">Adress</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" value="">
+                            <input type="text" class="form-control" id="exampleInputPassword1" value="{{$area->address}}" name="address">
                         </div>
                      
             

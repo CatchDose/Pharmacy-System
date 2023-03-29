@@ -182,13 +182,13 @@
                         <li class="nav-item">
                             <a href="{{route("areas.index")}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>all Areas</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('areas.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>add Area</p>
                             </a>
                         </li>
 
