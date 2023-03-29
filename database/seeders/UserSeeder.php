@@ -15,10 +15,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1)->create();
+        $admin = User::create([
+            'name' => 'admin',
+            'password' => Hash::make("123456"),
+            'avatar_image' => "image.jpg",
+            'national_id' => '11111000011111',
+            'email' => 'admin@test.com',
+            'gender' => '1',
+            'phone' => '01066362244',
+            'date_of_birth' => fake()->date(),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
 
-        $user = User::create([
-            'name' => 'doctor_1',
+        ]);
+
+        $admin->assignRole("admin");
+
+        $doctor = User::create([
+            'name' => 'doctor',
             'password' => Hash::make("123456"),
             'avatar_image' => "image.jpg",
             'national_id' => '22222000022222',
@@ -27,12 +41,25 @@ class UserSeeder extends Seeder
             'phone' => '01066362246',
             'date_of_birth' => fake()->date(),
             'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-
+            'remember_token' => Str::random(10)
         ]);
 
-        $user->doctor([
-            'pharmacy_id' => 1
+        $doctor->assignRole("doctor");
+
+        $pharmacy = User::create([
+            'name' => 'pharmacy',
+            'password' => Hash::make("123456"),
+            'avatar_image' => "image.jpg",
+            'national_id' => '22222000022223',
+            'email' => 'pharmacy@test.com',
+            'gender' => '1',
+            'phone' => '01066362246',
+            'date_of_birth' => fake()->date(),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10)
         ]);
+
+        $pharmacy->assignRole("pharmacy");
+
     }
 }
