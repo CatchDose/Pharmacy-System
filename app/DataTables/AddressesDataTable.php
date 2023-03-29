@@ -32,6 +32,17 @@ class AddressesDataTable extends DataTable
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
                 </div>')
+            ->addColumn('area', function (Address $address) {
+                return $address->area->name;
+            })
+            ->addColumn('user', function (Address $address) {
+                return $address->user->name;
+            })
+            ->addColumn('ismain', function (Address $address) {
+                return $address->is_main;
+            })
+
+
             ->setRowId('id');
     }
 
@@ -76,9 +87,10 @@ class AddressesDataTable extends DataTable
             Column::make('building_number'),
             Column::make('floor_number'),
             Column::make('flat_number'),
-            Column::make('is_main'),
-            Column::make('area_id'),
-            Column::make('user_id'),
+            Column::computed('ismain',"Is Main"),
+            Column::computed('area',"Area"),
+            Column::computed('user',"User name"),
+
 //            Column::make('created_at'),
 //            Column::make('updated_at')
             Column::computed('action')
