@@ -7,6 +7,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -32,7 +34,15 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
 
-        User::create($request->validated());
+        $data = $request->validated();
+
+        $path = $request->file("avatar_image")
+                ->store('',["disk"=>"avatars"]);
+
+        $data["avatar_images"] = $path;
+        $data["password"] = Hash::make($data["password"]);
+
+        User::create($data);
 
         return redirect()->route("users.index");
     }
@@ -58,7 +68,21 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->validated();
+
+        $data["password"] = isset($request->password)
+                            ? Hash::make($request->password)
+                            : $user->password;
+
+        if ($request->hasFile("avatar_image"))
+        {
+            Storage::disk("avatars")->delete($user->avatar_image);
+            $data["avatar_image"] = $request->file("avatar_image")
+                                    ->store('',["disk"=>"avatars"]);
+        }
+//        dd($data);
+
+        $user->update($data);
 
         return redirect()->route("users.index");
     }
