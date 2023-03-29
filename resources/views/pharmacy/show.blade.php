@@ -23,20 +23,24 @@
 </div>
 
 <div class="card-body">
-<strong><i class="fas fa-book mr-1"></i> Name</strong>
+<strong><i class="fas fa-book mr-1"></i> Pharmacy Name</strong>
 <p class="text-muted">
 {{$pharmacy->name}}
+</p>
+<strong><i class="fas fa-solid fa-user"></i> Owner Name</strong>
+<p class="text-muted">
+{{$pharmacy->owner->name}}
 </p>
 <strong><i class="fas fa-solid fa-envelope"></i> Email</strong>
 <p class="text-muted">
 {{$pharmacy->owner->email}}
 </p>
-<strong><i class="fas fa-phone mr-1"></i>Phone</strong>
+<strong><i class="fas fa-phone mr-1"></i> Phone</strong>
 <p class="text-muted">
 {{$pharmacy->owner->phone}}
 </p>
 <hr>
-<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+<strong><i class="fas fa-map-marker-alt mr-1"></i> Area Name</strong>
 <p class="text-muted">{{$pharmacy->area->name}}</p>
 <hr>
 <strong><i class="fas fa-solid fa-id-card"></i> National id</strong>
