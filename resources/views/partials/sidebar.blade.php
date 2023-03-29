@@ -137,27 +137,32 @@
                 <li class="nav-item">
 
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="bi bi-cart4"></i>
                         <p>
-                            orders
+                            Orders
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route('orders.index')}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('orders.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>Add</p>
                             </a>
                         </li>
 
-
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Edit</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>

@@ -12,5 +12,9 @@
         "laravel-vite-plugin": "^0.7.2",
         "sass": "^1.56.1",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "select2": "^4.1.0-rc.0",
+        "select2-bootstrap-5-theme": "^1.3.0"
     }
 }

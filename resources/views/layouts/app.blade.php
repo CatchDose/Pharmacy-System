@@ -219,6 +219,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 @vite('resources/js/app.js')
 
+
 <!-- jQuery -->
 <script src="{{asset("plugins/jquery/jquery.min.js")}}"></script>
 <!-- Bootstrap 4 -->
