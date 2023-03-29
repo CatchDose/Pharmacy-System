@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles;
 
 
     /**
@@ -20,8 +22,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
+        "avatar_image",
+        "national_id",
+        'email',
+        "date_of_birth",
+        "gender",
+        "phone"
     ];
 
     /**
@@ -46,23 +53,22 @@ class User extends Authenticatable
 
     public function addresses()
     {
-        return $this->hasMany(Address::class,"user_id");
+        return $this->hasMany(Address::class, "user_id");
     }
 
     public function orders()
     {
-        return $this->hasMany(Order::class,"user_id");
+        return $this->hasMany(Order::class, "user_id");
     }
 
 
     public function pharmacy()
     {
-        return $this->hasOne(Pharmacy::class,"owner_id");
+        return $this->hasOne(Pharmacy::class, "owner_id");
     }
 
     public function doctor()
     {
-        return $this->hasOne(Doctor::class,'user_id');
+        return $this->hasOne(Doctor::class, 'user_id');
     }
-
 }

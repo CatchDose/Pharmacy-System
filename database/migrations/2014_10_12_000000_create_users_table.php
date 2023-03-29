@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('password');
-            $table->string('avatar_image');
+            $table->string('avatar_image')->default("image.jpg");
             $table->string('national_id')->unique();
             $table->string('email')->unique();
             $table->date("date_of_birth");

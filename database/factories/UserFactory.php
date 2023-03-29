@@ -20,7 +20,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
-
         return [
             'name' => 'admin',
             'password' => Hash::make("123456"),

@@ -19,7 +19,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset("dist/css/adminlte.min.css")}}">
 
-    @yield("style")
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+
+
+@yield("style")
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -185,8 +189,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
+        <div class="content pb-3">
+            <div class="container-fluid ">
                 @yield("content")
              </div><!-- /.container-fluid -->
         </div>
@@ -219,6 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 @vite('resources/js/app.js')
 
+
 <!-- jQuery -->
 <script src="{{asset("plugins/jquery/jquery.min.js")}}"></script>
 <!-- Bootstrap 4 -->
@@ -226,8 +231,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{{asset("dist/js/adminlte.min.js")}}"></script>
 
-
-@stack('scripts')
+@yield("extra")
+@yield('scripts')
 
 </body>
 </html>

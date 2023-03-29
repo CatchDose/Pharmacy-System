@@ -24,13 +24,13 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name'=> ["required","max:255"],
-            'password'=> ["required","max:255","min:6"],
-            'avatar_image'=> ["nullable","mimes:jpg,png","size:4096"],
+            'password'=> ["nullable","max:255","min:6"],
+            'avatar_image'=> ["nullable","mimes:jpg,png","max:4096"],
             'national_id'=> ["required","max:14","unique:users,national_id," . $this->user->id],
             'email'=> ["required","max:255","unique:users,email," . $this->user->id],
             'date_of_birth'=> ["required","date"],
             'gender'=> ["required",Rule::in(["1","2"])],
-            'phone' => ["required"]
+            'phone' => ["required", "digits:11"]
         ];
     }
 }
