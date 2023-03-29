@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -39,6 +40,7 @@ class UserController extends Controller
                 ->store('',["disk"=>"avatars"]);
 
         $data["avatar_images"] = $path;
+        $data["password"] = Hash::make($data["password"]);
 
         User::create($data);
 
