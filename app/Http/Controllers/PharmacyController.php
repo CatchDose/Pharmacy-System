@@ -19,9 +19,6 @@ class PharmacyController extends Controller
      */
     public function index(PharmaciesDataTable $dataTable)
     {
-        // dd($dataTable);
-        $model = Pharmacy::all()->first();
-        // dd($model->action);
         return $dataTable->render('pharmacy.index');
     }
 
