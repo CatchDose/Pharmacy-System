@@ -16,6 +16,6 @@
 
 @section('content')
 
-
+<h>hi</h>
 
 @endsection

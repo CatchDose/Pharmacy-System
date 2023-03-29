@@ -20,8 +20,17 @@
 
 @endsection
 
-@push('scripts')
+@section('scripts')
 
-    {{ $dataTable->scripts() }}
-    
-@endpush
+    {{ $dataTable->scripts()}}
+    <script>
+        function modalShow(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+            document.querySelector(".modal-footer").lastElementChild.addEventListener("click",(e)=>{
+                event.target.closest("form").submit();
+            })
+        }
+   </script>
+@endsection

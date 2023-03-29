@@ -22,7 +22,15 @@ class OrdersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'orders.action')
+        ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <a class="btn btn-success" id="option_a1" href="{{Route("orders.edit",$id)}}"> edit </a>
+        <a class="btn btn-primary" id="option_a2" href="{{Route("orders.show",$id)}}"> show </a>
+        <form method="post" class="delete_item"  id="option_a3" action="{{Route("orders.destroy",$id)}}">
+            @csrf
+            @method("DELETE")
+            <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+        </form>
+        </div>')
             ->addColumn('Pharmacy', function(Order $order){
                 return $order->pharmacy->name;
             })
@@ -87,7 +95,7 @@ class OrdersDataTable extends DataTable
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(70)
                   ->addClass('text-center'),
                   
         ];
