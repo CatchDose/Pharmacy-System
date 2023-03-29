@@ -37,16 +37,16 @@
 
                 {{--Home Page--}}
                 <li class="nav-item">
-                    <a href="{{route("index")}}" class="nav-link">
+                    <a href="{{route("index")}}" class="nav-link {{ Route::currentRouteNamed('index') ? 'active' : '' }}">
                         <i class="fas fa-home nav-icon"></i>
                         <p>Home</p>
                     </a>
                 </li>
 
                 {{-- Users Menu--}}
-                <li class="nav-item menu-open">
+                <li class="nav-item {{ Route::currentRouteNamed('users.*') ? 'menu-open' : '' }}">
 
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             users
@@ -55,13 +55,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route("users.index")}}" class="nav-link active">
+                            <a href="{{route("users.index")}}" class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>all users</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route("users.create")}}" class="nav-link {{ Route::currentRouteNamed('users.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>add user</p>
                             </a>
