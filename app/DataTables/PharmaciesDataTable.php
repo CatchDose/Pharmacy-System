@@ -34,7 +34,15 @@ class PharmaciesDataTable extends DataTable
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
                 </div>')
-            ->setRowId('id');
+            ->setRowId('id')->addColumn('owner_name', function (Pharmacy $pharmacy) {
+                return $pharmacy->owner->name;
+            })->addColumn('area_name', function (Pharmacy $pharmacy) {
+                return $pharmacy->area->name;
+            })->addColumn('phone', function (Pharmacy $pharmacy) {
+                return $pharmacy->owner->phone;
+            })->addColumn('email', function (Pharmacy $pharmacy) {
+                return $pharmacy->owner->email;
+            });
     }
 
     /**
@@ -75,11 +83,11 @@ class PharmaciesDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('area_id'),
-            Column::make('owner_id'),
+            Column::make('area_name'),
+            Column::make('owner_name'),
             Column::make('priority'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('phone'),
+            Column::make('email'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
