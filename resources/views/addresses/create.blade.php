@@ -23,31 +23,78 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form>
+        <form action="{{route("addresses.store")}}" method="post">
             <div class="card-body">
+                @csrf
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <label for="street-name">Street name</label>
+                    <input type="text" value="{{old("street_name")}}" class="form-control @error('street_name') is-invalid @enderror" name="street_name" id="street-name"
+                           placeholder="Enter user name">
+
+                    @error('street_name')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="building-number">Building number</label>
+                    <input type="text" value="{{old("building_number")}}" class="form-control @error('building_number') is-invalid @enderror" name="building_number" id="building-number"
+                           placeholder="Enter Building number">
+
+                    @error('building_number')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+
                 </div>
+
                 <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+                    <label for="building-number">Is this your main Address?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Yes
+                        </label>
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+
+                    @error('is_main')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
                 </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+                <div class="form-group">
+                    <label for="area-id">Area id</label>
+                    <input type="text" value="{{old("area_id")}}" class="form-control @error('area_id') is-invalid @enderror" name="area_id" id="area-id" placeholder="Area id">
+
+                    @error('area_id')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <label for="user-id">User id</label>
+                    <input type="text" value="{{old("user_id")}}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" id="user-id"
+                           placeholder="Enter date">
+                    @error('user_id')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+
                 </div>
             </div>
             <!-- /.card-body -->
