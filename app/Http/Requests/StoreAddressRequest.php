@@ -22,7 +22,9 @@ class StoreAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'street_name' => ["required" , "max:255"],
+            'building_number' => ["required" , "numeric" , "max:999" , "min:1"],
+            'floor_number' => ["required" , "numeric" , "max:40" , "min:1"]
         ];
     }
 }

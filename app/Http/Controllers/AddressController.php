@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DataTables\AddressesDataTable;
 use App\Models\Address;
 use Illuminate\Http\Request;
-use App\DataTables\UsersDataTable;
 
 class AddressController extends Controller
 {
@@ -14,7 +13,7 @@ class AddressController extends Controller
     }
 
     public function create() {
-
+        return view('addresses.create');
     }
 
     public function store(StoreAddressRequest $request) {
