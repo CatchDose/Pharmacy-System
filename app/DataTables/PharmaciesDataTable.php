@@ -20,17 +20,6 @@ class PharmaciesDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-    // protected Action = "<div class='btn-group btn-group-toggle' data-toggle='buttons'>
-    //             <label class='btn btn-secondary active'>
-    //             <a class='btn' id='option_a1' href='{{Route('pharmacies.edit',$name)}}'> edit
-    //             </label>
-    //             <label class='btn btn-secondary'>
-    //             <a class='btn' id='option_a2' href='{{Route('pharmacies.show',$name)}}'> show
-    //             </label>
-    //             <label class='btn btn-secondary'>
-    //             <a class='btn' id='option_a3' href='{{Route('pharmacies.destroy',$name)}}'> delete
-    //             </label>
-    //             </div>";
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
