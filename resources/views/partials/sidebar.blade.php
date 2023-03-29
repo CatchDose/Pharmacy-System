@@ -210,15 +210,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route('addresses.index')}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>All addresses</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('addresses.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>Add address</p>
                             </a>
                         </li>
 

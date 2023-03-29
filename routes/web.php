@@ -6,7 +6,7 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AddressController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +46,7 @@ Route::group(["middleware" => "auth"], function () {
 
 
     Route::resource('users', UserController::class);
-
+    Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
 });
 
