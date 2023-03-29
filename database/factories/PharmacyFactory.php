@@ -20,7 +20,7 @@ class PharmacyFactory extends Factory
         return [
             'name' => fake()->company(),
             'area_id' => 1,
-            'owner_id' => 1,
+            'owner_id' => 3,
             'priority' => 1,
         ];
     }

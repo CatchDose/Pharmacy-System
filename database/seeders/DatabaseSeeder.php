@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,12 +21,13 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-           MedicineSeeder::class,
+           RoleSeeder::class,
            AreaSeeder::class,
            UserSeeder::class,
            PharmacySeeder::class,
+           MedicineSeeder::class,
            OrderSeeder::class,
-           AddressSeeder::class
+           AddressSeeder::class,
         ]);
     }
 }
