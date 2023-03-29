@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\AddressesDataTable;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use App\DataTables\UsersDataTable;
 
 class AddressController extends Controller
 {
-    public function index () {
-        return Address::all();
+    public function index (AddressesDataTable $dataTable) {
+        return $dataTable->render('addresses.index');
     }
 
     public function create() {
