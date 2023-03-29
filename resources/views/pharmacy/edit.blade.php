@@ -1,17 +1,17 @@
 @extends("layouts.app")
 
-@section("title","add pharmacy")
+@section("title","edit pharmacy")
 
 @section("style")
 
 @endsection
 
-@section("header","add pharmacy")
+@section("header","edit pharmacy")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Add pharmacy</a></li>
+    <li class="breadcrumb-item"><a href="#">edit pharmacy</a></li>
 
 @endsection
 
@@ -19,7 +19,7 @@
 
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Add pharmacy</h3>
+        <h3 class="card-title">edit pharmacy</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -41,25 +41,6 @@
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" value="{{old("email")??$pharmacy->owner->email}}">
                 @error('email')
-                    <div class="invalid-feedback" @style(["display: block"])>
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                @error('password')
-                    <div class="invalid-feedback" @style(["display: block"])>
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputNationalId1">National Id</label>
-                <input type="text" name="national_id" class="form-control" id="exampleInputNationalId1" placeholder="Enter National Id" value="{{old("national_id")??$pharmacy->owner->national_id}}">
-                @error('national_id')
                     <div class="invalid-feedback" @style(["display: block"])>
                         {{ $message }}
                     </div>

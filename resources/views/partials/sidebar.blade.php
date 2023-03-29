@@ -74,7 +74,7 @@
 
 
                 {{-- Pharmacy Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('pharmacies.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -85,13 +85,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route("pharmacies.index")}}" class="nav-link active">
+                            <a href="{{route("pharmacies.index")}}" class="nav-link {{Route::is('pharmacies.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>all pharmacies</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route("pharmacies.create")}}" class="nav-link">
+                            <a href="{{route("pharmacies.create")}}" class="nav-link {{Route::is('pharmacies.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>add pharmacy</p>
                             </a>
