@@ -22,7 +22,14 @@ class AddressesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'addresses.action')
+            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <a class="btn btn-success" id="option_a1" href="{{Route("addresses.edit",$id)}}"> edit
+                </label>
+                <a class="btn btn-primary" id="option_a2" href="{{Route("addresses.show",$id)}}"> show
+                </label>
+                <a class="btn btn-danger" id="option_a3" href="{{Route("addresses.destroy",$id)}}"> delete
+                </label>
+                </div>')
             ->setRowId('id');
     }
 
@@ -62,11 +69,6 @@ class AddressesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
             Column::make('street_name'),
             Column::make('building_number'),
@@ -75,8 +77,13 @@ class AddressesDataTable extends DataTable
             Column::make('is_main'),
             Column::make('area_id'),
             Column::make('user_id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+//            Column::make('created_at'),
+//            Column::make('updated_at')
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
