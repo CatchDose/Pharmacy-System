@@ -68,7 +68,21 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->validated();
+
+        $data["password"] = isset($request->password)
+                            ? Hash::make($request->password)
+                            : $user->password;
+
+        if ($request->hasFile("avatar_image"))
+        {
+            Storage::disk("avatars")->delete($user->avatar_image);
+            $data["avatar_image"] = $request->file("avatar_image")
+                                    ->store('',["disk"=>"avatars"]);
+        }
+//        dd($data);
+
+        $user->update($data);
 
         return redirect()->route("users.index");
     }
