@@ -22,6 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "phone",
+        "gender",
+        "date_of_birth",
+        "date_of_birth",
+        "national_id"
+
     ];
 
     /**
@@ -46,23 +52,22 @@ class User extends Authenticatable
 
     public function addresses()
     {
-        return $this->hasMany(Address::class,"user_id");
+        return $this->hasMany(Address::class, "user_id");
     }
 
     public function orders()
     {
-        return $this->hasMany(Order::class,"user_id");
+        return $this->hasMany(Order::class, "user_id");
     }
 
 
     public function pharmacy()
     {
-        return $this->hasOne(Pharmacy::class,"owner_id");
+        return $this->hasOne(Pharmacy::class, "owner_id");
     }
 
     public function doctor()
     {
-        return $this->hasOne(Doctor::class,'user_id');
+        return $this->hasOne(Doctor::class, 'user_id');
     }
-
 }

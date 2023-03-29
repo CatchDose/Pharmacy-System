@@ -1,17 +1,17 @@
 @extends("layouts.app")
 
-@section("title","Users")
+@section("title","Pharmacies")
 
 @section("style")
 
 @endsection
 
-@section("header","Users")
+@section("header","Pharmacies")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">users</a></li>
+    <li class="breadcrumb-item"><a href="#">Pharmacies</a></li>
 
 @endsection
 
@@ -24,5 +24,6 @@
 
 
 @section('scripts')
+   
     {{ $dataTable->scripts() }}
 @endsection

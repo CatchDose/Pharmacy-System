@@ -18,8 +18,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset("plugins/fontawesome-free/css/all.min.css")}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset("dist/css/adminlte.min.css")}}">
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    @yield("style")
+
+
+@yield("style")
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -228,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset("dist/js/adminlte.min.js")}}"></script>
 
 
-@stack('scripts')
+@yield('scripts')
 
 </body>
 </html>

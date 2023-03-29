@@ -2,8 +2,9 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
+use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Notifications\Action;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class PharmaciesDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,9 +24,11 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <a class="btn btn-success" id="option_a1" href="{{Route("users.edit",$id)}}"> edit
+                <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> edit
                 </label>
-                <a class="btn btn-danger" id="option_a3" href="{{Route("users.destroy",$id)}}"> delete
+                <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}"> show
+                </label>
+                <a class="btn btn-danger" id="option_a3" href="{{Route("pharmacies.destroy",$id)}}"> delete
                 </label>
                 </div>')
             ->setRowId('id');
@@ -34,7 +37,7 @@ class UsersDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(User $model): QueryBuilder
+    public function query(Pharmacy $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -45,21 +48,20 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('users-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-//                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-
+            ->setTableId('pharmacies-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
             ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -70,25 +72,23 @@ class UsersDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('national_id'),
-            Column::make('email'),
+            Column::make('area_id'),
+            Column::make('owner_id'),
+            Column::make('priority'),
             Column::make('created_at'),
             Column::make('updated_at'),
-
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-
         ];
     }
-
     /**
      * Get the filename for export.
      */
     protected function filename(): string
     {
-        return 'Users_' . date('YmdHis');
+        return 'Pharmacies_' . date('YmdHis');
     }
 }
