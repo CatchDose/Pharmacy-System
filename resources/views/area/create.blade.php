@@ -40,14 +40,15 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" value="" class="form-control  is-invalid " name="address" id="user-name"
+                        <input type="text" value="" class="form-control   @error('name') is-invalid @enderror" name="address" id="user-name"
                                placeholder="Enter Address">
 
-                       
+                               @error('address')
                         <span class="invalid-feedback" role="alert">
-                                        
+                                        <strong>{{ $message }}</strong>
                                     </span>
-                       
+                                    @enderror
+
 
                     </div>
                 
