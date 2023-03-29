@@ -18,7 +18,20 @@ class AddressController extends Controller
     }
 
     public function store(StoreAddressRequest $request) {
-        dd($request);
+        $is_main = NULL;
+        if ($request->is_main == 'yes') $is_main = 1 ;
+        else $is_main = 0 ;
+        Address::create([
+           'street_name' => $request->street_name,
+            'building_number' => $request->building_number,
+            'floor_number' => $request->floor_number,
+            'flat_number' => $request->flat_number,
+            'is_main' => $is_main,
+            'area_id' => $request->area_id,
+            'user_id' => $request->user_id
+        ]);
+
+        return redirect()->route('addresses.index');
     }
 
     public function show(Address $address) {
