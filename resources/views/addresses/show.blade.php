@@ -20,6 +20,10 @@
     <table>
         <tbody>
         <tr>
+            <th>User Name</th>
+            <td>{{ $address->user->name }}</td>
+        </tr>
+        <tr>
             <th style="width: 20vh">Street Name</th>
             <td>{{ $address->street_name }}</td>
         </tr>
@@ -42,10 +46,6 @@
             @else
             <td>No</td>
             @endif
-        </tr>
-        <tr>
-            <th>User Name</th>
-            <td>{{ $address->user->name }}</td>
         </tr>
         <tr>
             <th>Area</th>
