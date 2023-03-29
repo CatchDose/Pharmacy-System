@@ -6,7 +6,7 @@ use App\DataTables\AddressesDataTable;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAddressRequest;
-
+use App\Http\Requests\UpdateAddressRequest;
 class AddressController extends Controller
 {
     public function index (AddressesDataTable $dataTable) {
@@ -39,11 +39,20 @@ class AddressController extends Controller
     }
 
     public function edit(Address $address) {
-        return view('addresses.edit');
+        return view('addresses.edit' , ['address' => $address]);
     }
 
     public function update(UpdateAddressRequest $request, Address $address) {
 
+        $address->update([
+            'street_name' => $request->street_name,
+            'building_number' => $request->building_number,
+            'floor_number' => $request->floor_number,
+            'flat_number' => $request->flat_number,
+            'is_main' => $request->is_main,
+            'area_id' => $request->area_id,
+            'user_id' => $request->user_id
+        ]);
     }
 
     public function destroy(Address $address) {

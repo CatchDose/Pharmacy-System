@@ -23,12 +23,13 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route("addresses.edit")}}" method="post">
+        <form action="{{route("addresses.update",$address->id)}}" method="post">
             @csrf
+            @method('PUT')
             <div class="card-body">
                 <div class="form-group">
                     <label for="street-name">Street name</label>
-                    <input type="text" value="{{old("street_name")}}" class="form-control @error('street_name') is-invalid @enderror" name="street_name" id="street-name"
+                    <input type="text" value="{{$address->street_name}}" class="form-control @error('street_name') is-invalid @enderror" name="street_name" id="street-name"
                            placeholder="Enter user name">
 
                     @error('street_name')
@@ -40,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label for="building-number">Building number</label>
-                    <input type="text" value="{{old("building_number")}}" class="form-control @error('building_number') is-invalid @enderror" name="building_number" id="building-number"
+                    <input type="text" value="{{$address->building_number}}" class="form-control @error('building_number') is-invalid @enderror" name="building_number" id="building-number"
                            placeholder="Enter Building number">
 
                     @error('building_number')
@@ -52,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="floor-number">Floor number</label>
-                    <input type="text" value="{{old("floor_number")}}" class="form-control @error('floor_number') is-invalid @enderror" name="floor_number" id="floor-number"
+                    <input type="text" value="{{$address->floor_number}}" class="form-control @error('floor_number') is-invalid @enderror" name="floor_number" id="floor-number"
                            placeholder="Enter floor number">
 
                     @error('floor_number')
@@ -64,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label for="flat_number">Flat number</label>
-                    <input type="text" value="{{old("flat_number")}}" class="form-control @error('flat_number') is-invalid @enderror" name="flat_number" id="flat-number"
+                    <input type="text" value="{{$address->flat_number}}" class="form-control @error('flat_number') is-invalid @enderror" name="flat_number" id="flat-number"
                            placeholder="Enter Flat number">
 
                     @error('flat_number')
@@ -98,7 +99,7 @@
 
                 <div class="form-group">
                     <label for="area-id">Area id</label>
-                    <input type="text" value="{{old("area_id")}}" class="form-control @error('area_id') is-invalid @enderror" name="area_id" id="area-id" placeholder="Area id">
+                    <input type="text" value="{{$address->area_id}}" class="form-control @error('area_id') is-invalid @enderror" name="area_id" id="area-id" placeholder="Area id">
 
                     @error('area_id')
                     <span class="invalid-feedback" role="alert">
@@ -110,7 +111,7 @@
 
                 <div class="form-group">
                     <label for="user-id">User id</label>
-                    <input type="text" value="{{old("user_id")}}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" id="user-id"
+                    <input type="text" value="{{$address->user_id}}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" id="user-id"
                            placeholder="Enter date">
                     @error('user_id')
                     <span class="invalid-feedback" role="alert">
