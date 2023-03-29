@@ -94,6 +94,7 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        $pharmacy->delete();
+        return Redirect::route('pharmacies.index');
     }
 }

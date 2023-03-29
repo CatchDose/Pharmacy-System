@@ -20,27 +20,19 @@ class PharmaciesDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-    // protected Action = "<div class='btn-group btn-group-toggle' data-toggle='buttons'>
-    //             <label class='btn btn-secondary active'>
-    //             <a class='btn' id='option_a1' href='{{Route('pharmacies.edit',$name)}}'> edit
-    //             </label>
-    //             <label class='btn btn-secondary'>
-    //             <a class='btn' id='option_a2' href='{{Route('pharmacies.show',$name)}}'> show
-    //             </label>
-    //             <label class='btn btn-secondary'>
-    //             <a class='btn' id='option_a3' href='{{Route('pharmacies.destroy',$name)}}'> delete
-    //             </label>
-    //             </div>";
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> edit
-                </label>
-                <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}"> show
-                </label>
-                <a class="btn btn-danger" id="option_a3" href="{{Route("pharmacies.destroy",$id)}}"> delete
-                </label>
+            ->addColumn('action', '
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> edit </a>
+                    <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}"> show </a>
+                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("pharmacies.destroy",$id)}}">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                    </form>
                 </div>')
             ->setRowId('id');
     }
