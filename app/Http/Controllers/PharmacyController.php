@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pharmacy;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\DataTables\PharmaciesDataTable;
+use App\Http\Requests\StorePharmacyRequest;
+use App\Http\Requests\UpdatePharmacyRequest;
+use App\Models\Area;
+use Illuminate\Support\Facades\Redirect;
 
 class PharmacyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PharmaciesDataTable $dataTable)
     {
-        $pharmacies = Pharmacy::all();
-        return view("pharmacy.index", ["pharmacies" => $pharmacies]);
+        // dd($dataTable);
+        $model = Pharmacy::all()->first();
+        // dd($model->action);
+        return $dataTable->render('pharmacy.index');
     }
 
     /**
@@ -21,21 +30,41 @@ class PharmacyController extends Controller
      */
     public function create()
     {
-        return view("pharmacy.create");
+        $areas = Area::all();
+
+        return view("pharmacy.create", ["areas" => $areas]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(StorePharmacyRequest $request)
     {
-        return view("pharmacy.show");
+
+        $data = $request->validated();
+        // dd($data);
+        $user = User::create([
+            "name" => $data["name"], "email" => $data["email"], "national_id" => $data["national_id"], "date_of_birth" => now(),
+            "gender" => $data["gender"], "phone" => $data["phone"],
+            "avatar_image" => $data["avatar_image"],
+            "password" => Hash::make(
+                $data["password"]
+            )
+        ]);
+        $Pharmacy = Pharmacy::create([
+            "name" => $data["pharmacy_name"],
+            "priority" => $data["priority"],
+            "area_id" => $data["area_id"],
+            "owner_id" => $user["id"]
+        ]);
+        return Redirect::route('pharmacies.show', $Pharmacy->id);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Pharmacy $pharmacy)
+
     {
         return view("pharmacy.show", ["pharmacy" => $pharmacy]);
     }
@@ -45,15 +74,17 @@ class PharmacyController extends Controller
      */
     public function edit(Pharmacy $pharmacy)
     {
-
-        return view("pharmacy.edit", ["pharmacy" => $pharmacy]);
+        $areas = Area::all();
+        return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pharmacy $pharmacy)
+    public function update(UpdatePharmacyRequest $request, Pharmacy $pharmacy)
     {
+
+        // $data = $request->validated();
 
         return view("pharmacy.show", ["pharmacy" => $pharmacy]);
     }
