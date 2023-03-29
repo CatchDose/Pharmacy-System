@@ -28,7 +28,7 @@ class UpdatePharmacyRequest extends FormRequest
             'password' => ["required", "max:255", "min:6"],
             'avatar_image' => ["nullable", "mimes:jpg,png", "size:4096"],
             'national_id' => ["required", "max:14", "unique:users,national_id"],
-            'email' => ["required", "max:255", "unique:users,email," . dd($this->owner_id)],
+            'email' => ["required", "max:255", "unique:users,email," . dd($this->pharmacy->owner->id)],
             'date_of_birth' => ["required", "date"],
             'gender' => ["required", Rule::in(["1", "2"])],
             'phone' => ["required", "digits:11"],

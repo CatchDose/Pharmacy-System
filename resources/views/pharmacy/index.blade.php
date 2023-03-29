@@ -50,8 +50,6 @@
             event.target.closest("form").submit();
         })
     }
-        
-    
    </script>
 
 @endsection
