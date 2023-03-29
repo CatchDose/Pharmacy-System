@@ -24,8 +24,8 @@
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("addresses.store")}}" method="post">
+            @csrf
             <div class="card-body">
-                @csrf
                 <div class="form-group">
                     <label for="street-name">Street name</label>
                     <input type="text" value="{{old("street_name")}}" class="form-control @error('street_name') is-invalid @enderror" name="street_name" id="street-name"
@@ -33,7 +33,7 @@
 
                     @error('street_name')
                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        <strong>{{ $message }}</strong>
                     </span>
                     @enderror
 
@@ -45,22 +45,45 @@
 
                     @error('building_number')
                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
 
                 </div>
-
                 <div class="form-group">
-                    <label for="building-number">Is this your main Address?</label>
+                    <label for="floor-number">Floor number</label>
+                    <input type="text" value="{{old("floor_number")}}" class="form-control @error('floor_number') is-invalid @enderror" name="floor_number" id="floor-number"
+                           placeholder="Enter floor number">
+
+                    @error('floor_number')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+
+                </div>
+                <div class="form-group">
+                    <label for="flat_number">Flat number</label>
+                    <input type="text" value="{{old("flat_number")}}" class="form-control @error('flat_number') is-invalid @enderror" name="flat_number" id="flat-number"
+                           placeholder="Enter Flat number">
+
+                    @error('flat_number')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+
+                </div>
+                <div class="form-group">
+                    <label for="is_main">Is this your main Address?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" checked>
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" value="yes">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2" value="no">
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>
@@ -68,8 +91,8 @@
 
                     @error('is_main')
                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
 
