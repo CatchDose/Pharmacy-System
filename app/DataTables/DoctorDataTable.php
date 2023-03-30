@@ -33,7 +33,7 @@ class DoctorDataTable extends DataTable
                     </form>
                 </div>')
             ->addColumn('pharmacy',function ($user){
-                return $user->workPharmacy->name;
+                return $user->pharmacy->name;
             })
             ->setRowId('id');
     }

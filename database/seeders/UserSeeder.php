@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'admin',
             'password' => Hash::make("123456"),
-            'avatar_image' => "image.jpg",
             'national_id' => '11111000011111',
             'email' => 'admin@test.com',
             'gender' => '1',
@@ -31,35 +30,8 @@ class UserSeeder extends Seeder
 
         $admin->assignRole("admin");
 
-        $doctor = User::create([
-            'name' => 'doctor',
-            'password' => Hash::make("123456"),
-            'avatar_image' => "image.jpg",
-            'national_id' => '22222000022222',
-            'email' => 'doctor_1@test.com',
-            'gender' => '1',
-            'phone' => '01066362246',
-            'date_of_birth' => fake()->date(),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10)
-        ]);
 
-        $doctor->assignRole("doctor");
 
-        $pharmacy = User::create([
-            'name' => 'pharmacy',
-            'password' => Hash::make("123456"),
-            'avatar_image' => "image.jpg",
-            'national_id' => '22222000022223',
-            'email' => 'pharmacy@test.com',
-            'gender' => '1',
-            'phone' => '01066362246',
-            'date_of_birth' => fake()->date(),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10)
-        ]);
-
-        $pharmacy->assignRole("pharmacy");
 
     }
 }

@@ -18,8 +18,6 @@ class Order extends Model
         "user_id",
         "doctor_id",
         "is_insured",
-        
-
     ];
 
 
@@ -47,7 +45,7 @@ class Order extends Model
 
     protected function createdAt(): Attribute
     {
-        return Attribute::make( 
+        return Attribute::make(
 
             get: fn (string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
 
@@ -66,7 +64,7 @@ class Order extends Model
     protected function status(): Attribute
     {
         return Attribute::make(
-           
+
             get: function (string $value) {
 
                 switch($value){
@@ -85,24 +83,24 @@ class Order extends Model
                 }
 
             },
-
-            set: function (string $value) {
-
-                switch($value){
-                    case "New" :
-                        return 1;
-                    case "Processing" :
-                        return 2;
-                    case "Waiting":
-                        return 3;
-                    case "Cancelled":
-                        return 4 ;
-                    case "Confirmed":
-                        return 5 ;
-                    case "Delivered":
-                        return 6;
-                }
-            } 
+//
+//            set: function (string $value) {
+//
+//                switch($value){
+//                    case "New" :
+//                        return 1;
+//                    case "Processing" :
+//                        return 2;
+//                    case "Waiting":
+//                        return 3;
+//                    case "Cancelled":
+//                        return 4 ;
+//                    case "Confirmed":
+//                        return 5 ;
+//                    case "Delivered":
+//                        return 6;
+//                }
+//            }
         );
     }
 
@@ -127,7 +125,7 @@ class Order extends Model
         for($x=0 ; $x < count($med) ; $x++){
 
             $id = Medicine::all()->where('name' , $med[$x] )->first()->id;
-            
+
             $order->medicines($id)->attach(1 , ['quantity' => $qty[$x]]);
 
         }
