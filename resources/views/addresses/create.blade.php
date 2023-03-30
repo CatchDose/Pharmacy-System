@@ -97,27 +97,35 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="area-id">Area id</label>
-                    <input type="text" value="{{old("area_id")}}" class="form-control @error('area_id') is-invalid @enderror" name="area_id" id="area-id" placeholder="Area id">
+                    <label for="area" class="form-label">Area</label>
 
-                    @error('area_id')
-                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <select class="js-example-basic-multiple select2 @error('area') is-invalid @enderror" name="area"  style="width: 100%;" >
+                        @foreach($areas as $area)
+                            <option value="{{$area->id}}">{{$area->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('area')
+                    <span class="invalid-feedback fs-6" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
                     @enderror
-
                 </div>
 
                 <div class="form-group">
-                    <label for="user-id">User id</label>
-                    <input type="text" value="{{old("user_id")}}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" id="user-id"
-                           placeholder="Enter date">
-                    @error('user_id')
-                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                    @enderror
+                    <label for="user" class="form-label">User</label>
 
+                    <select class="js-example-basic-multiple select2 @error('user') is-invalid @enderror" name="user"  style="width: 100%;" >
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('user')
+                    <span class="invalid-feedback fs-6" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
                 </div>
             </div>
             <!-- /.card-body -->
