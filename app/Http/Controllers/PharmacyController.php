@@ -84,7 +84,16 @@ class PharmacyController extends Controller
     public function edit(Pharmacy $pharmacy)
     {
         $areas = Area::all();
-        return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
+
+        if (Auth::user()->hasRole("admin")) {
+            return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
+        }
+
+        if (Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id) {
+            return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
+        }
+
+        abort(403, "You Are Not Authorized To View This Page");
     }
 
     /**
@@ -93,9 +102,16 @@ class PharmacyController extends Controller
     public function update(UpdatePharmacyRequest $request, Pharmacy $pharmacy)
     {
 
-        $pharmacy->update($request->validated());
 
-        return Redirect::route('pharmacies.show', $pharmacy);
+        if (
+            Auth::user()->hasRole("admin") ||
+            Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id
+        ) {
+
+            $pharmacy->update($request->validated());
+            return Redirect::route('pharmacies.show', $pharmacy);
+        }
+        abort(403, "You Are Not Authorized To View This Page");
     }
 
     /**

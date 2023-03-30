@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger("area_id");
             $table->unsignedBigInteger("owner_id");
             $table->tinyInteger("priority");
-
             $table->timestamps();
         });
     }
