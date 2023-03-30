@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\DataTables\DoctorDataTable;
+use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
+use App\Models\Pharmacy;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+class DoctorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(UsersDataTable $dataTable)
+    public function index(DoctorDataTable $dataTable)
     {
-        return $dataTable->render('users.index');
+        return $dataTable->render('doctors.index');
+
     }
 
     /**
@@ -25,13 +26,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        $pharmacies = Pharmacy::all();
+        return view("doctors.create",["pharmacies"=>$pharmacies]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreDoctorRequest $request)
     {
 
         $data = $request->validated();
@@ -47,10 +49,10 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        $user->assignRole("admin");
+        $user->assignRole("doctor");
 
 
-        return redirect()->route("users.index");
+        return redirect()->route("doctors.index");
     }
 
     /**
@@ -58,40 +60,41 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view("users.show",["user" => $user]);
+        return view("doctor.show",["user"=> $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $doctor)
     {
-        return view("users.edit",["user"=>$user]);
+        $pharmacies = Pharmacy::all();
+        return view("doctors.edit",["doctor"=> $doctor,"pharmacies" => $pharmacies]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateDoctorRequest $request, User $doctor)
     {
         $data = $request->validated();
 
         $data["password"] = isset($request->password)
-                            ? Hash::make($request->password)
-                            : $user->password;
+            ? Hash::make($request->password)
+            : $doctor->password;
 
         if ($request->hasFile("avatar_image"))
         {
-            Storage::disk("avatars")->delete($user->avatar_image);
+            Storage::disk("avatars")->delete($doctor->avatar_image);
             $data["avatar_image"] = $request->file("avatar_image")
-                                    ->store('',["disk"=>"avatars"]);
+                ->store('',["disk"=>"avatars"]);
         }
-//        dd($data);
 
-        $user->update($data);
+        $doctor->update($data);
 
-        return redirect()->route("users.index");
+        return redirect()->route("doctors.index");
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -100,6 +103,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route("users.index");
+        return redirect()->route("doctors.index");
     }
 }

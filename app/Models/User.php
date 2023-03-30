@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         "date_of_birth",
         "gender",
-        "phone"
+        "phone",
+        "pharmacy_id"
     ];
 
     /**
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function pharmacy()
     {
         return $this->hasOne(Pharmacy::class, "owner_id");
+    }
+
+    public function workPharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class, 'pharmacy_id');
     }
 
 }

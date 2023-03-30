@@ -23,13 +23,12 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route("users.update",$user->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route("doctors.store")}}" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 @csrf
-                @method("put")
                 <div class="form-group">
                     <label for="user-name">User name</label>
-                    <input type="text" value="{{$user->name}}" class="form-control @error('name') is-invalid @enderror"
+                    <input type="text" value="{{old("name")}}" class="form-control @error('name') is-invalid @enderror"
                            name="name" id="user-name"
                            placeholder="Enter user name">
 
@@ -42,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" value="{{$user->email}}"
+                    <input type="email" value="{{old("email")}}"
                            class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                            placeholder="Enter email">
 
@@ -54,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="national-id">National id</label>
-                    <input type="text" value="{{$user->national_id}}"
+                    <input type="text" value="{{old("national_id")}}"
                            class="form-control @error('national_id') is-invalid @enderror" name="national_id"
                            id="national-id"
                            placeholder="Enter national id">
@@ -74,32 +73,66 @@
 
                     @error('password')
                     <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                     @enderror
 
                 </div>
+
                 <div class="form-group">
                     <label for="gender">Gender</label>
                     <select class="form-control @error('gender') is-invalid @enderror" name="gender" id="gender">
-                        <option value="1" {{$user->gender === "1" ? "selected" : ""}}>male</option>
-                        <option value="2" {{$user->gender === "2" ? "selected" : ""}} >female</option>
+                        <option value="1" {{old("gender") === "1" ? "selected" : ""}}>male</option>
+                        <option value="2" {{old("gender") === "2" ? "selected" : ""}} >female</option>
                     </select>
 
                     @error('gender')
                     <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                     @enderror
 
                 </div>
+
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" value="{{$user->phone}}"
+                    <input type="text" value="{{old("phone")}}"
                            class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone"
                            placeholder="Enter phone">
 
                     @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <label for="date-of-birth">date of birth</label>
+                    <input type="date" value="{{old("date_of_birth")}}"
+                           class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth"
+                           id="phone"
+                           placeholder="Enter date">
+                    @error('date_of_birth')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="pharmacy-name">Pharmacy Name</label>
+                    <select class="form-control select2 @error('pharmacy_id') is-invalid @enderror" name="pharmacy_id" id="pharmacy-name">
+                        <option>Choose Pharmacy</option>
+                        @foreach($pharmacies as $pharmacy)
+                            <option value="{{$pharmacy->id}}" {{$pharmacy->id === old("pharmacy_id") ? "selected" : ""}}>{{$pharmacy->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('pharmacy_id')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -107,19 +140,7 @@
 
                 </div>
 
-                <div class="form-group">
-                    <label for="date-of-birth">date of birth</label>
-                    <input type="date" value="{{$user->date_of_birth}}"
-                           class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth"
-                           id="phone"
-                           placeholder="Enter date">
-                    @error('date_of_birth')
-                    <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
 
-                </div>
                 <div class="form-group">
                     <label for="avatar-image">File input</label>
                     <div class="input-group">
@@ -151,7 +172,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">update</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 
         </form>
