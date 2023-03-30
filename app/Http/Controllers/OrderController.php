@@ -9,6 +9,8 @@ use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
@@ -19,7 +21,15 @@ class OrderController extends Controller
     {
 
         return $dataTable->render('orders.index');
+
+    // return $dataTable->before(function () {
+    //     if (Auth::user()->hasRole('admin')) {
+    //         dd('hi');
+    //         DataTables::eloquent($order)->removeColumn('id');
+    //     }
+    // })->render('orders.index');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,9 +37,10 @@ class OrderController extends Controller
     public function create()
     {
         $users = User::all();
+        $doctors = User::Role('doctor')->get();
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
-        return view('orders.create' ,['users'=>$users , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy]);
+        return view('orders.create' ,['users'=>$users , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
     }
 
     /**
@@ -46,10 +57,8 @@ class OrderController extends Controller
         $med = $data['med'];
         $qty = $data['qty'];
         
-        // dd(Order::totalPrice($qty , $med));
-
         $order = Order::Create([
-            'status'=> 1,
+            'status'=> 3,
             'pharmacy_id'=> $PharmacyId,
             'user_id'=> $UserId,
             'doctor_id'=> $DocId,
@@ -58,6 +67,8 @@ class OrderController extends Controller
         ]);
 
         Order::createOrderMedicine($order , $med , $qty);
+
+        // send email to user to notify him by price and change status to waiting (3)
 
         return to_route('orders.index');
 
@@ -68,9 +79,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        
+       
         return view('orders.show' , ['order' =>$order]);
-
     }
 
     /**
@@ -79,16 +89,36 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
 
-        return view('orders.edit' , ['order' =>$order]);
+        $users = User::all();
+        $doctors = User::Role('doctor')->get();
+        $pharmacy = Pharmacy::all();
+        return view('orders.edit' , ['order' =>$order ,'users'=>$users , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
         
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(StoreOrderRequest $request, Order $order)
     {
-        
+
+        $data = $request->all();
+
+        if(isset($data['status'])){
+
+            $order->status = $data['status'];
+
+        }
+
+        $order->update([
+
+            'is_insured'=>$data['is_insured'],
+            'pharmacy_id'=>$data['pharmacy_id'],
+            'user_id'=>$data['user_id'],
+
+        ]);
+
+        return to_route('orders.index');
     }
 
     /**
@@ -97,8 +127,7 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         
-        
-        // $order->delete();
+        $order->delete();
         return to_route('orders.index');
     }
 }
