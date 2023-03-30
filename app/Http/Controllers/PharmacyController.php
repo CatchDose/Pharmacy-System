@@ -11,6 +11,7 @@ use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Area;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class PharmacyController extends Controller
 {
@@ -40,10 +41,11 @@ class PharmacyController extends Controller
 
         $data = $request->validated();
         // dd($data);
+        // dd($request->validated());
         $user = User::create([
-            "name" => $data["name"], "email" => $data["email"], "national_id" => $data["national_id"], "date_of_birth" => now(),
+            "name" => $data["name"], "email" => $data["email"], "national_id" => $data["national_id"], "date_of_birth" => $data["date_of_birth"],
             "gender" => $data["gender"], "phone" => $data["phone"],
-            "avatar_image" => $data["avatar_image"],
+            "avatar_image" => "asdasd",
             "password" => Hash::make(
                 $data["password"]
             )
@@ -54,6 +56,8 @@ class PharmacyController extends Controller
             "area_id" => $data["area_id"],
             "owner_id" => $user["id"]
         ]);
+        $user->update(["pharmacy_id" => $Pharmacy->id]);
+        $user->assignRole("pharmacy");
         return Redirect::route('pharmacies.show', $Pharmacy->id);
     }
 
@@ -63,7 +67,15 @@ class PharmacyController extends Controller
     public function show(Pharmacy $pharmacy)
 
     {
-        return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        if (Auth::user()->hasRole("admin")) {
+
+            return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        }
+
+        if (Auth::user()->hasRole(["pharmacy", "doctor"]) && Auth::user()->pharmacy_id == $pharmacy->id) {
+            return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        }
+        abort(403, "You Are Not Authorized To View This Page");
     }
 
     /**
@@ -81,9 +93,9 @@ class PharmacyController extends Controller
     public function update(UpdatePharmacyRequest $request, Pharmacy $pharmacy)
     {
 
-        // $data = $request->validated();
+        $pharmacy->update($request->validated());
 
-        return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        return Redirect::route('pharmacies.show', $pharmacy);
     }
 
     /**
@@ -91,6 +103,6 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        return view("pharmacy.show", ["pharmacy" => $pharmacy]);
+        return Redirect::route('pharmacies.show', $pharmacy);
     }
 }

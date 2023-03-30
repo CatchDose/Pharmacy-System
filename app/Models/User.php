@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -13,6 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
+    use SoftDeletes;
 
 
     /**
@@ -62,15 +64,14 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, "user_id");
     }
 
-
-    public function pharmacy()
+    public function owens()
     {
         return $this->hasOne(Pharmacy::class, "owner_id");
     }
 
-    public function workPharmacy()
+    public function pharmacy()
     {
-        return $this->belongsTo(Pharmacy::class, 'pharmacy_id');
+        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
     }
 
 }
