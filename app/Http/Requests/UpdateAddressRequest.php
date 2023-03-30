@@ -27,8 +27,8 @@ class UpdateAddressRequest extends FormRequest
             'floor_number' => ["required" , "numeric" , "max:40" , "min:1"],
             'flat_number' => ["required" , "numeric" , "max:999" , "min:1"],
             'is_main' => ["required"],
-            'area_id' => ["required" , "numeric"],
-            'user_id' => ["required" , "numeric"]
+            'area' => ["required"],
+            'user' => ["required"]
         ];
     }
 }

@@ -43,7 +43,9 @@ class AddressController extends Controller
     }
 
     public function edit(Address $address) {
-        return view('addresses.edit' , ['address' => $address]);
+        $users = User::all();
+        $areas = Area::all();
+        return view('addresses.edit' , ['address' => $address , 'users' => $users , 'areas' => $areas]);
     }
 
     public function update(UpdateAddressRequest $request, Address $address) {
