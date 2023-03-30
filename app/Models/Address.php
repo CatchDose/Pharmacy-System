@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +26,12 @@ class Address extends Model
     public function area()
     {
         return $this->belongsTo(Area::class,'area_id');
+    }
+
+    protected function isMain(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => $value == "1" ? "Yes" : "No",
+        );
     }
 }

@@ -1,6 +1,6 @@
 @extends("layouts.app")
 
-@section('title' , 'id')
+@section('title' , 'Edit')
 
 @section('style')
 
@@ -14,20 +14,8 @@
 
 @endsection
 
-
 @section('content')
 
-<div>
-    <input type="text" >
-    <a class="btn btn-primary">
-</div>
+<h>hi</h>
 
 @endsection
-
-
-
-@push('scripts')
-
-
-
-@endpush

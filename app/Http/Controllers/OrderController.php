@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\DataTables\OrdersDataTable;
 use App\Models\Medicine;
 use App\Models\Order;
+use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreOrderRequest;
 
 class OrderController extends Controller
 {
@@ -26,18 +28,39 @@ class OrderController extends Controller
     {
         $users = User::all();
         $medicine = Medicine::all();
-        return view('orders.create' ,['users'=>$users , 'medicine'=>$medicine]);
+        $pharmacy = Pharmacy::all();
+        return view('orders.create' ,['users'=>$users , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
-        dd($request->all());
-        //check for validation on data
         $data = $request->all();
-        return redirect()->route('posts.index');
+
+        $UserId = User::all()->where('name' , $data['userName'] )->first()->id;
+        $DocId = User::all()->where('name' , $data['DocName'] )->first()->id;
+        $PharmacyId = Pharmacy::all()->where('name' , $data['PharmacyName'] )->first()->id;
+        
+        $med = $data['med'];
+        $qty = $data['qty'];
+        
+        // dd(Order::totalPrice($qty , $med));
+
+        $order = Order::Create([
+            'status'=> 1,
+            'pharmacy_id'=> $PharmacyId,
+            'user_id'=> $UserId,
+            'doctor_id'=> $DocId,
+            'is_insured'=> $data['insured'],
+
+        ]);
+
+        Order::createOrderMedicine($order , $med , $qty);
+
+        return to_route('orders.index');
+
     }
 
     /**
@@ -45,14 +68,18 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        
+        return view('orders.show' , ['order' =>$order]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Order $order)
     {
+
+        return view('orders.edit' , ['order' =>$order]);
         
     }
 
@@ -61,7 +88,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        
     }
 
     /**
@@ -69,6 +96,9 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        
+        
+        // $order->delete();
+        return to_route('orders.index');
     }
 }

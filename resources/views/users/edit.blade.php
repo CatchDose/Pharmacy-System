@@ -23,7 +23,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route("users.update",$user->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route("users.update",$user->id)}}" method="put" enctype="multipart/form-data">
             <div class="card-body">
                 @csrf
                 @method("put")

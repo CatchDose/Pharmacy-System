@@ -10,6 +10,12 @@ class Area extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'name',
+       'address'
+    ];
+
+
     public function addresses()
     {
         return $this->hasMany(Address::class,'area_id');
@@ -19,5 +25,6 @@ class Area extends Model
     {
         return $this->hasMany(Pharmacy::class,'area_id');
     }
+
 
 }

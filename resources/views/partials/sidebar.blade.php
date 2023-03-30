@@ -180,15 +180,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route("areas.index")}}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>all Areas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('areas.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>add Area</p>
                             </a>
                         </li>
 
@@ -199,7 +199,7 @@
 
 
                 {{-- Addresses Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('addresses.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -210,13 +210,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('addresses.index')}}" class="nav-link active">
+                            <a href="{{route('addresses.index')}}" class="nav-link {{ Route::currentRouteNamed('addresses.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All addresses</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('addresses.create')}}" class="nav-link">
+                            <a href="{{route('addresses.create')}}" class="nav-link {{ Route::currentRouteNamed('addresses.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add address</p>
                             </a>

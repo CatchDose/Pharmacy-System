@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Order;
+use App\Models\Area;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OrdersDataTable extends DataTable
+class AreasDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,34 +22,22 @@ class OrdersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <a class="btn btn-success" id="option_a1" href="{{Route("orders.edit",$id)}}"> edit </a>
-        <a class="btn btn-primary" id="option_a2" href="{{Route("orders.show",$id)}}"> show </a>
-        <form method="post" class="delete_item"  id="option_a3" action="{{Route("orders.destroy",$id)}}">
-            @csrf
-            @method("DELETE")
-            <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
-        </form>
+            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <a class="btn btn-success" id="option_a1" href="{{Route("areas.edit",$id)}}"> edit </a>
+            
+            <form method="post" class="delete_item"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
+                @csrf
+                @method("DELETE")
+                <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+            </form>
         </div>')
-            ->addColumn('Pharmacy', function(Order $order){
-                return $order->pharmacy->name;
-            })
-            ->addColumn('User', function(Order $order){
-                return $order->user->name;
-            })
-            // ->addColumn('Address', function(Order $order){
-            //     return $order->user->addresses->street_name;
-            // })
-            // ->addColumn('Doctor', function(Order $order){
-            //     return $order->doctor->user_id;
-            // })
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Order $model): QueryBuilder
+    public function query(Area $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -60,7 +48,7 @@ class OrdersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('orders-table')
+                    ->setTableId('areas-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -81,23 +69,17 @@ class OrdersDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [  
-
-            Column::make('id'),
-            Column::make('status'),
-            Column::make('is_insured'),
-            Column::computed('Pharmacy' , 'Assigned Pharmacy'),
-            Column::computed('User' , 'User Name'),
-            Column::computed('Address' , 'User Address'),
-            Column::make('doctor_id'),
+        return [
+            
+            Column::make('name'),
+            Column::make('address'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(70)
+                  ->width(60)
                   ->addClass('text-center'),
-                  
         ];
     }
 
@@ -106,6 +88,6 @@ class OrdersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Orders_' . date('YmdHis');
+        return 'Areas_' . date('YmdHis');
     }
 }
