@@ -23,7 +23,6 @@ class UserFactory extends Factory
         return [
             'name' => 'admin',
             'password' => Hash::make("123456"),
-            'avatar_image' => "image.jpg",
             'national_id' => '11111000011111',
             'email' => 'admin@test.com',
             'gender' => '1',
