@@ -31,8 +31,6 @@ class UpdateProfileRequest extends FormRequest
             'date_of_birth'=> ["required","date"],
             'gender'=> ["required",Rule::in(["1","2"])],
             'phone' => ["required", "digits:11"],
-            'pharmacy_id' => [Rule::requiredIf(auth()->user()->hasAnyRole(["doctor","pharmacy"])), "exists:pharmacies,id" ]
-
         ];
     }
 }

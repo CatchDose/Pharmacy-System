@@ -74,18 +74,18 @@
 
                 {{-- Pharmacy Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('pharmacies.*') ? 'menu-open' : '' }}">
-                    
+
                     <a href="#" class="nav-link ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            @role("admin") pharmacies @endrole 
+                            @role("admin") pharmacies @endrole
                             @hasanyrole("pharmacy|doctor") pharmacy @endrole
 
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                    @role("admin")  
+                    @role("admin")
                         <li class="nav-item">
                             <a href="{{route("pharmacies.index")}}" class="nav-link {{Route::is('pharmacies.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -98,23 +98,23 @@
                                 <p>add pharmacy</p>
                             </a>
                         </li>
-                        @endrole 
+                        @endrole
                     </ul>
                     @hasanyrole("pharmacy|doctor")
                     <li class="nav-item">
-                        
+
                             <a href="{{route("pharmacies.show",Auth::user()->pharmacy->id)}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>show pharmacy</p>
                             </a>
-                        </li> 
-                    @endrole 
+                        </li>
+                    @endrole
                 </li>
 
 
-            
+
                 {{-- Doctors Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('doctors.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -125,13 +125,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route("doctors.index")}}" class="nav-link active">
+                            <a href="{{route("doctors.index")}}" class="nav-link {{Route::is('doctors.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>all doctors</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route("doctors.create")}}" class="nav-link">
+                            <a href="{{route("doctors.create")}}" class="nav-link {{Route::is('doctors.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>add doctor</p>
                             </a>
@@ -179,7 +179,7 @@
 
 
                 {{-- Areas Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('areas.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -190,13 +190,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route("areas.index")}}" class="nav-link active">
+                            <a href="{{route("areas.index")}}" class="nav-link {{ Route::currentRouteNamed('areas.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>all Areas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('areas.create')}}" class="nav-link">
+                            <a href="{{route('areas.create')}}" class="nav-link {{ Route::currentRouteNamed('areas.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>add Area</p>
                             </a>
