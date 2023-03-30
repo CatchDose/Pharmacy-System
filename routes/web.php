@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +24,7 @@ use App\Http\Controllers\AddressController;
 
 Route::group(["middleware" => "auth"], function () {
 
-    Route::get('/', function () {
-        return view("welcome");
-    })->name("index");
+    Route::get('/', [IndexController::class,"index"])->name("index");
 
     /* ================================== start pharmacies route ==============================*/
     Route::get("/pharmacies", [PharmacyController::class, "index"])->name("pharmacies.index");
@@ -47,7 +47,6 @@ Route::group(["middleware" => "auth"], function () {
     /* ================================== end pharmacies route ==================================*/
 
 
-
     Route::get("/areas", [AreaController::class, "index"])->name("areas.index");
     Route::get("/areas/create", [AreaController::class, "create"])->name("areas.create");
     Route::post("/areas", [AreaController::class, "store"])->name("areas.store");
@@ -57,11 +56,13 @@ Route::group(["middleware" => "auth"], function () {
     Route::delete("/areas/{area}", [AreaController::class, "destroy"])->name("areas.destroy");
 
 
-
     Route::resource('users', UserController::class);
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('doctors', DoctorController::class);
+
+    Route::get('/profiles/{profile}/edit',[ProfileController::class,'edit'])->name("profiles.edit");
+    Route::put('/profiles/{profile}',[ProfileController::class,'update'])->name("profiles.update");
 
 });
 
