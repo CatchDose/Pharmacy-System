@@ -93,19 +93,20 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Date masks:</label>
+                            <label>date of birth</label>
                             <div class="input-group">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                             </div>
-                            <input type="text"  class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                            <input type="date" name="date_of_birth"  class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
                             </div>
-                        </div>
-                        @error('date_of_birth')
+                            @error('date_of_birth')
                                 <div class="invalid-feedback" @style(["display: block"])>
                                     {{ $message }}
                                 </div>
                             @enderror
+                        </div>
+                        
                         
                         <div class="form-group">
                             <label for="exampleInputAreaId1">Area</label>
@@ -141,10 +142,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>
+                        
                     </div>
                     <!-- /.card-body -->
 

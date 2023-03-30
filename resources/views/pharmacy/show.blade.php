@@ -52,6 +52,9 @@
 </div>
 
 </div>
+@hasanyrole("admin|pharmacy")
+<a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-block btn-primary">edit Pharmacy</a>
+@endhasanyrole
 
 @endsection
 
