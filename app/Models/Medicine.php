@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Medicine extends Model
 {
@@ -22,6 +23,13 @@ class Medicine extends Model
             'medicines_orders',
             'medicine_id',
             'order_id'
+        );
+    }
+    protected function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (int $value) => intval($value) * 100,
         );
     }
 }

@@ -6,7 +6,7 @@ use App\DataTables\MedicinesDataTable;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
+use App\Http\Requests\MedicineStoreRequest;
 
 class MedicineController extends Controller
 {
@@ -24,15 +24,17 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        //
+        return view("medicines.create", ["Medicines" => Medicine::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MedicineStoreRequest $request)
     {
-        //
+
+        $medicine = Medicine::create($request->validated());
+        return Redirect::route("medicines.index");
     }
 
     /**
@@ -48,15 +50,16 @@ class MedicineController extends Controller
      */
     public function edit(Medicine $medicine)
     {
-        //
+        return view("medicines.edit", ["medicine" => $medicine, "Medicines" => Medicine::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Medicine $medicine)
+    public function update(MedicineStoreRequest $request, Medicine $medicine)
     {
-        //
+        $medicine->update($request->validated());
+        return Redirect::route("medicines.index");
     }
 
     /**
