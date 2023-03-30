@@ -121,24 +121,6 @@
 
                 </div>
 
-                @hasanyrole(["doctor","pharmacy"])
-                <div class="form-group">
-                    <label for="pharmacy-name">Pharmacy Name</label>
-                    <select class="form-control select2 @error('pharmacy_id') is-invalid @enderror" name="pharmacy_id" id="pharmacy-name">
-                        <option>Choose Pharmacy</option>
-                        @foreach($pharmacies as $pharmacy)
-                            <option value="{{$pharmacy->id}}" {{ $pharmacy->id === auth()->user()->pharmacy_id ? "selected" : "" }}>{{$pharmacy->name}}</option>
-                        @endforeach
-                    </select>
-
-                    @error('pharmacy_id')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
-                </div>
-                @endhasanyrole
 
                 <div class="form-group">
                     <label for="avatar-image">File input</label>
