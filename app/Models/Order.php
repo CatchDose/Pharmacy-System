@@ -37,7 +37,7 @@ class Order extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class,"doctor_id",'user_id');
+        return $this->belongsTo(User::class,"doctor_id");
     }
 
     public function user()
@@ -50,14 +50,14 @@ class Order extends Model
         return Attribute::make( 
 
             get: fn (string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
-            
+
         );
     }
 
     protected function isInsured(): Attribute
     {
         return Attribute::make(
-           
+
             set: fn (string $value) => $value =  $value == "Yes" ? 1 : 0,
             get: fn (string $value) => $value =  $value == 0 ? "No" : "Yes",
         );
@@ -129,8 +129,9 @@ class Order extends Model
             $id = Medicine::all()->where('name' , $med[$x] )->first()->id;
             
             $order->medicines($id)->attach(1 , ['quantity' => $qty[$x]]);
+
         }
 
     }
-  
+
 }

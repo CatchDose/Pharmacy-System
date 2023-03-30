@@ -27,8 +27,15 @@ class StoreAddressRequest extends FormRequest
             'floor_number' => ["required" , "numeric" , "max:40" , "min:1"],
             'flat_number' => ["required" , "numeric" , "max:999" , "min:1"],
             'is_main' => ["required"],
-            'area_id' => ["required" , "numeric"],
-            'user_id' => ["required" , "numeric"]
+            'area' => ["required"],
+            'user' => ["required"]
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'is_main.required' => 'Please Check Your "Is this you main address" filed is required',
         ];
     }
 }

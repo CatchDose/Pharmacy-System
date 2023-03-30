@@ -21,7 +21,7 @@ class Pharmacy extends Model
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class, 'pharmacy_id');
+        return $this->hasMany(User::class, 'pharmacy_id');
     }
 
     public function area()

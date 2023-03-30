@@ -25,7 +25,6 @@ class MedicinesDataTable extends DataTable
             ->addColumn('action', '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <a class="btn btn-success" id="option_a1" href="{{Route("medicines.edit",$id)}}"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="{{Route("medicines.show",$id)}}"> show </a>
                     <form method="post" class="delete_item"  id="option_a3" action="{{Route("medicines.destroy",$id)}}">
                         @csrf
                         @method("DELETE")

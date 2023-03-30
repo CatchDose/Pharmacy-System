@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label for="street-name">Street name</label>
                     <input type="text" value="{{$address->street_name}}" class="form-control @error('street_name') is-invalid @enderror" name="street_name" id="street-name"
-                           placeholder="Enter user name">
+                           placeholder="Enter street name">
 
                     @error('street_name')
                     <span class="invalid-feedback" role="alert">
