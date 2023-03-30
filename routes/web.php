@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PharmacyController;
@@ -60,6 +61,8 @@ Route::group(["middleware" => "auth"], function () {
     Route::resource('users', UserController::class);
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('doctors', DoctorController::class);
+
 });
 
 Auth::routes();
