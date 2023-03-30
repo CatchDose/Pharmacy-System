@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title","Add user")
+@section("title","Edit user")
 
 @section("style")
 
 @endsection
 
-@section("header","Add user")
+@section("header","Edit user")
 
 @section("breadcrumb")
 
@@ -23,13 +23,13 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route("users.update",$user->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route("doctors.update",$doctor->id)}}" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 @csrf
                 @method("put")
                 <div class="form-group">
                     <label for="user-name">User name</label>
-                    <input type="text" value="{{$user->name}}" class="form-control @error('name') is-invalid @enderror"
+                    <input type="text" value="{{$doctor->name}}" class="form-control @error('name') is-invalid @enderror"
                            name="name" id="user-name"
                            placeholder="Enter user name">
 
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" value="{{$user->email}}"
+                    <input type="email" value="{{$doctor->email}}"
                            class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                            placeholder="Enter email">
 
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="national-id">National id</label>
-                    <input type="text" value="{{$user->national_id}}"
+                    <input type="text" value="{{$doctor->national_id}}"
                            class="form-control @error('national_id') is-invalid @enderror" name="national_id"
                            id="national-id"
                            placeholder="Enter national id">
@@ -82,8 +82,8 @@
                 <div class="form-group">
                     <label for="gender">Gender</label>
                     <select class="form-control @error('gender') is-invalid @enderror" name="gender" id="gender">
-                        <option value="1" {{$user->gender === "1" ? "selected" : ""}}>male</option>
-                        <option value="2" {{$user->gender === "2" ? "selected" : ""}} >female</option>
+                        <option value="1" {{$doctor->gender === "1" ? "selected" : ""}}>male</option>
+                        <option value="2" {{$doctor->gender === "2" ? "selected" : ""}} >female</option>
                     </select>
 
                     @error('gender')
@@ -95,7 +95,7 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" value="{{$user->phone}}"
+                    <input type="text" value="{{$doctor->phone}}"
                            class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone"
                            placeholder="Enter phone">
 
@@ -109,7 +109,7 @@
 
                 <div class="form-group">
                     <label for="date-of-birth">date of birth</label>
-                    <input type="date" value="{{$user->date_of_birth}}"
+                    <input type="date" value="{{$doctor->date_of_birth}}"
                            class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth"
                            id="phone"
                            placeholder="Enter date">
@@ -120,6 +120,24 @@
                     @enderror
 
                 </div>
+
+                <div class="form-group">
+                    <label for="pharmacy-name">Pharmacy Name</label>
+                    <select class="form-control select2 @error('pharmacy_id') is-invalid @enderror" name="pharmacy_id" id="pharmacy-name">
+                        <option>Choose Pharmacy</option>
+                        @foreach($pharmacies as $pharmacy)
+                            <option value="{{$pharmacy->id}}" {{ $pharmacy->id === $doctor->pharmacy_id ? "selected" : "" }}>{{$pharmacy->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('pharmacy_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+
+                </div>
+
                 <div class="form-group">
                     <label for="avatar-image">File input</label>
                     <div class="input-group">

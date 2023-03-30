@@ -90,8 +90,8 @@
                   <div class="form-group">
                         <label for="DocName">Doctor Name</label>
                         <select name="DocName" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                          @foreach($users as $user)
-                          <option>{{$user->name}}</option>
+                          @foreach($doctors as $doctor)
+                          <option>{{$doctor->name}}</option>
                           @endforeach
                         </select>
                   </div>

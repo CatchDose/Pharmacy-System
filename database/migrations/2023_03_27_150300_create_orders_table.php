@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("pharmacy_id");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("doctor_id");
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

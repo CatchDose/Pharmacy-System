@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DataTables\AddressesDataTable;
 use App\Models\Address;
+use App\Models\Area;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
@@ -14,7 +16,9 @@ class AddressController extends Controller
     }
 
     public function create() {
-        return view('addresses.create');
+        $users = User::all();
+        $areas = Area::all();
+        return view('addresses.create',['users' => $users , 'areas' => $areas]);
     }
 
     public function store(StoreAddressRequest $request) {
@@ -27,8 +31,8 @@ class AddressController extends Controller
             'floor_number' => $request->floor_number,
             'flat_number' => $request->flat_number,
             'is_main' => $is_main,
-            'area_id' => $request->area_id,
-            'user_id' => $request->user_id
+            'area_id' => $request->input('area'),
+            'user_id' => $request->input('user')
         ]);
 
         return redirect()->route('addresses.index');
@@ -39,7 +43,9 @@ class AddressController extends Controller
     }
 
     public function edit(Address $address) {
-        return view('addresses.edit' , ['address' => $address]);
+        $users = User::all();
+        $areas = Area::all();
+        return view('addresses.edit' , ['address' => $address , 'users' => $users , 'areas' => $areas]);
     }
 
     public function update(UpdateAddressRequest $request, Address $address) {

@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -36,6 +37,9 @@ class OrdersDataTable extends DataTable
             })
             ->addColumn('User', function(Order $order){
                 return $order->user->name;
+            })
+            ->addColumn('creatorType', function(Order $order){
+                return $order->user->getRoleNames()[0];
             })
             // ->addColumn('Address', function(Order $order){
             //     return $order->user->addresses->street_name;
@@ -81,24 +85,27 @@ class OrdersDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [  
 
-            Column::make('id'),
-            Column::make('status'),
-            Column::make('is_insured'),
-            Column::computed('Pharmacy' , 'Assigned Pharmacy'),
-            Column::computed('User' , 'User Name'),
-            Column::computed('Address' , 'User Address'),
-            Column::make('doctor_id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(70)
-                  ->addClass('text-center'),
-                  
-        ];
+        $isAdmin = Auth::user()->hasRole('admin') ??  false ; 
+            return [  
+
+                Column::make('id')->addClass('text-center'),
+                Column::make('status')->addClass('text-center'),
+                Column::make('is_insured')->addClass('text-center'),
+                Column::computed('User' , 'Client Name')->addClass('text-center'),
+                Column::computed('Pharmacy' , 'Assigned Pharmacy')->visible($isAdmin)->addClass('text-center'),
+                Column::computed('creatorType' , 'Creator Type')->visible($isAdmin)->addClass('text-center'),
+                // Column::computed('Address' , 'User Address')->addClass('text-center'),
+                Column::make('doctor_id')->addClass('text-center'),
+                Column::make('created_at')->addClass('text-center'),
+                Column::computed('action')
+                      ->exportable(false)
+                      ->printable(false)
+                      ->width(70)
+                      ->addClass('text-center')
+                      ->visible($isAdmin),      
+            ];
+              
     }
 
     /**
