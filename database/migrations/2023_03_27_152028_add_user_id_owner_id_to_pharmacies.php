@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::table('pharmacies', function (Blueprint $table) {
             $table->foreign('area_id')->references('id')->on('areas');
 
-            $table->foreign('owner_id')->references('id')->on('users');
-
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete("cascade");
         });
     }
 

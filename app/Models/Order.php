@@ -6,10 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
     protected $fillable = [
         'status',
@@ -17,7 +18,6 @@ class Order extends Model
         "user_id",
         "doctor_id",
         "is_insured",
-
     ];
 
 
@@ -35,7 +35,7 @@ class Order extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class,"doctor_id",'user_id');
+        return $this->belongsTo(User::class,"doctor_id");
     }
 
     public function user()
@@ -47,16 +47,60 @@ class Order extends Model
     {
         return Attribute::make(
 
-            // get: fn (string $value) => Carbon::createFromFormat('Y-m-d', $value)->toDateTimeString(),
-            
+            get: fn (string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
+
         );
     }
 
     protected function isInsured(): Attribute
     {
         return Attribute::make(
-           
+
             set: fn (string $value) => $value =  $value == "Yes" ? 1 : 0,
+            get: fn (string $value) => $value =  $value == 0 ? "No" : "Yes",
+        );
+    }
+
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+
+            get: function (string $value) {
+
+                switch($value){
+                    case 1 :
+                        return "New";
+                    case 2 :
+                        return "Processing";
+                    case 3 :
+                        return "Waiting";
+                    case 4 :
+                        return "Cancelled";
+                    case 5 :
+                        return "Confirmed";
+                    case 6 :
+                        return "Delivered";
+                }
+
+            },
+//
+//            set: function (string $value) {
+//
+//                switch($value){
+//                    case "New" :
+//                        return 1;
+//                    case "Processing" :
+//                        return 2;
+//                    case "Waiting":
+//                        return 3;
+//                    case "Cancelled":
+//                        return 4 ;
+//                    case "Confirmed":
+//                        return 5 ;
+//                    case "Delivered":
+//                        return 6;
+//                }
+//            }
         );
     }
 
@@ -81,10 +125,11 @@ class Order extends Model
         for($x=0 ; $x < count($med) ; $x++){
 
             $id = Medicine::all()->where('name' , $med[$x] )->first()->id;
-            
-            $order->medicines($id)->attach(1 , ['quantity' => $qty[$x] , 'created_at'=>$order->created_at]);
+
+            $order->medicines($id)->attach(1 , ['quantity' => $qty[$x]]);
+
         }
 
     }
-  
+
 }

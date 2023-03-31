@@ -23,6 +23,16 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+ 
     <form method="POST" action="{{route("pharmacies.update",$pharmacy->id)}}" class="needs-validation">
         @csrf
         @method("PUT")
@@ -55,6 +65,7 @@
                     </div>
                 @enderror
             </div>
+            @role("admin")
             <div class="form-group">
                 <label for="exampleInputAreaId1">Area</label>
                 <select name="area_id" class="form-select">
@@ -77,6 +88,7 @@
                     </div>
                 @enderror
             </div>
+            @endrole
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
                 <div class="input-group">
@@ -89,10 +101,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
+
         </div>
         <!-- /.card-body -->
 

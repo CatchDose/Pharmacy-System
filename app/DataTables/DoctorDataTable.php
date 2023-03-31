@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class DoctorsDataTable extends DataTable
+class DoctorDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,31 +25,27 @@ class DoctorsDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}"> show </a>
-                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("pharmacies.destroy",$id)}}">
+                    <a class="btn btn-success" id="option_a1" href="{{Route("doctors.edit",$id)}}"> edit </a>
+                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
                 </div>')
-            ->setRowId('id')->addColumn('name', function (Doctor $Doctor) {
-                return $Doctor->user->name;
-            })->addColumn('pharmacy_name', function (Doctor $Doctor) {
-                return $Doctor->Pharmacy->name;
-            })->addColumn('phone', function (Doctor $Doctor) {
-                return $Doctor->user->phone;
-            })->addColumn('email', function (Doctor $Doctor) {
-                return $Doctor->user->email;
-            });
+            ->addColumn('pharmacy',function ($user){
+                return $user->pharmacy->name;
+            })
+            ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Doctor $model): QueryBuilder
+    public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->whereHas('roles',function($role){
+            return $role->where("name","doctor");
+        });
     }
 
     /**
@@ -57,20 +54,20 @@ class DoctorsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('doctors-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            //->dom('Bfrtip')
-            ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+                    ->setTableId('doctor-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    //->dom('Bfrtip')
+                    ->orderBy(1)
+                    ->selectStyleSingle()
+                    ->buttons([
+                        Button::make('excel'),
+                        Button::make('csv'),
+                        Button::make('pdf'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    ]);
     }
 
     /**
@@ -81,14 +78,17 @@ class DoctorsDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('phone'),
+            Column::make('national_id'),
             Column::make('email'),
-            Column::make('pharmacy_name'),
+            Column::computed('pharmacy'),
+
+            Column::make('created_at'),
+            Column::make('updated_at'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
-
         ];
     }
 
@@ -97,6 +97,6 @@ class DoctorsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Doctors_' . date('YmdHis');
+        return 'Doctor_' . date('YmdHis');
     }
 }

@@ -16,12 +16,12 @@ class MedicineFactory extends Factory
      */
     public function definition(): array
     {
-        $medicineTypes = ["Tablet","Capsule","Injection","Syrup"];
+        $medicineTypes = ["Tablet", "Capsule", "Injection", "Syrup"];
 
         return [
             'name' => fake()->name(),
             'type' => $medicineTypes[array_rand($medicineTypes)],
-            'price' => fake()->numberBetween(1000,15000),
+            'price' => fake()->numberBetween(10, 150),
         ];
     }
 }

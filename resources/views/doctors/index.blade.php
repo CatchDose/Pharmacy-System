@@ -1,27 +1,27 @@
 @extends("layouts.app")
 
-@section('title' , 'Orders')
+@section("title","Users")
 
-@section('style')
+@section("style")
 
 @endsection
 
-@section("header","Orders")
+@section("header","Users")
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="#">Order</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("users.index")}}">users</a></li>
 
 @endsection
 
-@section('content')
+@section("content")
 
     {{ $dataTable->table() }}
-
 @endsection
 
-@section('extra')
 
+@section("extra")
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -39,20 +39,19 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
+    {{ $dataTable->scripts() }}
 
-    {{ $dataTable->scripts()}}
     <script>
         function modalShow(event){
-
             event.preventDefault();
             event.stopPropagation();
             document.querySelector(".modal-footer").lastElementChild.addEventListener("click",(e)=>{
                 event.target.closest("form").submit();
             })
         }
-   </script>
+    </script>
+
 @endsection
