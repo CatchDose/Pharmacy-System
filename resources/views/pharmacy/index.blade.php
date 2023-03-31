@@ -61,7 +61,7 @@
 @section('scripts')
 {{ $dataTable->scripts() }}
    <script>
-    var toast=new bootstrap.Toast(document.querySelector(".toast"),{"delay":10000});
+    var toast=new bootstrap.Toast(document.querySelector(".toast"),{"delay":5000});
     
     function modalShow(event){
         event.preventDefault();
