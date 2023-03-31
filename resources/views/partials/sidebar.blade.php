@@ -86,7 +86,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                    @role("admin")
+                        @role("admin")
                         <li class="nav-item">
                             <a href="{{route("pharmacies.index")}}" class="nav-link {{Route::is('pharmacies.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -99,17 +99,17 @@
                                 <p>add pharmacy</p>
                             </a>
                         </li>
-                    @endrole
-                    </ul>
-                    @role("pharmacy")
-                    <li class="nav-item">
-
+                        @endrole
+                        @role("pharmacy")
+                        <li class="nav-item">
                             <a href="{{route("pharmacies.show",Auth::user()->pharmacy->id)}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>show pharmacy</p>
                             </a>
                         </li>
-                    @endrole
+                        @endrole
+
+                    </ul>
                 </li>
                 @endhasanyrole
 
