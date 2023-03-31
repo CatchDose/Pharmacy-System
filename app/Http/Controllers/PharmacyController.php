@@ -40,12 +40,20 @@ class PharmacyController extends Controller
     {
 
         $data = $request->validated();
-        // dd($data);
-        // dd($request->validated());
+
+        if ($request->hasFile("avatar_image")) {
+            $path = $request->file("avatar_image")
+                ->store('', ["disk" => "avatars"]);
+
+            $data["avatar_image"] = $path;
+        }
         $user = User::create([
-            "name" => $data["name"], "email" => $data["email"], "national_id" => $data["national_id"], "date_of_birth" => $data["date_of_birth"],
-            "gender" => $data["gender"], "phone" => $data["phone"],
-            "avatar_image" => "asdasd",
+            "name" => $data["name"],
+            "email" => $data["email"],
+            "national_id" => $data["national_id"],
+            "date_of_birth" => $data["date_of_birth"],
+            "gender" => $data["gender"],
+            "phone" => $data["phone"],
             "password" => Hash::make(
                 $data["password"]
             )
@@ -56,8 +64,10 @@ class PharmacyController extends Controller
             "area_id" => $data["area_id"],
             "owner_id" => $user["id"]
         ]);
+
         $user->update(["pharmacy_id" => $Pharmacy->id]);
         $user->assignRole("pharmacy");
+
         return Redirect::route('pharmacies.show', $Pharmacy->id);
     }
 
@@ -107,7 +117,12 @@ class PharmacyController extends Controller
             Auth::user()->hasRole("admin") ||
             Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id
         ) {
+            if ($request->hasFile("avatar_image")) {
+                $path = $request->file("avatar_image")
+                    ->store('', ["disk" => "avatars"]);
 
+                $data["avatar_image"] = $path;
+            }
             $pharmacy->update($request->validated());
             return Redirect::route('pharmacies.show', $pharmacy);
         }
@@ -119,6 +134,18 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        return Redirect::route('pharmacies.show', $pharmacy);
+        foreach ($pharmacy->orders as $order) {
+
+            if ($order->whereIn('status', [2, 3, 5])->get()) {
+
+                return response()->json([
+                    'error' => "you can't delete this pharmacy make sure pharmacy doesn't have any active order before deleting.",
+                ], 200);
+            }
+        }
+        // $pharmacy->delete();
+        return response()->json([
+            'success' => "you deleted this pharmacy successfully.",
+        ], 200);
     }
 }

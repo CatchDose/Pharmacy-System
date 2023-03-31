@@ -71,7 +71,7 @@
                     </ul>
                 </li>
 
-
+                @hasanyrole("pharmacy|doctor")
                 {{-- Pharmacy Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('pharmacies.*') ? 'menu-open' : '' }}">
 
@@ -79,7 +79,7 @@
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             @role("admin") pharmacies @endrole
-                            @hasanyrole("pharmacy|doctor") pharmacy @endrole
+                            @role("pharmacy") pharmacy @endrole
 
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -98,9 +98,9 @@
                                 <p>add pharmacy</p>
                             </a>
                         </li>
-                        @endrole
+                    @endrole
                     </ul>
-                    @hasanyrole("pharmacy|doctor")
+                    @role("pharmacy")
                     <li class="nav-item">
 
                             <a href="{{route("pharmacies.show",Auth::user()->pharmacy->id)}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
@@ -110,7 +110,7 @@
                         </li>
                     @endrole
                 </li>
-
+                @endhasanyrole
 
 
                 {{-- Doctors Menu--}}
