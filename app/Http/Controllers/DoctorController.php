@@ -17,8 +17,8 @@ class DoctorController extends Controller
      */
     public function index(DoctorDataTable $dataTable)
     {
-        return $dataTable->render('doctors.index');
 
+        return $dataTable->render('doctors.index');
     }
 
     /**
@@ -27,7 +27,11 @@ class DoctorController extends Controller
     public function create()
     {
         $pharmacies = Pharmacy::all();
-        return view("doctors.create",["pharmacies"=>$pharmacies]);
+        if (auth()->user()->hasRole("pharmacy")) {
+            $pharmacies = Pharmacy::where("id", auth()->user()->pharmacy_id)->get();
+        }
+
+        return view("doctors.create", ["pharmacies" => $pharmacies]);
     }
 
     /**
@@ -38,13 +42,15 @@ class DoctorController extends Controller
 
         $data = $request->validated();
 
-        if($request->hasFile("avatar_image")){
+        if ($request->hasFile("avatar_image")) {
             $path = $request->file("avatar_image")
-                ->store('',["disk"=>"avatars"]);
+                ->store('', ["disk" => "avatars"]);
 
             $data["avatar_image"] = $path;
         }
-
+        if (auth()->user()->hasRole("pharmacy")) {
+            $data["pharmacy_id"] = auth()->user()->pharmacy_id;
+        }
         $data["password"] = Hash::make($data["password"]);
 
         $user = User::create($data);
@@ -60,7 +66,8 @@ class DoctorController extends Controller
      */
     public function show(User $user)
     {
-        return view("doctor.show",["user"=> $user]);
+
+        return redirect()->route("doctors.index");
     }
 
     /**
@@ -69,7 +76,7 @@ class DoctorController extends Controller
     public function edit(User $doctor)
     {
         $pharmacies = Pharmacy::all();
-        return view("doctors.edit",["doctor"=> $doctor,"pharmacies" => $pharmacies]);
+        return view("doctors.edit", ["doctor" => $doctor, "pharmacies" => $pharmacies]);
     }
 
     /**
@@ -83,13 +90,14 @@ class DoctorController extends Controller
             ? Hash::make($request->password)
             : $doctor->password;
 
-        if ($request->hasFile("avatar_image"))
-        {
+        if ($request->hasFile("avatar_image")) {
             Storage::disk("avatars")->delete($doctor->avatar_image);
             $data["avatar_image"] = $request->file("avatar_image")
-                ->store('',["disk"=>"avatars"]);
+                ->store('', ["disk" => "avatars"]);
         }
-
+        if (auth()->user()->hasRole("pharmacy")) {
+            $data["pharmacy_id"] = auth()->user()->pharmacy_id;
+        }
         $doctor->update($data);
 
         return redirect()->route("doctors.index");
@@ -99,10 +107,20 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
-
-        return redirect()->route("doctors.index");
+        $user = user::find($id);
+        if (
+            auth()->user()->hasRole("admin") ||
+            (auth()->user()->hasRole(["pharmacy"]) && auth()->user()->pharmacy_id == $user->pharmacy_id)
+        ) {
+            $user->delete();
+            return response()->json([
+                'success' => "Doctor was deleted successfully.",
+            ], 200);
+        }
+        return response()->json([
+            'error' => "Doctor couldn't be delete",
+        ], 200);
     }
 }

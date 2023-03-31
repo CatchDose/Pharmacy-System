@@ -23,15 +23,15 @@ class UpdateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ["required","max:255"],
-            'password'=> ["nullable","max:255","min:6"],
-            'avatar_image'=> ["nullable","mimes:jpg,png","max:4096"],
-            'national_id'=> ["required","max:14","unique:users,national_id," . $this->doctor->id],
-            'email'=> ["required","max:255","unique:users,email," . $this->doctor->id],
-            'date_of_birth'=> ["required","date"],
-            'gender'=> ["required",Rule::in(["1","2"])],
+            'name' => ["required", "max:255"],
+            'password' => ["nullable", "max:255", "min:6"],
+            'avatar_image' => ["nullable", "mimes:jpg,png", "max:4096"],
+            'national_id' => ["required", "max:14", "unique:users,national_id," . $this->doctor->id],
+            'email' => ["required", "max:255", "unique:users,email," . $this->doctor->id],
+            'date_of_birth' => ["required", "date"],
+            'gender' => ["required", Rule::in(["1", "2"])],
             'phone' => ["required", "digits:11"],
-            'pharmacy_id' => ["required", "exists:pharmacies,id" ]
+            'pharmacy_id' => [Rule::requiredIf(auth()->user()->hasRole('admin')), "exists:pharmacies,id", Rule::prohibitedIf(!auth()->user()->hasRole('admin'))]
         ];
     }
 
@@ -43,5 +43,4 @@ class UpdateDoctorRequest extends FormRequest
             'pharmacy_id.required' => "The pharmacy is required."
         ];
     }
-
 }

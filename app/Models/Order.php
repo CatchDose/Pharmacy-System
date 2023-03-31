@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'status',
@@ -29,18 +30,18 @@ class Order extends Model
 
     public function pharmacy()
     {
-        return $this->belongsTo(Pharmacy::class,"pharmacy_id");
+        return $this->belongsTo(Pharmacy::class, "pharmacy_id");
     }
 
 
     public function doctor()
     {
-        return $this->belongsTo(User::class,"doctor_id");
+        return $this->belongsTo(User::class, "doctor_id");
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class,"user_id");
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function prescription()
@@ -72,69 +73,65 @@ class Order extends Model
 
             get: function (string $value) {
 
-                switch($value){
-                    case 1 :
+                switch ($value) {
+                    case 1:
                         return "New";
-                    case 2 :
+                    case 2:
                         return "Processing";
-                    case 3 :
+                    case 3:
                         return "Waiting";
-                    case 4 :
+                    case 4:
                         return "Cancelled";
-                    case 5 :
+                    case 5:
                         return "Confirmed";
-                    case 6 :
+                    case 6:
                         return "Delivered";
                 }
-
             },
-//
-//            set: function (string $value) {
-//
-//                switch($value){
-//                    case "New" :
-//                        return 1;
-//                    case "Processing" :
-//                        return 2;
-//                    case "Waiting":
-//                        return 3;
-//                    case "Cancelled":
-//                        return 4 ;
-//                    case "Confirmed":
-//                        return 5 ;
-//                    case "Delivered":
-//                        return 6;
-//                }
-//            }
+            //
+            //            set: function (string $value) {
+            //
+            //                switch($value){
+            //                    case "New" :
+            //                        return 1;
+            //                    case "Processing" :
+            //                        return 2;
+            //                    case "Waiting":
+            //                        return 3;
+            //                    case "Cancelled":
+            //                        return 4 ;
+            //                    case "Confirmed":
+            //                        return 5 ;
+            //                    case "Delivered":
+            //                        return 6;
+            //                }
+            //            }
         );
     }
 
 
-    public static function totalPrice($qty , $med){
+    public static function totalPrice($qty, $med)
+    {
 
         $total = 0;
 
-        for($x=0 ; $x < count($med) ; $x++){
+        for ($x = 0; $x < count($med); $x++) {
 
-            $price = Medicine::all()->where('name' , $med[$x] )->first()->price;
-            $total = $total + ($price * $qty[$x] );
-
+            $price = Medicine::all()->where('name', $med[$x])->first()->price;
+            $total = $total + ($price * $qty[$x]);
         }
 
-        return $total ;
-
+        return $total;
     }
 
-    public static function createOrderMedicine($order , $med , $qty ){
+    public static function createOrderMedicine($order, $med, $qty)
+    {
 
-        for($x=0 ; $x < count($med) ; $x++){
+        for ($x = 0; $x < count($med); $x++) {
 
-            $id = Medicine::all()->where('name' , $med[$x] )->first()->id;
+            $id = Medicine::all()->where('name', $med[$x])->first()->id;
 
-            $order->medicines($id)->attach(1 , ['quantity' => $qty[$x]]);
-
+            $order->medicines($id)->attach(1, ['quantity' => $qty[$x]]);
         }
-
     }
-
 }
