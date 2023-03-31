@@ -18,4 +18,17 @@ $(document).ready(function() {
         $(this).append($element);
         $(this).trigger("change");
       });
+
+      $("select").on('select2:unselect', function (e) {
+
+        if (e.params.originalEvent != null && e.params.originalEvent.handleObj.type == "mouseup") {
+            $(this).append('<option value="' + e.params.data.id + '">' + e.params.data.text + '</option>');
+            let vals = $(this).val();
+            vals.push(e.params.data.id);
+            $(this).val(vals).trigger('change');
+            $(this).select2('close');
+        } else if (e.params.data.element != null) {
+            e.params.data.element.remove();
+        }
+    });
 });

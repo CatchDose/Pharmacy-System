@@ -43,6 +43,14 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        
+        'prescription' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/prescription'),
+            'url' => env('APP_URL').'/storage/prescription',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         'avatars' => [
             'driver' => 'local',

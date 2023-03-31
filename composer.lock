@@ -6933,16 +6933,16 @@
         },
         {
             "name": "yajra/laravel-datatables-html",
-            "version": "v10.5.1",
+            "version": "v10.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables-html.git",
-                "reference": "c8bedb6f63a11655b647090cdb909d469eeaf52e"
+                "reference": "eee4dac665d8f854233212eab3840f16c57ceaa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-html/zipball/c8bedb6f63a11655b647090cdb909d469eeaf52e",
-                "reference": "c8bedb6f63a11655b647090cdb909d469eeaf52e",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables-html/zipball/eee4dac665d8f854233212eab3840f16c57ceaa8",
+                "reference": "eee4dac665d8f854233212eab3840f16c57ceaa8",
                 "shasum": ""
             },
             "require": {
@@ -6990,7 +6990,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-html/issues",
-                "source": "https://github.com/yajra/laravel-datatables-html/tree/v10.5.1"
+                "source": "https://github.com/yajra/laravel-datatables-html/tree/v10.6.0"
             },
             "funding": [
                 {
@@ -7006,7 +7006,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-28T07:56:29+00:00"
+            "time": "2023-03-31T07:26:51+00:00"
         },
         {
             "name": "yajra/laravel-datatables-oracle",
@@ -7548,16 +7548,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v7.3.3",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "c680af93e414110b36056029f63120e6bc78f6e3"
+                "reference": "42bab217d4913d6610f341d0468cec860aae165e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/c680af93e414110b36056029f63120e6bc78f6e3",
-                "reference": "c680af93e414110b36056029f63120e6bc78f6e3",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/42bab217d4913d6610f341d0468cec860aae165e",
+                "reference": "42bab217d4913d6610f341d0468cec860aae165e",
                 "shasum": ""
             },
             "require": {
@@ -7571,15 +7571,15 @@
             },
             "require-dev": {
                 "brianium/paratest": "^7.1.2",
-                "laravel/framework": "^10.4.1",
+                "laravel/framework": "^10.5.1",
                 "laravel/pint": "^1.7.0",
-                "laravel/sail": "^1.21.2",
+                "laravel/sail": "^1.21.3",
                 "laravel/sanctum": "^3.2.1",
                 "laravel/tinker": "^2.8.1",
                 "nunomaduro/larastan": "^2.5.1",
-                "orchestra/testbench-core": "^8.1.1",
-                "pestphp/pest": "^2.0.2",
-                "phpunit/phpunit": "^10.0.17",
+                "orchestra/testbench-core": "^8.2.0",
+                "pestphp/pest": "^2.3.0",
+                "phpunit/phpunit": "^10.0.19",
                 "sebastian/environment": "^6.0.0",
                 "spatie/laravel-ignition": "^2.0.0"
             },
@@ -7640,7 +7640,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-23T21:41:35+00:00"
+            "time": "2023-03-31T08:17:12+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -9511,5 +9511,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
