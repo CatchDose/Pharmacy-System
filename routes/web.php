@@ -75,7 +75,10 @@ Route::group(["middleware" => "auth"], function () {
     Route::resource('users', UserController::class);
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('doctors', DoctorController::class);
+    /*================================== start doctors route ================================= */
+
+    Route::resource('doctors', DoctorController::class)->middleware('role:admin|pharmacy');
+    /*================================== end doctors route ================================== */
 
     Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
