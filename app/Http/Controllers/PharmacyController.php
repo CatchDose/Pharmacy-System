@@ -145,7 +145,7 @@ class PharmacyController extends Controller
         }
         // $pharmacy->delete();
         return response()->json([
-            'success' => "you deleted this pharmacy successfully.",
+            'success' => "you deleted this pharmacy successfully."
         ], 200);
     }
 }
