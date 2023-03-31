@@ -107,12 +107,20 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        if (auth()->user()->hasRole("pharmacy") && auth()->user()->pharmacy_id == $user->pharmacy_id) {
+        $user = user::find($id);
+        if (
+            auth()->user()->hasRole("admin") ||
+            (auth()->user()->hasRole(["pharmacy"]) && auth()->user()->pharmacy_id == $user->pharmacy_id)
+        ) {
             $user->delete();
+            return response()->json([
+                'success' => "Doctor was deleted successfully.",
+            ], 200);
         }
-
-        return redirect()->route("doctors.index");
+        return response()->json([
+            'error' => "Doctor couldn't be delete",
+        ], 200);
     }
 }
