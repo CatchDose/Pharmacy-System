@@ -115,7 +115,7 @@ class PharmacyController extends Controller
 
         if (
             Auth::user()->hasRole("admin") ||
-            Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id
+            (Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id)
         ) {
             if ($request->hasFile("avatar_image")) {
                 $path = $request->file("avatar_image")
