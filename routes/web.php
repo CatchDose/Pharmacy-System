@@ -25,7 +25,7 @@ use App\Http\Controllers\AddressController;
 
 Route::group(["middleware" => "auth"], function () {
 
-    Route::get('/', [IndexController::class,"index"])->name("index");
+    Route::get('/', [IndexController::class, "index"])->name("index");
 
     /* ================================== start pharmacies route ==============================*/
     Route::group(
@@ -40,6 +40,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::group(
         ["middleware" => ['role:admin|pharmacy']],
         function () {
+            Route::get("/pharmacies/{pharmacy}", [PharmacyController::class, "show"])->name("pharmacies.show");
             Route::get("/pharmacies/{pharmacy}/edit", [PharmacyController::class, "edit"])->name("pharmacies.edit");
             Route::put("/pharmacies/{pharmacy}", [PharmacyController::class, "update"])->name("pharmacies.update");
         }
@@ -47,7 +48,6 @@ Route::group(["middleware" => "auth"], function () {
     Route::group(
         ["middleware" => ['role:admin|pharmacy|doctor']],
         function () {
-            Route::get("/pharmacies/{pharmacy}", [PharmacyController::class, "show"])->name("pharmacies.show");
         }
     );
 
@@ -77,9 +77,8 @@ Route::group(["middleware" => "auth"], function () {
     Route::resource('orders', OrderController::class);
     Route::resource('doctors', DoctorController::class);
 
-    Route::get('/profiles/{profile}/edit',[ProfileController::class,'edit'])->name("profiles.edit");
-    Route::put('/profiles/{profile}',[ProfileController::class,'update'])->name("profiles.update");
-
+    Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
+    Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
 });
 
 Auth::routes();
