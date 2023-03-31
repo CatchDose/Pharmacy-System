@@ -11,23 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger("status");
-            $table->tinyInteger("is_insured");
-            $table->unsignedBigInteger("pharmacy_id")->nullable();
-            $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("doctor_id")->nullable();
-            $table->softDeletes();
+            $table->unsignedBigInteger("order_id");
+            $table->string("path");
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('orders_prescriptions');
     }
 };

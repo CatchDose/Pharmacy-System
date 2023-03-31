@@ -21,13 +21,6 @@ class OrderController extends Controller
     {
 
         return $dataTable->render('orders.index');
-
-    // return $dataTable->before(function () {
-    //     if (Auth::user()->hasRole('admin')) {
-    //         dd('hi');
-    //         DataTables::eloquent($order)->removeColumn('id');
-    //     }
-    // })->render('orders.index');
     }
 
 
