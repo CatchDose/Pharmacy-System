@@ -6,8 +6,6 @@ use App\DataTables\UsersDataTable;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -43,11 +41,11 @@ class UserController extends Controller
             $data["avatar_image"] = $path;
         }
 
-        $data["password"] = Hash::make($data["password"]);
+        $data["password"] = $data["password"];
 
         $user = User::create($data);
 
-        $user->assignRole("admin");
+        $user->assignRole("client");
 
 
         return redirect()->route("users.index");
@@ -77,7 +75,7 @@ class UserController extends Controller
         $data = $request->validated();
 
         $data["password"] = isset($request->password)
-                            ? Hash::make($request->password)
+                            ? $request->password
                             : $user->password;
 
         if ($request->hasFile("avatar_image"))

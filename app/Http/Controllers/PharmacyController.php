@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pharmacy;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use App\DataTables\PharmaciesDataTable;
 use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
@@ -54,9 +52,8 @@ class PharmacyController extends Controller
             "date_of_birth" => $data["date_of_birth"],
             "gender" => $data["gender"],
             "phone" => $data["phone"],
-            "password" => Hash::make(
-                $data["password"]
-            )
+            "password" => $data["password"]
+
         ]);
         $Pharmacy = Pharmacy::create([
             "name" => $data["pharmacy_name"],
