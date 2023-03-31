@@ -134,18 +134,26 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        foreach ($pharmacy->orders as $order) {
 
-            if ($order->whereIn('status', [2, 3, 5])->get()) {
+        $hasOrders = $pharmacy->orders()->where(function ($order) {
+            return $order->whereIn('status', [2, 3, 5]);
+        })->count();
+        if ($hasOrders) {
 
-                return response()->json([
-                    'error' => "you can't delete this pharmacy make sure pharmacy doesn't have any active order before deleting.",
-                ], 200);
-            }
+            return response()->json([
+                'error' => "you can't delete This Pharmacy This Pharmacy has $hasOrders Orders make sure pharmacy doesn't have any active order before deleting.",
+            ], 200);
         }
-        // $pharmacy->delete();
+
+        $pharmacy->doctors()->each(function ($doctor) {
+            $doctor->delete();
+        });
+        $pharmacy->orders()->each(function ($order) {
+            $order->delete();
+        });
+        $pharmacy->delete();
         return response()->json([
-            'success' => "you deleted this pharmacy successfully."
+            'success' => "you deleted this pharmacy successfully.",
         ], 200);
     }
 }
