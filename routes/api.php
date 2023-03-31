@@ -20,17 +20,19 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('/sanctum/token', [AuthController::class, 'getToken']);
+
+
+Route::group(["middleware"=>"auth:sanctum"],function (){
+    Route::put('/users/{user}',[UserController::class, 'update']);
+
+    Route::get('/orders' , [OrderController::class , 'index']);
+    Route::get('/orders/{order}' , [OrderController::class , 'show']);
+    Route::post('/orders' , [OrderController::class , 'store']);
+    Route::put('/orders/{order}' , [OrderController::class , 'update']);
+    Route::put('/users/{user}',[UserController::class, 'update']);
+
 });
 
-Route::put('/users/{user}',[UserController::class, 'update'])->middleware('auth:sanctum');
 
-
-Route::get('/orders' , [OrderController::class , 'index']);
-Route::get('/orders/{order}' , [OrderController::class , 'show']);
-Route::post('/orders' , [OrderController::class , 'store']);
-Route::put('/orders/{order}' , [OrderController::class , 'update']);
-Route::put('/users/{user}',[UserController::class, 'update']);
-
-Route::post('/sanctum/token', [AuthController::class, 'gettoken']);
