@@ -23,7 +23,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd($this);
+       
             return [
 
                 'name'=> ["required","max:255"],
