@@ -23,7 +23,7 @@ use App\Http\Controllers\AddressController;
 */
 
 
-Route::group(["middleware" => "auth"], function () {
+Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor"]], function () {
 
     Route::get('/', [IndexController::class, "index"])->name("index");
 
@@ -81,4 +81,4 @@ Route::group(["middleware" => "auth"], function () {
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);

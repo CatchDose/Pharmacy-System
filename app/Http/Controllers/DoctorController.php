@@ -7,7 +7,6 @@ use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Pharmacy;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -51,7 +50,6 @@ class DoctorController extends Controller
         if (auth()->user()->hasRole("pharmacy")) {
             $data["pharmacy_id"] = auth()->user()->pharmacy_id;
         }
-        $data["password"] = Hash::make($data["password"]);
 
         $user = User::create($data);
 
@@ -87,7 +85,7 @@ class DoctorController extends Controller
         $data = $request->validated();
 
         $data["password"] = isset($request->password)
-            ? Hash::make($request->password)
+            ? $request->password
             : $doctor->password;
 
         if ($request->hasFile("avatar_image")) {
