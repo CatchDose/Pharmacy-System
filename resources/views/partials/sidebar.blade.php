@@ -42,6 +42,7 @@
                     </a>
                 </li>
 
+                @role('admin')
                 {{-- Users Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('users.*') ? 'menu-open' : '' }}">
 
@@ -70,7 +71,7 @@
 
                     </ul>
                 </li>
-
+                @endrole
                 @hasanyrole("pharmacy|admin")
                 {{-- Pharmacy Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('pharmacies.*') ? 'menu-open' : '' }}">
@@ -167,17 +168,11 @@
                                 <p>Add</p>
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Edit</p>
-                            </a>
-                        </li>
-
                     </ul>
                 </li>
 
+
+                @role('admin')
 
                 {{-- Areas Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('areas.*') ? 'menu-open' : '' }}">
@@ -207,8 +202,9 @@
 
                     </ul>
                 </li>
+                @endrole
 
-
+                @role('admin')
                 {{-- Addresses Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('addresses.*') ? 'menu-open' : '' }}">
 
@@ -232,12 +228,9 @@
                                 <p>Add address</p>
                             </a>
                         </li>
-
-
-
                     </ul>
                 </li>
-
+                @endrole
 
                 {{-- Medicines Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('medicines.*') ? 'menu-open' : '' }}">
@@ -262,9 +255,6 @@
                                 <p>add medicine</p>
                             </a>
                         </li>
-
-
-
                     </ul>
                 </li>
 
@@ -291,9 +281,6 @@
                                 <p>add user</p>
                             </a>
                         </li>
-
-
-
                     </ul>
                 </li>
 
