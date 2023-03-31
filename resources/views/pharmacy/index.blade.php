@@ -32,7 +32,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this pharmacy?
+                    <div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-circle text-danger fs-3 me-2"></i>
+                            Deleting this pharmacy will delete all doctors and orders assigned to it.<br>
+                            Are you sure you want to continue?
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="modalNo">no</button>
@@ -72,6 +78,7 @@
                 return res.json();
             })
             .then(res=>{
+                console.log(res);
                 if(res["success"]){
                     document.querySelector(".toast-body").innerHTML=`<i class="bi bi-check-circle text-success fs-3 me-2"></i> ${res["success"]}`;
                     toast.show()
