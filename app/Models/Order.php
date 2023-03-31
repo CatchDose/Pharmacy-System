@@ -24,7 +24,7 @@ class Order extends Model
     public function medicines()
     {
         return $this->belongsToMany(Medicine::class,'medicines_orders'
-            ,'order_id' ,'medicine_id');
+            ,'order_id' ,'medicine_id')->withPivot('quantity');
     }
 
     public function pharmacy()
@@ -41,6 +41,11 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class,"user_id");
+    }
+
+    public function prescription()
+    {
+        return $this->hasMany(Prescription::class,'order_id');
     }
 
     protected function createdAt(): Attribute
