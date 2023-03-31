@@ -13,6 +13,8 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
-        Area::factory(10)->create();
+        Area::factory(10)->create([
+            "country_id" => 818
+        ]);
     }
 }
