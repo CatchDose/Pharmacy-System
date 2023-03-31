@@ -31,7 +31,10 @@ class AreasDataTable extends DataTable
                 <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
             </form>
         </div>')
-            ->setRowId('id');
+           ->addColumn('Country', function (Area $area) {
+                return $area->country->name;
+            });
+
     }
 
     /**
@@ -73,6 +76,7 @@ class AreasDataTable extends DataTable
             
             Column::make('name'),
             Column::make('address'),
+            Column::make('Country'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

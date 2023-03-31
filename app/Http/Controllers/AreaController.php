@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\DataTables\AreasDataTable;
 use App\Http\Requests\StoreAreaRequest;
 use App\Models\Area;
+use App\Models\Country;
 use Illuminate\Http\Request;
 
 
@@ -16,7 +17,12 @@ class AreaController extends Controller
 
     public function create()
     {
-        return view("area.create");
+        // $allareas=Area::where('country_id',818)->get();
+        // $allareas=json_encode($allareas);
+        // dd($allareas);
+        $Countries_data=Country::all();
+        // dd($Countries_data);
+        return view("area.create",['countries'=>$Countries_data]);
     }
 
     public function store(StoreAreaRequest $request)
@@ -32,7 +38,7 @@ class AreaController extends Controller
      */
     public function show(Area $area)
     {
-        return view("area.show",["area" => $area]);
+        return view("area.index",["area" => $area]);
     }
 
     /**
@@ -40,7 +46,10 @@ class AreaController extends Controller
      */
     public function edit(Area $area)
     {
-        return view("area.edit",["area" => $area]);
+        $Countries_data=Country::all();
+        // dd($Countries_data);
+      
+        return view("area.edit",["area" => $area,'countries'=>$Countries_data]);
     }
 
     /**
@@ -62,6 +71,7 @@ class AreaController extends Controller
 
         return redirect()->route("areas.index");
     }
+  
 }
 
 
