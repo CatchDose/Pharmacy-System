@@ -35,6 +35,10 @@ Route::group(["middleware" => "auth"], function () {
             Route::get("/pharmacies/create", [PharmacyController::class, "create"])->name("pharmacies.create");
             Route::post("/pharmacies", [PharmacyController::class, "store"])->name("pharmacies.store");
             Route::delete("/pharmacies/{pharmacy}", [PharmacyController::class, "destroy"])->name("pharmacies.destroy");
+
+            Route::resource('users', UserController::class);
+            Route::resource('areas', AreaController::class);
+
         }
     );
     Route::group(
@@ -64,15 +68,8 @@ Route::group(["middleware" => "auth"], function () {
     /* ================================== end medicines route ==================================*/
 
 
-    Route::get("/areas", [AreaController::class, "index"])->name("areas.index");
-    Route::get("/areas/create", [AreaController::class, "create"])->name("areas.create");
-    Route::post("/areas", [AreaController::class, "store"])->name("areas.store");
-    Route::get("/areas/{area}", [AreaController::class, "show"])->name("areas.show");
-    Route::get("/areas/{area}/edit", [AreaController::class, "edit"])->name("areas.edit");
-    Route::put("/areas/{area}", [AreaController::class, "update"])->name("areas.update");
-    Route::delete("/areas/{area}", [AreaController::class, "destroy"])->name("areas.destroy");
 
-    Route::resource('users', UserController::class);
+
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
     /*================================== start doctors route ================================= */
