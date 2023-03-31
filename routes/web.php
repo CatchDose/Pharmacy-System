@@ -75,7 +75,25 @@ Route::group(["middleware" => "auth"], function () {
     Route::resource('users', UserController::class);
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('doctors', DoctorController::class);
+    /*================================== start doctors route ================================= */
+    // Route::get('doctors', DoctorController::class)->middleware('role:admin');
+
+    Route::get("/doctors", [DoctorController::class, "index"])->name("doctors.index")->middleware('role:admin');
+
+    Route::group(
+        ["middleware" => ['role:admin|pharmacy']],
+        function () {
+            Route::get("/doctors/create", [DoctorController::class, "create"])->name("doctors.create");
+            Route::post("/doctors", [DoctorController::class, "store"])->name("doctors.store");
+            Route::get("/doctors/{doctor}", [DoctorController::class, "show"])->name("doctors.show");
+            Route::get("/doctors/{doctor}/edit", [DoctorController::class, "edit"])->name("doctors.edit");
+            Route::put("/doctors/{doctor}", [DoctorController::class, "update"])->name("doctors.update");
+            Route::delete("/doctors/{doctor}", [DoctorController::class, "destroy"])->name("doctors.destroy");
+        }
+    );
+
+    /*================================== end doctors route ================================== */
+    Route::resource('doctors', DoctorController::class)->middleware('role:admin|pharmacy');
 
     Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");

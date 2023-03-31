@@ -1,17 +1,17 @@
 @extends("layouts.app")
 
-@section("title","Edit user")
+@section("title","Edit Doctor")
 
 @section("style")
 
 @endsection
 
-@section("header","Edit user")
+@section("header","Edit Doctor")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">add user</a></li>
+    <li class="breadcrumb-item"><a href="#">add Doctor</a></li>
 
 @endsection
 
@@ -19,7 +19,7 @@
 
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Add user</h3>
+            <h3 class="card-title">Add Doctor</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -28,10 +28,10 @@
                 @csrf
                 @method("put")
                 <div class="form-group">
-                    <label for="user-name">User name</label>
+                    <label for="Doctor-name">Doctor name</label>
                     <input type="text" value="{{$doctor->name}}" class="form-control @error('name') is-invalid @enderror"
-                           name="name" id="user-name"
-                           placeholder="Enter user name">
+                           name="name" id="Doctor-name"
+                           placeholder="Enter Doctor name">
 
                     @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -120,7 +120,7 @@
                     @enderror
 
                 </div>
-
+                @role("admin")
                 <div class="form-group">
                     <label for="pharmacy-name">Pharmacy Name</label>
                     <select class="form-control select2 @error('pharmacy_id') is-invalid @enderror" name="pharmacy_id" id="pharmacy-name">
@@ -137,9 +137,10 @@
                     @enderror
 
                 </div>
+                @endrole
 
                 <div class="form-group">
-                    <label for="avatar-image">File input</label>
+                    <label for="avatar-image">Avatar Image</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" name="avatar_image"

@@ -112,7 +112,7 @@
                 </li>
                 @endhasanyrole
 
-
+                @hasanyrole("pharmacy|admin")
                 {{-- Doctors Menu--}}
                 <li class="nav-item {{ Route::currentRouteNamed('doctors.*') ? 'menu-open' : '' }}">
 
@@ -141,6 +141,7 @@
 
                     </ul>
                 </li>
+                @endhasanyrole
 
 
                 {{-- Orders Menu--}}

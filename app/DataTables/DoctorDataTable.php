@@ -32,7 +32,7 @@ class DoctorDataTable extends DataTable
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
                 </div>')
-            ->addColumn('pharmacy',function ($user){
+            ->addColumn('pharmacy', function ($user) {
                 return $user->pharmacy->name;
             })
             ->setRowId('id');
@@ -43,9 +43,16 @@ class DoctorDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->whereHas('roles',function($role){
-            return $role->where("name","doctor");
-        });
+
+        if (auth()->user()->hasRole("pharmacy")) {
+            return $model->where("pharmacy_id", "=", auth()->user()->pharmacy_id)->whereHas('roles', function ($role) {
+                return $role->where("name", "doctor");
+            });
+        } else {
+            return $model->newQuery()->whereHas('roles', function ($role) {
+                return $role->where("name", "doctor");
+            });
+        }
     }
 
     /**
@@ -54,20 +61,20 @@ class DoctorDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('doctor-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('doctor-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -80,11 +87,9 @@ class DoctorDataTable extends DataTable
             Column::make('name'),
             Column::make('national_id'),
             Column::make('email'),
-            Column::computed('pharmacy'),
-
+            Column::computed('pharmacy')->visible(auth()->user()->hasRole("admin")),
             Column::make('created_at'),
             Column::make('updated_at'),
-
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
