@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::put('/users/{user}',[UserController::class, 'update'])->middleware('auth:sanctum');
+
 
 Route::get('/orders' , [OrderController::class , 'index']);
 Route::get('/orders/{order}' , [OrderController::class , 'show']);
@@ -30,21 +33,4 @@ Route::post('/orders' , [OrderController::class , 'store']);
 Route::put('/orders/{order}' , [OrderController::class , 'update']);
 Route::put('/users/{user}',[UserController::class, 'update']);
 
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-    // dd($user);
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-    return $user->createToken($request->device_name)->plainTextToken;
-});
+Route::post('/sanctum/token', [AuthController::class, 'gettoken']);
