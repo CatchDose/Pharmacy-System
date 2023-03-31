@@ -20,9 +20,10 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
+Route::post("register",[AuthController::class, 'register']);
+
 
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
-
 
 Route::group(["middleware"=>"auth:sanctum"],function (){
     Route::put('/users/{user}',[UserController::class, 'update']);
