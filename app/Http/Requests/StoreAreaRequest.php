@@ -23,7 +23,8 @@ class StoreAreaRequest extends FormRequest
     {
         return [
             'name'=> ["required","max:255"],
-            'address'=>['required','string']
+            'address'=>['required','string'],
+            'country_id'=>['exists:countries,id']
         ];
     }
 }

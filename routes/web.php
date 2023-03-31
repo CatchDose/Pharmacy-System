@@ -51,8 +51,7 @@ Route::group(["middleware" => "auth"], function () {
     Route::get("/areas/{area}/edit", [AreaController::class, "edit"])->name("areas.edit");
     Route::put("/areas/{area}", [AreaController::class, "update"])->name("areas.update");
     Route::delete("/areas/{area}", [AreaController::class, "destroy"])->name("areas.destroy");
-
-
+    
 
     Route::resource('users', UserController::class);
     Route::resource('addresses', AddressController::class);

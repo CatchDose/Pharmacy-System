@@ -12,7 +12,8 @@ class Area extends Model
 
     protected $fillable = [
         'name',
-       'address'
+       'address',
+       'country_id'
     ];
 
 
@@ -24,6 +25,10 @@ class Area extends Model
     public function pharmacies()
     {
         return $this->hasMany(Pharmacy::class,'area_id');
+    }
+
+    public function country(){
+        return $this->belongsTo(Country::class,'country_id');
     }
 
 
