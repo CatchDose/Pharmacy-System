@@ -61,7 +61,7 @@ class DoctorDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('doctor-table')
+            ->setTableId('doctors-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')

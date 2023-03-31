@@ -1,17 +1,17 @@
 @extends("layouts.app")
 
-@section("title","Doctor")
+@section("title","Doctors")
 
 @section("style")
 
 @endsection
 
-@section("header","Doctor")
+@section("header","Doctors")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{route("doctors.index")}}">Doctor</a></li>
+    <li class="breadcrumb-item">Doctors</li>
 
 @endsection
 
@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="toast-container p-3 top-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
         <div class="toast bg-succes fade" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-center"></div>
@@ -52,7 +52,7 @@
 
     <script>
     var toast=new bootstrap.Toast(document.querySelector(".toast"),{"delay":5000});
-    
+
     function modalShow(event){
         event.preventDefault();
         event.stopPropagation();
@@ -60,7 +60,7 @@
         document.querySelector(".modal-footer").lastElementChild.addEventListener("click",(e)=>{
 
             fetch(event.target.closest("form").action,{
-                method: "DELETE", 
+                method: "DELETE",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
             })
             .then((res,err)=>{
@@ -72,7 +72,7 @@
                 if(res["success"]){
                     document.querySelector(".toast-body").innerHTML=`<i class="bi bi-check-circle text-success fs-3 me-2"></i> ${res["success"]}`;
                     toast.show()
-                    $('#pharmacies-table').DataTable().ajax.reload();
+                    $('#doctors-table').DataTable().ajax.reload();
                 }else{
                     document.querySelector(".toast-body").innerHTML=`<i class="bi bi-exclamation-circle text-danger fs-3 me-2"></i> ${res["error"]}`;
                     toast.show()
@@ -80,7 +80,7 @@
             })
         })
     }
-    
+
    </script>
 
 @endsection
