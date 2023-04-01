@@ -100,4 +100,60 @@ class UserController extends Controller
 
         return redirect()->route("users.index");
     }
+
+
+    /**
+     * Ban Doctor user.
+     */
+    public function ban(User $doctor)
+    {
+        if(
+            auth()->user()->hasRole("admin")
+            ||
+            (
+                auth()->user()->hasRole("pharmacy")
+                && auth()->user()->pharmacy_id === $doctor->pharmacy_id
+            )
+        )
+        {
+            $doctor->ban();
+
+            session()->flash('success', 'User banned successfully');
+            return redirect()->route("doctors.index");
+
+        }
+
+        session()->flash('error', 'You are not authorized');
+
+        return redirect()->route("doctors.index");
+
+    }
+
+
+    /**
+     * Unban Doctor user.
+     */
+    public function unban(User $doctor)
+    {
+        if(
+            auth()->user()->hasRole("admin")
+            ||
+            (
+                auth()->user()->hasRole("pharmacy")
+                && auth()->user()->pharmacy_id === $doctor->pharmacy_id
+            )
+        )
+        {
+            $doctor->unban();
+
+            session()->flash('success', 'User unbanned successfully');
+            return redirect()->route("doctors.index");
+
+        }
+
+        session()->flash('error', 'You are not authorized');
+
+        return redirect()->route("doctors.index");
+
+    }
 }
