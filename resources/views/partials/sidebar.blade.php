@@ -257,33 +257,38 @@
                         </li>
                     </ul>
                 </li>
-
+                @hasanyrole("pharmacy|admin")
                 {{-- Revenue Menu--}}
                 <li class="nav-item">
 
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            revenue
+                            revenues
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @role("admin")
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>all users</p>
+                                <p>Pharmacies revenues</p>
                             </a>
                         </li>
+                        @endrole
+                        @role("pharmacy")
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>add user</p>
+                                <p>Pharmacy revenue</p>
                             </a>
                         </li>
+                        @endrole
+
                     </ul>
                 </li>
-
+                @endhasanyrole
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">

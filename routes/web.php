@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,11 +50,7 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor"]], function (
             Route::put("/pharmacies/{pharmacy}", [PharmacyController::class, "update"])->name("pharmacies.update");
         }
     );
-    Route::group(
-        ["middleware" => ['role:admin|pharmacy|doctor']],
-        function () {
-        }
-    );
+
 
     /* ================================== end pharmacies route ==================================*/
 
@@ -67,15 +64,17 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor"]], function (
 
     /* ================================== end medicines route ==================================*/
 
-
-
-
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
+
     /*================================== start doctors route ================================= */
 
     Route::resource('doctors', DoctorController::class)->middleware('role:admin|pharmacy');
     /*================================== end doctors route ================================== */
+
+    /*================================== start revenues route ================================= */
+    Route::get("/revenues", [RevenueController::class, "index"])->name("revenues.index")->middleware('role:admin|pharmacy');;
+    /*================================== end revenues route ================================== */
 
     Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
