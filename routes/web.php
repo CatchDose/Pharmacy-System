@@ -24,7 +24,7 @@ use App\Http\Controllers\AddressController;
 */
 
 
-Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor"]], function () {
+Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-banned-user"]], function () {
 
     Route::get('/', [IndexController::class, "index"])->name("index");
 
@@ -48,6 +48,10 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor"]], function (
             Route::get("/pharmacies/{pharmacy}", [PharmacyController::class, "show"])->name("pharmacies.show");
             Route::get("/pharmacies/{pharmacy}/edit", [PharmacyController::class, "edit"])->name("pharmacies.edit");
             Route::put("/pharmacies/{pharmacy}", [PharmacyController::class, "update"])->name("pharmacies.update");
+
+
+            Route::put("/doctors/{doctor}/ban", [UserController::class, "ban"])->name("doctors.ban");
+            Route::put("/doctors/{doctor}/unban", [UserController::class, "unban"])->name("doctors.unban");
         }
     );
 

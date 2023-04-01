@@ -23,15 +23,16 @@ class DoctorDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("doctors.edit",$id)}}"> edit </a>
-                    <form method="post" class="delete_item"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+            ->addColumn('action', function (User $doctor){
+                return $this->toggleBan($doctor->id) . '
+                    <a class="btn btn-success" id="option_a1" href="' .route("doctors.edit",$doctor->id).'"> edit </a>
+                    <form method="post" class="delete_item"  id="option_a3" action="' .route("doctors.destroy",$doctor->id).'">
+                        <input type="hidden" name="_token" value="' .csrf_token(). '">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_ ' . $doctor->id . '" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
-                </div>')
+                </div>';
+            })
             ->addColumn('pharmacy', function ($user) {
                 return $user->pharmacy->name;
             })
@@ -103,5 +104,27 @@ class DoctorDataTable extends DataTable
     protected function filename(): string
     {
         return 'Doctor_' . date('YmdHis');
+    }
+
+
+    private function toggleBan($id)
+    {
+        if(User::find($id)->isBanned()){
+         return     '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.unban",$id).'">
+                        <input type="hidden" name="_token" value="' .csrf_token(). '">
+                        <input type="hidden" name="_method" value="PUT">
+                      <button type="submit" class="btn btn-secondary">unban</button>
+                    </form>';
+        }
+
+        return   '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.ban",$id).'">
+                        <input type="hidden" name="_token" value="' .csrf_token(). '">
+                        <input type="hidden" name="_method" value="PUT">
+                      <button type="submit" class="btn btn-info">ban</button>
+                    </form>';
+
+
     }
 }
