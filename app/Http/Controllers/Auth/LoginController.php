@@ -46,11 +46,12 @@ class LoginController extends Controller
         {
             auth()->logout();
 
-//            $request->session()->invalidate();
-//
-//            $request->session()->regenerateToken();
+            $request->session()->invalidate();
 
-            return redirect()->route('login')->with('error', "Sorry , " . $user->name. " Your Account does't have previllages to login in.");
+            $request->session()->regenerateToken();
+
+            return  redirect()->route('login')
+                    ->with('error', "Sorry, " . $user->name. " your account doesn't have privileges to login in.");
         }
     }
 
