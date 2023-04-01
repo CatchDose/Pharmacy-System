@@ -17,44 +17,53 @@
 
 @section("content")
 
-    <table>
-        <tbody>
-        <tr>
-            <th>User Name</th>
-            <td>{{ $address->user->name }}</td>
-        </tr>
-        <tr>
-            <th>Area</th>
-            <td>{{ $address->area->name }}</td>
-        </tr>
-        <tr>
-            <th style="width: 20vh">Street Name</th>
-            <td>{{ $address->street_name }}</td>
-        </tr>
-        <tr>
-            <th>Building Number</th>
-            <td>{{ $address->building_number }}</td>
-        </tr>
-        <tr>
-            <th>Floor Number</th>
-            <td>{{ $address->floor_number }}</td>
-        </tr>
-        <tr>
-            <th>Flat Number</th>
-            <td>{{ $address->flat_number }}</td>
-        </tr>
-        <tr>
-            <th>Main Address</th>
-            @if($address->is_main == 1)
-                <td>Yes</td>
-            @else
-            <td>No</td>
-            @endif
-        </tr>
-        </tbody>
-    </table>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Address Info </h3>
+        </div>
 
-
+        <div class="card-body">
+            <strong> User Name</strong>
+            <p class="text-muted">
+                {{ $address->user->name }}
+            </p>
+            <strong> Area Name</strong>
+            <p class="text-muted">
+                {{ $address->area->name }}
+            </p>
+            <strong> Street Name</strong>
+            <p class="text-muted">
+                {{ $address->street_name }}
+            </p>
+            <strong> Building Number</strong>
+            <p class="text-muted">
+                {{ $address->building_number }}
+            </p>
+            <hr>
+            <strong> Floor Number</strong>
+            <p class="text-muted">
+                {{ $address->floor_number }}
+            </p>
+            <hr>
+            <strong>Flat Number</strong>
+            <p class="text-muted">
+                {{ $address->flat_number }}
+            </p>
+            <hr>
+            <strong> Is this the user main address?</strong>
+            <p class="text-muted">
+                @if($address->is_main == 1)
+                    <p class="text-muted">
+                        Yes
+                    </p>
+                @else
+                    <p class="text-muted">
+                        No
+                    </p>
+                @endif
+            </p>
+        </div>
+    </div>
 @endsection
 
 
