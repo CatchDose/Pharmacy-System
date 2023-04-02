@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\DataTables\DoctorDataTable;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\Pharmacy;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -54,7 +56,7 @@ class DoctorController extends Controller
         $user = User::create($data);
 
         $user->assignRole("doctor");
-
+        SendVerifyEmailJob::dispatch($user);
 
         return redirect()->route("doctors.index");
     }

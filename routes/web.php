@@ -9,9 +9,16 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
+use Illuminate\Support\Facades\URL;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,10 +30,29 @@ use App\Http\Controllers\AddressController;
 |
 */
 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
-Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-banned-user"]], function () {
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+
+    $request->fulfill();
+    return Redirect()->route("index");
+})->middleware(["auth",'signed'])->name('verification.verify');
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-banned-user","verified"]], function () {
 
     Route::get('/', [IndexController::class, "index"])->name("index");
+
 
     /* ================================== start pharmacies route ==============================*/
     Route::group(
@@ -84,4 +110,4 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-ban
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
 });
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => false,'verify' => true]);

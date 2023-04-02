@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Doctor;
+
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -22,7 +22,10 @@ class DoctorDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+//        dd(new EloquentDataTable($query));
+
         return (new EloquentDataTable($query))
+
             ->addColumn('action', function (User $doctor){
                 return $this->toggleBan($doctor->id) . '
                     <a class="btn btn-success" id="option_a1" href="' .route("doctors.edit",$doctor->id).'"> edit </a>
