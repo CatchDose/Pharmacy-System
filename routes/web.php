@@ -9,6 +9,8 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
+use App\Models\Order;
+use App\Models\Pharmacy;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,15 @@ use App\Http\Controllers\AddressController;
 |
 */
 
+Route::get("/test2",function (){
+    $orders=Order::where("status",1)->get();
+    foreach($orders as $order){
+        $orderArea=$order->user->addresses()->where("is_main",1)->first()->id;
+        $order->pharmacy_id=Pharmacy::where("area_id",$orderArea)->orderby("priority","desc")->first()->id;
+        $order->save();
 
+    }
+});
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\AssignNewOrder;
 use App\Jobs\NotifyNonLoggedUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
 
-         $schedule->job(new NotifyNonLoggedUsers())->everyMinute();
+         $schedule->job(new NotifyNonLoggedUsers())->daily();
+        $schedule->job(new AssignNewOrder())->everyMinute();
     }
 
     /**

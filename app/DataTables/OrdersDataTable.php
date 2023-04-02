@@ -55,6 +55,9 @@ class OrdersDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
+        if (auth()->user()->hasRole(["pharmacy","doctor"])) {
+            return $model->where("pharmacy_id", "=", auth()->user()->pharmacy_id);
+        }
         return $model->newQuery();
     }
 
@@ -86,8 +89,8 @@ class OrdersDataTable extends DataTable
     public function getColumns(): array
     {
 
-        $isAdmin = Auth::user()->hasRole('admin') ??  false ; 
-            return [  
+        $isAdmin = Auth::user()->hasRole('admin') ??  false ;
+            return [
 
                 Column::make('id')->addClass('text-center'),
                 Column::make('status')->addClass('text-center'),
@@ -103,9 +106,9 @@ class OrdersDataTable extends DataTable
                       ->printable(false)
                       ->width(70)
                       ->addClass('text-center')
-                      ->visible($isAdmin),      
+                      ->visible($isAdmin),
             ];
-              
+
     }
 
     /**
