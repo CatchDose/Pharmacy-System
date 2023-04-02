@@ -18,13 +18,25 @@ class AuthController extends Controller
     public function getToken(SanctumTokenRequest $request)
     {
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)
+
+                ->whereHas('roles',function($role){
+
+                    return $role->where('name','client');
+
+                })->first();
+
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+
+        $user->update([
+            "last_login" => now()
+        ]);
+
 
         return $user->createToken($request->device_name)->plainTextToken;
 
@@ -34,8 +46,8 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $user = User::create($request->validated());
-//        SendVerifyEmailJob::dispatch($user);
-        event(new Registered($user));
+        SendVerifyEmailJob::dispatch($user);
+//        event(new Registered($user));
 
 
         return new UserResource($user);

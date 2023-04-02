@@ -30,6 +30,14 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+Route::get('test',function(){
+
+    $emails =   App\Models\User::where("last_login", '<' , now()->subMonth(1)->toDateTimeString())
+                ->pluck("email")->toArray();
+    dd($emails);
+});
+
+
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
