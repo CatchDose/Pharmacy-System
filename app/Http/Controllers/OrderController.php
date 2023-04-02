@@ -30,7 +30,7 @@ class OrderController extends Controller
         $doctors = User::Role('doctor')->get();
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
-        
+
         return view('orders.create',['users'=>$clients , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
 
     }
@@ -45,10 +45,10 @@ class OrderController extends Controller
         $docId = User::all()->where('name', $data['DocName'])->first()->id;
         $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
 
-        
+
         $med = $data['med'];
         $qty = $data['qty'];
-        
+
         $order = Order::Create([
             'pharmacy_id'=> $pharmacyId,
             'user_id'=> $userId,
@@ -57,7 +57,7 @@ class OrderController extends Controller
 
         ]);
 
-        Order::createOrderMedicine($order, $med, $qty);
+        self::createOrderMedicine($order, $med, $qty);
 
 
         // send email to user to notify him by price and change status to waiting (3)
@@ -76,6 +76,7 @@ class OrderController extends Controller
         $medicine = Medicine::all();
         $prescriptions = $order->prescription;
         return view('orders.show', ['order' =>$order , 'medicines'=>$medicine , 'prescriptions'=>$prescriptions]);
+
     }
 
     /**
@@ -88,7 +89,7 @@ class OrderController extends Controller
         $doctors = User::Role('doctor')->get();
         $pharmacy = Pharmacy::all();
         return view('orders.edit', ['order' =>$order ,'users'=>$users , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
-        
+
     }
 
     /**
@@ -120,7 +121,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        
+
         $order->delete();
         return to_route('orders.index');
     }
@@ -163,6 +164,7 @@ class OrderController extends Controller
         foreach ($med as $key=>$value) {
             
             $order->medicines($value)->attach($value, ['quantity' => $qty[$key]]);
+
         }
 
         $order->update([

@@ -9,15 +9,14 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Order;
+use App\Models\Pharmacy;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
-use Illuminate\Support\Facades\URL;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +29,15 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
-Route::get('test',function(){
+Route::get("/test2",function (){
+    $orders=Order::where("status",1)->get();
+    foreach($orders as $order){
+        $orderArea=$order->user->addresses()->where("is_main",1)->first()->id;
+        $order->pharmacy_id=Pharmacy::where("area_id",$orderArea)->orderby("priority","desc")->first()->id;
+        $order->save();
 
-    $emails =   App\Models\User::where("last_login", '<' , now()->subMonth(1)->toDateTimeString())
-                ->pluck("email")->toArray();
-    dd($emails);
+    }
 });
-
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

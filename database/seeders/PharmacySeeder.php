@@ -18,7 +18,7 @@ class PharmacySeeder extends Seeder
     {
         $pharmacyOwner = User::create([
             'name' => 'pharmacy',
-            'password' => Hash::make("123456"),
+            'password' => "123456",
             'national_id' => '22222000022223',
 
             'email' => 'pharmacy@test.com',
@@ -39,7 +39,7 @@ class PharmacySeeder extends Seeder
 
         $doctor = User::create([
             'name' => 'doctor',
-            'password' => Hash::make("123456"),
+            'password' => "123456",
             'national_id' => '22222000022222',
             'pharmacy_id' => 1,
             'email' => 'doctor_1@test.com',
