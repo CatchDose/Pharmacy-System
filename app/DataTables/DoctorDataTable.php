@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Doctor;
+
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -22,6 +22,8 @@ class DoctorDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+//        dd(new EloquentDataTable($query));
+
         return (new EloquentDataTable($query))
             ->addColumn('action', '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -29,7 +31,7 @@ class DoctorDataTable extends DataTable
                     <form method="post" class="delete_item"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$name}}</button>
                     </form>
                 </div>')
             ->addColumn('pharmacy', function ($user) {

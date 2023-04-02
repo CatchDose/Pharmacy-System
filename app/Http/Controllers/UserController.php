@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Jobs\SendMailJob;
+use App\Jobs\SendVerifyEmailJob;
+use App\Mail\NotificationEmail;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -15,8 +20,10 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
+
         return $dataTable->render('users.index');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -41,11 +48,9 @@ class UserController extends Controller
             $data["avatar_image"] = $path;
         }
 
-        $data["password"] = $data["password"];
-
         $user = User::create($data);
-
         $user->assignRole("client");
+        SendVerifyEmailJob::dispatch($user);
 
 
         return redirect()->route("users.index");

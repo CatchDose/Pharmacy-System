@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegisterUserRequest;
 use App\Http\Requests\Api\SanctumTokenRequest;
 use App\Http\Resources\UserResource;
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -32,6 +34,9 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $user = User::create($request->validated());
+//        SendVerifyEmailJob::dispatch($user);
+        event(new Registered($user));
+
 
         return new UserResource($user);
     }

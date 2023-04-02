@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\Pharmacy;
 use App\Models\User;
 use App\DataTables\PharmaciesDataTable;
 use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Area;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +20,7 @@ class PharmacyController extends Controller
      */
     public function index(PharmaciesDataTable $dataTable)
     {
+
         return $dataTable->render('pharmacy.index');
     }
 
@@ -45,27 +48,17 @@ class PharmacyController extends Controller
 
             $data["avatar_image"] = $path;
         }
-        $user = User::create([
-            "name" => $data["name"],
-            "email" => $data["email"],
-            "national_id" => $data["national_id"],
-            "date_of_birth" => $data["date_of_birth"],
-            "gender" => $data["gender"],
-            "phone" => $data["phone"],
-            "password" => $data["password"]
+        $user = User::create($data);
+        $data["owner_id"] = $user["id"];
 
-        ]);
-        $Pharmacy = Pharmacy::create([
-            "name" => $data["pharmacy_name"],
-            "priority" => $data["priority"],
-            "area_id" => $data["area_id"],
-            "owner_id" => $user["id"]
-        ]);
+        $Pharmacy = Pharmacy::create($data);
 
         $user->update(["pharmacy_id" => $Pharmacy->id]);
         $user->assignRole("pharmacy");
 
-        return Redirect::route('pharmacies.show', $Pharmacy->id);
+        SendVerifyEmailJob::dispatch($user);
+
+        return Redirect()->route('pharmacies.show', $Pharmacy->id);
     }
 
     /**
@@ -74,12 +67,12 @@ class PharmacyController extends Controller
     public function show(Pharmacy $pharmacy)
 
     {
-        if (Auth::user()->hasRole("admin")) {
+        if (auth()->user()->hasRole("admin")) {
 
             return view("pharmacy.show", ["pharmacy" => $pharmacy]);
         }
 
-        if (Auth::user()->hasRole(["pharmacy", "doctor"]) && Auth::user()->pharmacy_id == $pharmacy->id) {
+        if (auth()->user()->hasRole(["pharmacy", "doctor"]) && auth()->user()->pharmacy_id == $pharmacy->id) {
             return view("pharmacy.show", ["pharmacy" => $pharmacy]);
         }
         abort(403, "You Are Not Authorized To View This Page");
@@ -92,11 +85,11 @@ class PharmacyController extends Controller
     {
         $areas = Area::all();
 
-        if (Auth::user()->hasRole("admin")) {
+        if (auth()->user()->hasRole("admin")) {
             return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
         }
 
-        if (Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id) {
+        if (auth()->user()->hasRole(["pharmacy"]) && auth()->user()->pharmacy_id == $pharmacy->id) {
             return view("pharmacy.edit", ["pharmacy" => $pharmacy, "areas" => $areas]);
         }
 
@@ -111,8 +104,8 @@ class PharmacyController extends Controller
 
 
         if (
-            Auth::user()->hasRole("admin") ||
-            (Auth::user()->hasRole(["pharmacy"]) && Auth::user()->pharmacy_id == $pharmacy->id)
+            auth()->user()->hasRole("admin") ||
+            (auth()->user()->hasRole(["pharmacy"]) && auth()->user()->pharmacy_id == $pharmacy->id)
         ) {
             if ($request->hasFile("avatar_image")) {
                 $path = $request->file("avatar_image")
