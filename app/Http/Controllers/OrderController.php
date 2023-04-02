@@ -7,10 +7,8 @@ use App\Models\Medicine;
 use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\Facades\DataTables;
+
 
 class OrderController extends Controller
 {
@@ -23,17 +21,16 @@ class OrderController extends Controller
         return $dataTable->render('orders.index');
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $users = User::all();
+        $clients = User::Role('doctor')->get();
         $doctors = User::Role('doctor')->get();
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
-        return view('orders.create' ,['users'=>$users , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
+        return view('orders.create',['users'=>$clients , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
     }
 
     /**
@@ -42,24 +39,23 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         $data = $request->all();
-
-        $UserId = User::all()->where('name' , $data['userName'] )->first()->id;
-        $DocId = User::all()->where('name' , $data['DocName'] )->first()->id;
-        $PharmacyId = Pharmacy::all()->where('name' , $data['PharmacyName'] )->first()->id;
+        $userId = User::all()->where('name', $data['userName'])->first()->id;
+        $docId = User::all()->where('name', $data['DocName'])->first()->id;
+        $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
         
         $med = $data['med'];
         $qty = $data['qty'];
         
         $order = Order::Create([
             'status'=> 3,
-            'pharmacy_id'=> $PharmacyId,
-            'user_id'=> $UserId,
-            'doctor_id'=> $DocId,
+            'pharmacy_id'=> $pharmacyId,
+            'user_id'=> $userId,
+            'doctor_id'=> $docId,
             'is_insured'=> $data['insured'],
 
         ]);
 
-        Order::createOrderMedicine($order , $med , $qty);
+        Order::createOrderMedicine($order, $med, $qty);
 
         // send email to user to notify him by price and change status to waiting (3)
 
@@ -73,7 +69,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
        
-        return view('orders.show' , ['order' =>$order]);
+        return view('orders.show', ['order' =>$order]);
     }
 
     /**
@@ -85,7 +81,7 @@ class OrderController extends Controller
         $users = User::all();
         $doctors = User::Role('doctor')->get();
         $pharmacy = Pharmacy::all();
-        return view('orders.edit' , ['order' =>$order ,'users'=>$users , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
+        return view('orders.edit', ['order' =>$order ,'users'=>$users , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
         
     }
 
@@ -97,10 +93,9 @@ class OrderController extends Controller
 
         $data = $request->all();
 
-        if(isset($data['status'])){
+        if (isset($data['status'])) {
 
             $order->status = $data['status'];
-
         }
 
         $order->update([
