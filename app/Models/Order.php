@@ -24,8 +24,7 @@ class Order extends Model
 
     public function medicines()
     {
-        return $this->belongsToMany(Medicine::class,'medicines_orders'
-            ,'order_id' ,'medicine_id')->withPivot('quantity');
+        return $this->belongsToMany(Medicine::class,'medicines_orders','order_id','medicine_id')->withPivot('quantity');
     }
 
     public function pharmacy()
@@ -88,24 +87,6 @@ class Order extends Model
                         return "Delivered";
                 }
             },
-            //
-            //            set: function (string $value) {
-            //
-            //                switch($value){
-            //                    case "New" :
-            //                        return 1;
-            //                    case "Processing" :
-            //                        return 2;
-            //                    case "Waiting":
-            //                        return 3;
-            //                    case "Cancelled":
-            //                        return 4 ;
-            //                    case "Confirmed":
-            //                        return 5 ;
-            //                    case "Delivered":
-            //                        return 6;
-            //                }
-            //            }
         );
     }
 }

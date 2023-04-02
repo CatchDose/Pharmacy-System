@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Summary of PostController
+ * Summary of OrderController
  */
 class OrderController extends Controller
 {
@@ -38,7 +38,9 @@ class OrderController extends Controller
 
         ]);
 
-        if ($request->hasFile('prescription')){
+
+        if ($request->hasFile('prescription')) {
+
 
             $files = $request->file('prescription');
 
@@ -56,11 +58,11 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
     
-    public function update(StoreOrderapiRequest $request, Order $order)
+    public function update(StoreOrderapiRequest $request , Order $order)
     {
         if ($order->status == 'New') {
 
-            if ($request->hasFile('prescription')) {
+            if ($request->hasFile('prescription')){
 
                 $directory = 'order-'.$order->id;
                 Storage::disk('prescription')->deleteDirectory($directory);
