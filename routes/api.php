@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-
+use App\Http\Controllers\Api\AddressController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,15 +21,17 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::post("register",[AuthController::class, 'register']);
-
-
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
 Route::group(["middleware"=>"auth:sanctum"],function (){
     Route::put('/users/{user}',[UserController::class, 'update']);
+    Route::put('/addresses/{address}',[AddressController::class, 'update']);
+    Route::get('/addresses/{user}',[AddressController::class, 'show']);
+    Route::delete('/addresses/{Address}',[AddressController::class, 'destroy']);
 
     Route::get('/orders' , [OrderController::class , 'index']);
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
+
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::put('/orders/{order}' , [OrderController::class , 'update']);
     Route::put('/users/{user}',[UserController::class, 'update']);
