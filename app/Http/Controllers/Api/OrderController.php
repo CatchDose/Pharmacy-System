@@ -16,18 +16,20 @@ use Illuminate\Support\Facades\Validator;
  */
 class OrderController extends Controller
 {
-    function index(){
+    public function index()
+    {
 
         $orders = Auth::user()->order ?? Order::all();
         return OrderResource::collection($orders);
     }
-    function show(Order $order){
+    public function show(Order $order)
+    {
 
         return new OrderResource($order);
     }
     
-    function store(StoreOrderapiRequest $request){
-
+    public function store(StoreOrderapiRequest $request)
+    {
         $order = Order::Create([
 
             'status'=> 1,
@@ -36,11 +38,11 @@ class OrderController extends Controller
 
         ]);
 
-        if($request->hasFile('prescription')){
+        if ($request->hasFile('prescription')){
 
             $files = $request->file('prescription');
 
-            foreach($files as $file){
+            foreach ($files as $file) {
 
                 $path = $file->store('order-'.$order->id , ['disk'=>'prescription']);
 
@@ -54,20 +56,20 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
     
-    function update(StoreOrderapiRequest $request , Order $order){
+    public function update(StoreOrderapiRequest $request, Order $order)
+    {
+        if ($order->status == 'New') {
 
-        if($order->status == 'New'){
-
-            if($request->hasFile('prescription')){
+            if ($request->hasFile('prescription')) {
 
                 $directory = 'order-'.$order->id;
-                $files = Storage::disk('prescription')->deleteDirectory($directory);
+                Storage::disk('prescription')->deleteDirectory($directory);
 
                 $files = $request->file('prescription');
     
-                foreach($files as $file){
+                foreach ($files as $file) {
     
-                    $path = $file->store('order-'.$order->id , ['disk'=>'prescription']);
+                    $path = $file->store('order-'.$order->id, ['disk'=>'prescription']);
 
                     $order->prescription()->delete();
 
