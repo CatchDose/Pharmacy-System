@@ -10,6 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Resources\RevenueResource;
+use App\Models\Pharmacy;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\URL;
+use Yajra\DataTables\EloquentDataTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +33,6 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
-Route::get('test',function(){
-
-    $emails =   App\Models\User::where("last_login", '<' , now()->subMonth(1)->toDateTimeString())
-                ->pluck("email")->toArray();
-    dd($emails);
-});
 
 
 Route::get('/email/verify', function () {
