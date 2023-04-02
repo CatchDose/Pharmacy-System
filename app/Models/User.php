@@ -38,7 +38,8 @@ class User extends Authenticatable implements BannableInterface,MustVerifyEmail
         "date_of_birth",
         "gender",
         "phone",
-        "pharmacy_id"
+        "pharmacy_id",
+        "last_login"
     ];
 
     /**

@@ -42,6 +42,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
         if(auth()->user()->hasRole("client"))
         {
             auth()->logout();
@@ -53,6 +54,11 @@ class LoginController extends Controller
             return  redirect()->route('login')
                     ->with('error', "Sorry, " . $user->name. " your account doesn't have privileges to login in.");
         }
+
+
+
+
+
     }
 
 }
