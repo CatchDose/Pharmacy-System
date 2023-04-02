@@ -38,7 +38,9 @@ class OrderController extends Controller
 
         ]);
 
+
         if ($request->hasFile('prescription')) {
+
 
             $files = $request->file('prescription');
 

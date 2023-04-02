@@ -30,7 +30,9 @@ class OrderController extends Controller
         $doctors = User::Role('doctor')->get();
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
+        
         return view('orders.create',['users'=>$clients , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
+
     }
 
     /**
@@ -42,6 +44,7 @@ class OrderController extends Controller
         $userId = User::all()->where('name', $data['userName'])->first()->id;
         $docId = User::all()->where('name', $data['DocName'])->first()->id;
         $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
+
         
         $med = $data['med'];
         $qty = $data['qty'];
@@ -57,7 +60,10 @@ class OrderController extends Controller
 
         Order::createOrderMedicine($order, $med, $qty);
 
+
         // send email to user to notify him by price and change status to waiting (3)
+        // $totalprice = $this::totalPrice($qty, $med);
+        // dd($totalprice);
 
         return to_route('orders.index');
 
@@ -117,5 +123,30 @@ class OrderController extends Controller
         
         $order->delete();
         return to_route('orders.index');
+    }
+
+    private static function totalPrice($qty, $med)
+    {
+
+        $total = 0;
+
+        for ($x = 0; $x < count($med); $x++) {
+
+            $price = Medicine::all()->where('name', $med[$x])->first()->price;
+            $total = $total + ($price * $qty[$x]);
+        }
+
+        return $total;
+    }
+
+    private static function createOrderMedicine($order, $med, $qty)
+    {
+
+        for ($x = 0; $x < count($med); $x++) {
+            
+            $id = Medicine::all()->where('name', $med[$x])->first()->id;
+            
+            $order->medicines($id)->attach($id, ['quantity' => $qty[$x]]);
+        }
     }
 }
