@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         return new OrderResource($order);
     }
-    
+
     public function store(StoreOrderapiRequest $request)
     {
         $order = Order::Create([
@@ -55,9 +55,10 @@ class OrderController extends Controller
             }
         }
 
+
         return new OrderResource($order);
     }
-    
+
     public function update(StoreOrderapiRequest $request , Order $order)
     {
         if ($order->status == 'New') {
@@ -68,9 +69,9 @@ class OrderController extends Controller
                 Storage::disk('prescription')->deleteDirectory($directory);
 
                 $files = $request->file('prescription');
-    
+
                 foreach ($files as $file) {
-    
+
                     $path = $file->store('order-'.$order->id, ['disk'=>'prescription']);
 
                     $order->prescription()->delete();
@@ -90,5 +91,5 @@ class OrderController extends Controller
         }
 
         return response()->json(['message'=>"your order is ".$order->status." you cant change it"] , 406);
-    } 
+    }
 }
