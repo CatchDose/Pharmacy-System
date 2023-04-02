@@ -46,10 +46,10 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $user = User::create($request->validated());
-        SendVerifyEmailJob::dispatch($user);
+//        SendVerifyEmailJob::dispatch($user);
 //        event(new Registered($user));
 
-
+        $user->assignRole("client");
         return new UserResource($user);
     }
 

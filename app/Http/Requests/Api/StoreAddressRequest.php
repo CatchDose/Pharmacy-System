@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAddressRequest extends FormRequest
+class StoreAddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,8 @@ class UpdateAddressRequest extends FormRequest
             'building_number' => ["required" , "numeric" , "max:999" , "min:1"],
             'floor_number' => ["required" , "numeric" , "max:40" , "min:1"],
             'flat_number' => ["required" , "numeric" , "max:999" , "min:1"],
-            'is_main' => ["required"],
-            'area' => ["required"]
+            'is_main' => ["required","numeric"],
+            'area' => ["required", "numeric"]
         ];
     }
 }

@@ -23,18 +23,20 @@ use App\Http\Controllers\Api\AddressController;
 Route::post("register",[AuthController::class, 'register']);
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
+
 Route::group(["middleware"=>"auth:sanctum"],function (){
     Route::put('/users/{user}',[UserController::class, 'update']);
+
+    Route::get('/addresses', [AddressController::class, 'index']);
+    Route::get('/addresses/{address}',[AddressController::class, 'show']);
     Route::put('/addresses/{address}',[AddressController::class, 'update']);
-    Route::get('/addresses/{user}',[AddressController::class, 'show']);
-    Route::delete('/addresses/{Address}',[AddressController::class, 'destroy']);
+    Route::post('/addresses',[AddressController::class , 'store']);
+    Route::delete('/addresses/{address}',[AddressController::class, 'destroy']);
 
     Route::get('/orders' , [OrderController::class , 'index']);
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
-
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::put('/orders/{order}' , [OrderController::class , 'update']);
-    Route::put('/users/{user}',[UserController::class, 'update']);
 
 });
 
