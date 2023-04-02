@@ -73,6 +73,7 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-ban
 
             Route::resource('users', UserController::class);
             Route::resource('areas', AreaController::class);
+            Route::post('/orders/{order}/assign' ,[OrderController::class, 'assign'])->name("orders.assign");
 
         }
     );

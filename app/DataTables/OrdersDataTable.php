@@ -33,7 +33,7 @@ class OrdersDataTable extends DataTable
         </form>
         </div>')
             ->addColumn('Pharmacy', function(Order $order){
-                return $order->pharmacy->name;
+                return $order->pharmacy->name ?? "";
             })
             ->addColumn('User', function(Order $order){
                 return $order->user->name;
