@@ -22,7 +22,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form>
+        
             <div class="card-body">
 
                 <div class="form-group">
@@ -37,12 +37,12 @@
 
                 <div class="form-group">
                     <label for="user-name">Pharmacy</label>
-                    <input type="text" value="{{$order->pharmacy->name}}" class="form-control" disabled>
+                    <input type="text" value="{{$order->pharmacy->name ?? ''}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="user-name">Doctor ID</label>
-                    <input type="text" value="{{$order->doctor->id}}" class="form-control" disabled>
+                    <input type="text" value="{{$order->doctor->id ?? ''}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
@@ -50,10 +50,84 @@
                     <input type="text" value="{{$order->status}}" class="form-control" disabled>
                 </div>
 
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                    @foreach($prescriptions as $prescription)
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$loop->index}}" @if ($loop->first) aria-current="true" class="active" @endif aria-label="Slide {{$loop->iteration}}"></button>
+                    @endforeach
+                    </div>
+                    <div class="carousel-inner">
+                        @foreach($prescriptions as $prescription)
+                        <div class="carousel-item @if($loop->first) active @endif">
+                            <img src="{{asset('storage/prescription/'.$prescription->path)}}" class="d-block w-100" alt="prescription image">
+                        </div>
+                        @endforeach
+                        
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    </div>
+
+                @if($order->medicines == null)
+                <form action="{{route('orders.assign' , $order->id)}}" method="POST" enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="form-group">
+
+                  <label for="med[]" class="form-label">Medicine</label>
+
+                  <select class="js-example-basic-multiple select2 @error('med[]') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
+                      
+                    @foreach($medicines as $medicine)
+
+                      <option value="{{$medicine->id}}">{{$medicine->name}}</option>
+
+                    @endforeach
+
+                  </select>
+
+                  @error('med[]')
+                      <span class="invalid-feedback fs-6" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+                  </div>
+
+                  <div class="form-group">
+                    <label for="qty[]" class="form-label">Qty</label>
+
+                    <select class="js-example-basic-multiple select2 @error('qty[]') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
+                        
+                    @for($x=1;$x<=10;$x++)
+                        <option value="{{$x}}">{{$x}}</option>
+                    @endfor
+                    </select>
+
+                    @error('qty[]')
+                      <span class="invalid-feedback fs-6" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
+                  </div>
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-dark w-100">Assign</button>
+                  </div>
+
+                </form>
+                @endif
+
             </div>
             <!-- /.card-body -->
 
-        </form>
     </div>
 
 @endsection

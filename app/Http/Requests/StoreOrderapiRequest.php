@@ -24,8 +24,6 @@ class StoreOrderapiRequest extends FormRequest
     public function rules(): array
     {
 
-        dd(auth()->user()->address->id);
-
         return [
 
             'is_insured'=>['required'],

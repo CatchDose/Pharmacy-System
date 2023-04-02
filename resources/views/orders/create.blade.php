@@ -56,7 +56,7 @@
                       
                     @foreach($medicine as $med)
 
-                      <option value="{{$med->name}}">{{$med->name}}</option>
+                      <option value="{{$med->id}}">{{$med->name}}</option>
 
                     @endforeach
 

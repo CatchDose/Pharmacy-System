@@ -50,7 +50,6 @@ class OrderController extends Controller
         $qty = $data['qty'];
 
         $order = Order::Create([
-            'status'=> 3,
             'pharmacy_id'=> $pharmacyId,
             'user_id'=> $userId,
             'doctor_id'=> $docId,
@@ -74,8 +73,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $medicine = Medicine::all();
+        $prescriptions = $order->prescription;
+        return view('orders.show', ['order' =>$order , 'medicines'=>$medicine , 'prescriptions'=>$prescriptions]);
 
-        return view('orders.show', ['order' =>$order]);
     }
 
     /**
@@ -125,6 +126,24 @@ class OrderController extends Controller
         return to_route('orders.index');
     }
 
+    /**
+     * assign medicine to new orders.
+     */
+
+     public function assign(StoreOrderRequest $request, Order $order)
+     {
+         
+        $med = $request->med;
+        $qty = $request->qty;
+        self::createOrderMedicine($order, $med, $qty);
+
+        // send email to user to notify him by price and change status to waiting (3)
+        // $totalprice = $this::totalPrice($qty, $med);
+        // dd($totalprice);
+
+        return to_route('orders.index');
+     }
+
     private static function totalPrice($qty, $med)
     {
 
@@ -142,11 +161,16 @@ class OrderController extends Controller
     private static function createOrderMedicine($order, $med, $qty)
     {
 
-        for ($x = 0; $x < count($med); $x++) {
+        foreach ($med as $key=>$value) {
+            
+            $order->medicines($value)->attach($value, ['quantity' => $qty[$key]]);
 
-            $id = Medicine::all()->where('name', $med[$x])->first()->id;
-
-            $order->medicines($id)->attach($id, ['quantity' => $qty[$x]]);
         }
+
+        $order->update([
+            
+            'status'=>3,
+            'doctor_id'=> auth()->user()->hasRole('doctor')  ? auth()->id : null,
+        ]);
     }
 }
