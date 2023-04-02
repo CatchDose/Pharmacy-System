@@ -108,30 +108,4 @@ class Order extends Model
             //            }
         );
     }
-
-
-    public static function totalPrice($qty, $med)
-    {
-
-        $total = 0;
-
-        for ($x = 0; $x < count($med); $x++) {
-
-            $price = Medicine::all()->where('name', $med[$x])->first()->price;
-            $total = $total + ($price * $qty[$x]);
-        }
-
-        return $total;
-    }
-
-    public static function createOrderMedicine($order, $med, $qty)
-    {
-
-        for ($x = 0; $x < count($med); $x++) {
-
-            $id = Medicine::all()->where('name', $med[$x])->first()->id;
-
-            $order->medicines($id)->attach(1, ['quantity' => $qty[$x]]);
-        }
-    }
 }
