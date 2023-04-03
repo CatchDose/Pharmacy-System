@@ -77,13 +77,13 @@
                 <div class="form-group">
                     <label for="is_main">Is this your main Address?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" value="yes">
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" value="1">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2" value="no">
+                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2" value="0">
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>

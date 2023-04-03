@@ -28,10 +28,10 @@ class Address extends Model
         return $this->belongsTo(Area::class,'area_id');
     }
 
-//    protected function isMain(): Attribute
-//    {
-//        return Attribute::make(
-//            get: fn (string $value) => $value == "1" ? "Yes" : "No",
-//        );
-//    }
+    protected function isMain(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => $value == "1" ? "Yes" : "No",
+        );
+    }
 }
