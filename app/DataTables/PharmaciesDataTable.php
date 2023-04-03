@@ -33,16 +33,23 @@ class PharmaciesDataTable extends DataTable
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                     </form>
-                </div>')
-            ->setRowId('id')->addColumn('owner_name', function (Pharmacy $pharmacy) {
+                </div>')->setRowId('id')
+            ->addColumn('owner_name', function (Pharmacy $pharmacy) {
                 return $pharmacy->owner->name;
+            })->addColumn("avatar_image", function (Pharmacy $pharmacy){
+                return '
+                    <div class="user-panel  d-flex">
+                        <div class="image">
+                            <img src="'.asset("/storage/avatars/".$pharmacy->owner->avatar_image).'" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                    </div>';
             })->addColumn('area_name', function (Pharmacy $pharmacy) {
                 return $pharmacy->area->name;
             })->addColumn('phone', function (Pharmacy $pharmacy) {
                 return $pharmacy->owner->phone;
             })->addColumn('email', function (Pharmacy $pharmacy) {
                 return $pharmacy->owner->email;
-            });
+            })->rawColumns(['avatar_image', 'action']);
     }
 
     /**
@@ -82,6 +89,7 @@ class PharmaciesDataTable extends DataTable
     {
         return [
             Column::make('id'),
+            Column::computed("avatar_image"),
             Column::make('name'),
             Column::make('area_name'),
             Column::make('owner_name'),

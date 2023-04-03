@@ -20,7 +20,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-        
+
         return $dataTable->render('orders.index');
     }
 
@@ -34,8 +34,7 @@ class OrderController extends Controller
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
 
-        return view('orders.create',['users'=>$clients , 'medicine'=>$medicine , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
-
+        return view('orders.create', ['users' => $clients, 'medicine' => $medicine, 'pharmacy' => $pharmacy, 'doctors' => $doctors]);
     }
 
     /**
@@ -54,10 +53,10 @@ class OrderController extends Controller
         $qty = $data['qty'];
 
         $order = Order::Create([
-            'status'=> 3,
-            'pharmacy_id'=> $pharmacyId,
-            'user_id'=> $userId,
-            'is_insured'=> $data['insured'],
+            'status' => 3,
+            'pharmacy_id' => $pharmacyId,
+            'user_id' => $userId,
+            'is_insured' => $data['insured'],
         ]);
 
         self::createOrderMedicine($order, $med, $qty);
@@ -68,7 +67,6 @@ class OrderController extends Controller
         // dd($totalprice);
 
         return to_route('orders.index');
-
     }
 
     /**
@@ -78,8 +76,7 @@ class OrderController extends Controller
     {
         $medicine = Medicine::all();
         $prescriptions = $order->prescription;
-        return view('orders.show', ['order' =>$order , 'medicines'=>$medicine , 'prescriptions'=>$prescriptions]);
-
+        return view('orders.show', ['order' => $order, 'medicines' => $medicine, 'prescriptions' => $prescriptions]);
     }
 
     /**
@@ -91,8 +88,7 @@ class OrderController extends Controller
         $users = User::all();
         $doctors = User::Role('doctor')->get();
         $pharmacy = Pharmacy::all();
-        return view('orders.edit', ['order' =>$order ,'users'=>$users , 'pharmacy'=>$pharmacy , 'doctors'=>$doctors]);
-
+        return view('orders.edit', ['order' => $order, 'users' => $users, 'pharmacy' => $pharmacy, 'doctors' => $doctors]);
     }
 
     /**
@@ -110,9 +106,9 @@ class OrderController extends Controller
 
         $order->update([
 
-            'is_insured'=>$data['is_insured'],
+            'is_insured' => $data['is_insured'],
             // 'pharmacy_id'=>$data['pharmacy_id'],
-            'user_id'=>$data['user_id'],
+            'user_id' => $data['user_id'],
 
         ]);
 
@@ -134,22 +130,22 @@ class OrderController extends Controller
      * assign medicine to new orders.
      */
 
-     public function assign(StoreOrderRequest $request, Order $order)
-     {
+    public function assign(StoreOrderRequest $request, Order $order)
+    {
+
         $size = count($request->med);
         $request->validate([
-            'qty[]' => 'size:'.$size,
+            'qty[]' => 'size:' . $size,
         ]);
         $med = $request->med;
         $qty = $request->qty;
         self::createOrderMedicine($order, $med, $qty);
-
         // send email to user to notify him by price and change status to waiting (3)
         // $totalprice = $this::totalPrice($qty, $med);
         // dd($totalprice);
 
         return to_route('orders.index');
-     }
+    }
 
     private static function totalPrice($qty, $med)
     {
@@ -168,16 +164,15 @@ class OrderController extends Controller
     private static function createOrderMedicine($order, $med, $qty)
     {
 
-        foreach ($med as $key=>$value) {
-            
-            $order->medicines($value)->attach($value, ['quantity' => $qty[$key]]);
+        foreach ($med as $key => $value) {
 
+            $order->medicines($value)->attach($value, ['quantity' => $qty[$key]]);
         }
 
         $order->update([
-            
-            'status'=>3,
-            'doctor_id'=> auth()->user()->hasRole('doctor')  ? auth()->id : null,
+
+            'status' => 3,
+            'doctor_id' => auth()->user()->hasRole('doctor')  ? auth()->id : null,
         ]);
     }
 }

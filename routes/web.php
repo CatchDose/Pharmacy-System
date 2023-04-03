@@ -29,13 +29,12 @@ use App\Http\Controllers\AddressController;
 |
 */
 
-Route::get("/test2",function (){
-    $orders=Order::where("status",1)->get();
-    foreach($orders as $order){
-        $orderArea=$order->user->addresses()->where("is_main",1)->first()->id;
-        $order->pharmacy_id=Pharmacy::where("area_id",$orderArea)->orderby("priority","desc")->first()->id;
+Route::get("/test2", function () {
+    $orders = Order::where("status", 1)->get();
+    foreach ($orders as $order) {
+        $orderArea = $order->user->addresses()->where("is_main", 1)->first()->id;
+        $order->pharmacy_id = Pharmacy::where("area_id", $orderArea)->orderby("priority", "desc")->first()->id;
         $order->save();
-
     }
 });
 
@@ -48,7 +47,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
     $request->fulfill();
     return Redirect()->route("index");
-})->middleware(["auth",'signed'])->name('verification.verify');
+})->middleware(["auth", 'signed'])->name('verification.verify');
 
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -58,7 +57,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-banned-user","verified"]], function () {
+Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-banned-user", "verified"]], function () {
 
     Route::get('/', [IndexController::class, "index"])->name("index");
 
@@ -74,8 +73,6 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-ban
 
             Route::resource('users', UserController::class);
             Route::resource('areas', AreaController::class);
-            Route::post('/orders/{order}/assign' ,[OrderController::class, 'assign'])->name("orders.assign");
-
         }
     );
     Route::group(
@@ -106,6 +103,7 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-ban
 
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
+    Route::post('/orders/{order}/assign', [OrderController::class, 'assign'])->name("orders.assign");
 
     /*================================== start doctors route ================================= */
 
@@ -120,4 +118,4 @@ Route::group(["middleware" => ["auth","role:admin|pharmacy|doctor","logs-out-ban
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
 });
 
-Auth::routes(['register' => false,'verify' => true]);
+Auth::routes(['register' => false, 'verify' => true]);
