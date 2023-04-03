@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\OrdersDataTable;
+use App\Mail\ConfirmPrice;
+use App\Mail\ConfirmPriceMail;
 use App\Models\Medicine;
 use App\Models\Order;
 use App\Models\Pharmacy;
@@ -10,8 +12,7 @@ use App\Models\User;
 use App\Http\Requests\StoreOrderRequest;
 use App\Rules\SameArraySize;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -44,7 +45,6 @@ class OrderController extends Controller
     {
 
         $data = $request->all();
-        // dd($data);
         $userId = User::all()->where('name', $data['userName'])->first()->id;
         $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
 
@@ -61,10 +61,13 @@ class OrderController extends Controller
 
         self::createOrderMedicine($order, $med, $qty);
 
+        // $url = route('test');
+        // $totalPrice = $this::totalPrice($qty, $med);
+        // $orderInfo = self::buildOrderInfo($med ,$qty );
 
-        // send email to user to notify him by price and change status to waiting (3)
-        // $totalprice = $this::totalPrice($qty, $med);
-        // dd($totalprice);
+        // Mail::to("hoda.yossiv@gmail.com")
+        // ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
+        
 
         return to_route('orders.index');
     }
@@ -140,22 +143,26 @@ class OrderController extends Controller
         $med = $request->med;
         $qty = $request->qty;
         self::createOrderMedicine($order, $med, $qty);
-        // send email to user to notify him by price and change status to waiting (3)
-        // $totalprice = $this::totalPrice($qty, $med);
-        // dd($totalprice);
+
+        $url = url('/');
+        $totalPrice = $this::totalPrice($qty, $med);
+        $orderInfo = self::buildOrderInfo($med ,$qty );
+
+        Mail::to("omaralaa0989@gmail.com")
+        ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
 
         return to_route('orders.index');
     }
 
-    private static function totalPrice($qty, $med)
+    private static function totalPrice($qty, $medicines)
     {
 
         $total = 0;
 
-        for ($x = 0; $x < count($med); $x++) {
+        foreach ($medicines as $index => $medicine) {
 
-            $price = Medicine::all()->where('name', $med[$x])->first()->price;
-            $total = $total + ($price * $qty[$x]);
+            $price = Medicine::find($medicine)->price;
+            $total = $total + ($price * $qty[$index]);
         }
 
         return $total;
@@ -174,5 +181,19 @@ class OrderController extends Controller
             'status' => 3,
             'doctor_id' => auth()->user()->hasRole('doctor')  ? auth()->id : null,
         ]);
+    }
+
+    private static function buildOrderInfo ($medicines, $quantity)
+    {
+        $orderInfo = [];
+        foreach ($medicines as $index => $medicine) {
+            $medicine = Medicine::find($medicine);
+            $orderInfo[] = [
+                'medicine' => $medicine->name,
+                'quantity'=> $quantity[$index],
+                'price'=> $medicine->price * $quantity[$index],
+            ];
+        }
+        return $orderInfo ;
     }
 }

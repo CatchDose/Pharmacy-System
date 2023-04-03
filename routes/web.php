@@ -36,7 +36,7 @@ Route::get("/test2", function () {
         $order->pharmacy_id = Pharmacy::where("area_id", $orderArea)->orderby("priority", "desc")->first()->id;
         $order->save();
     }
-});
+})->name('test');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
