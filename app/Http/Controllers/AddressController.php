@@ -24,18 +24,11 @@ class AddressController extends Controller
     }
 
     public function store(StoreAddressRequest $request) {
-        $userId = Auth::user()->id;
-        $userAddresses = User::find($userId)->addresses;
-        $hasMain = false;
-        foreach ($userAddresses as $userAddress) {
-            if ( $userAddress->is_main == 'Yes') {
-                $hasMain = true;
-                $request->is_main = 0 ;
-                break;
-            }
-        }
-        if ( !$hasMain ){
-            $request->is_main = 1;
+        $userId = $request->user;
+        $previousAddressIsMain = Address::where('user_id',$userId)->where('is_main', 1)->first();
+        if ( $request->input('is_main') == 1 && !empty($previousAddressIsMain) ) {
+            $previousAddressIsMain->is_main = 0;
+            $previousAddressIsMain->save();
         }
         Address::create([
            'street_name' => $request->street_name,
@@ -44,7 +37,7 @@ class AddressController extends Controller
             'flat_number' => $request->flat_number,
             'is_main' => $request->is_main,
             'area_id' => $request->input('area'),
-            'user_id' => $request->input('user')
+            'user_id' => $userId
         ]);
 
         return redirect()->route('addresses.index');
