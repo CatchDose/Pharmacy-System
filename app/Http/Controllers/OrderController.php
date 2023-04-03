@@ -8,6 +8,9 @@ use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
 use App\Http\Requests\StoreOrderRequest;
+use App\Rules\SameArraySize;
+use Illuminate\Http\Request;
+
 
 
 class OrderController extends Controller
@@ -17,7 +20,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-
+        
         return $dataTable->render('orders.index');
     }
 
@@ -26,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $clients = User::Role('doctor')->get();
+        $clients = User::Role('client')->get();
         $doctors = User::Role('doctor')->get();
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
@@ -40,9 +43,10 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+
         $data = $request->all();
+        // dd($data);
         $userId = User::all()->where('name', $data['userName'])->first()->id;
-        $docId = User::all()->where('name', $data['DocName'])->first()->id;
         $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
 
 
@@ -50,11 +54,10 @@ class OrderController extends Controller
         $qty = $data['qty'];
 
         $order = Order::Create([
+            'status'=> 3,
             'pharmacy_id'=> $pharmacyId,
             'user_id'=> $userId,
-            'doctor_id'=> $docId,
             'is_insured'=> $data['insured'],
-
         ]);
 
         self::createOrderMedicine($order, $med, $qty);
@@ -108,7 +111,7 @@ class OrderController extends Controller
         $order->update([
 
             'is_insured'=>$data['is_insured'],
-            'pharmacy_id'=>$data['pharmacy_id'],
+            // 'pharmacy_id'=>$data['pharmacy_id'],
             'user_id'=>$data['user_id'],
 
         ]);
@@ -121,8 +124,9 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-
-        $order->delete();
+        if (auth()->user()->hasRole('admin')) {
+            $order->delete();
+        }
         return to_route('orders.index');
     }
 
@@ -132,7 +136,10 @@ class OrderController extends Controller
 
      public function assign(StoreOrderRequest $request, Order $order)
      {
-         
+        $size = count($request->med);
+        $request->validate([
+            'qty[]' => 'size:'.$size,
+        ]);
         $med = $request->med;
         $qty = $request->qty;
         self::createOrderMedicine($order, $med, $qty);
