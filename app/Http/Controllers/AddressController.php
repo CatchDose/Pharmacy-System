@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use Illuminate\Support\Facades\Auth;
+
 class AddressController extends Controller
 {
     public function index (AddressesDataTable $dataTable) {
@@ -22,15 +24,25 @@ class AddressController extends Controller
     }
 
     public function store(StoreAddressRequest $request) {
-        $is_main = NULL;
-        if ($request->is_main == 'yes') $is_main = 1 ;
-        else $is_main = 0 ;
+        $userId = Auth::user()->id;
+        $userAddresses = User::find($userId)->addresses;
+        $hasMain = false;
+        foreach ($userAddresses as $userAddress) {
+            if ( $userAddress->is_main == 'Yes') {
+                $hasMain = true;
+                $request->is_main = 0 ;
+                break;
+            }
+        }
+        if ( !$hasMain ){
+            $request->is_main = 1;
+        }
         Address::create([
            'street_name' => $request->street_name,
             'building_number' => $request->building_number,
             'floor_number' => $request->floor_number,
             'flat_number' => $request->flat_number,
-            'is_main' => $is_main,
+            'is_main' => $request->is_main,
             'area_id' => $request->input('area'),
             'user_id' => $request->input('user')
         ]);
@@ -50,15 +62,23 @@ class AddressController extends Controller
 
     public function update(UpdateAddressRequest $request, Address $address) {
 
+        $userId = $address->user_id;
+        $previousAddressIsMain = Address::where('user_id',$userId)->where('is_main', 1)->first();
+        if ( $request->input('is_main') == 1 && !empty($previousAddressIsMain) ) {
+            $previousAddressIsMain->is_main = 0;
+            $previousAddressIsMain->save();
+        }
+
         $address->update([
             'street_name' => $request->street_name,
             'building_number' => $request->building_number,
             'floor_number' => $request->floor_number,
             'flat_number' => $request->flat_number,
-            'is_main' => $request->is_main,
-            'area_id' => $request->area_id,
-            'user_id' => $request->user_id
+            'is_main' => $request->input('is_main'),
+            'area_id' => $request->area,
+            'user_id' => $request->user
         ]);
+        return redirect()->route('addresses.index');
     }
 
     public function destroy(Address $address) {
