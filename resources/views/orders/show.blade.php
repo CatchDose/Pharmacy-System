@@ -26,31 +26,33 @@
             <div class="card-body">
 
                 <div class="form-group">
-                    <label for="user-name">User Name</label>
+                    <label>User Name</label>
                     <input type="text" value="{{$order->user->name}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label for="user-name">Is Insured ?</label>
+                    <label>Is Insured ?</label>
                     <input type="text" value="{{$order->is_insured}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label for="user-name">Pharmacy</label>
+                    <label>Pharmacy</label>
                     <input type="text" value="{{$order->pharmacy->name ?? ''}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label for="user-name">Doctor ID</label>
+                    <label>Doctor ID</label>
                     <input type="text" value="{{$order->doctor->id ?? ''}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label for="user-name">Status</label>
+                    <label>Status</label>
                     <input type="text" value="{{$order->status}}" class="form-control" disabled>
                 </div>
 
+                
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <label>Client Prescription</label>
                     <div class="carousel-indicators">
                     @foreach($prescriptions as $prescription)
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$loop->index}}" @if ($loop->first) aria-current="true" class="active" @endif aria-label="Slide {{$loop->iteration}}"></button>
@@ -59,7 +61,7 @@
                     <div class="carousel-inner">
                         @foreach($prescriptions as $prescription)
                         <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{asset('storage/prescription/'.$prescription->path)}}" class="d-block w-100" alt="prescription image">
+                            <img src="{{asset($prescription->path)}}" class="d-block w-100" alt="prescription image">
                         </div>
                         @endforeach
                         
@@ -74,7 +76,8 @@
                     </button>
                     </div>
 
-                @if($order->medicines == null)
+                @if(count($order->medicines)== 0)
+                <label class="text-danger fs-4 mt-4">Please Insert client Medicine</label>
                 <form action="{{route('orders.assign' , $order->id)}}" method="POST" enctype="multipart/form-data">
 
                 @csrf
@@ -118,9 +121,7 @@
 
                   </div>
 
-                  <div class="card-footer">
-                    <button type="submit" class="btn btn-dark w-100">Assign</button>
-                  </div>
+                <button type="submit" class="btn btn-dark w-100">Assign</button>
 
                 </form>
                 @endif

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule\SameArraySize;
 
 class StoreOrderRequest extends FormRequest
 {
@@ -21,18 +24,26 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd('validation class');
+        $size = $this->input("med") ? count($this->input("med")) : 0;
+
+        
         return [
-            'qty[]'=>[ 'array' , 'min:1'],
-            'med[]'=>[ 'array' , 'min:1'],
+            'med'=>['required' , Rule::exists('medicines')->where(function ($medicines) {
+                // foreach($medicines as $medicine)
+                //  $query->where('id', 1);
+                dd($medicines->where('id' , 1));
+            })],
+            'qty'=>['required' , 'size:'.$size],
         ];
     }
 
     public function messages(): array
 {
     return [
-        'qty[].required' => 'Please Check Your QTY Field is required',
-        'med[].required' => 'Please Check Your Medicine Field is required',
+        'qty.size' => 'Please Provide A Quantity For Each Medicine ',
+        'qty.required' => 'Please Check Your QTY Field is required',
+        'med.required' => 'Please Check Your Medicine Field is required',
+        'med.exists' => 'Please Create Medicine First',
     ];
 }
 }

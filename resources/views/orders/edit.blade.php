@@ -33,15 +33,15 @@
                 <div class="form-group" data-select2-id="13">
                     <label for="status">status</label>
                     <select name="status" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                        <option>{{$order->status}}</option>
-                        <option>Waiting</option>
-                        <option>Cancelled</option>
-                        <option>Delivered</option>
+                        <option value="2" {{$order->status == 'Processing' ? 'selected': ""}}>Processing</option>
+                        <option value='3' {{$order->status == 'Waiting' ? 'selected': ""}}>Waiting</option>
+                        <option value='4' {{$order->status == 'Cancelled' ? 'selected': ""}} >Cancelled</option>
+                        <option value='6' {{$order->status == 'Delivered' ? 'selected': ""}}>Delivered</option>
                     </select>
                 </div>
                 @endif
 
-                @if(!Auth::user()->hasRole('doctor' , 'user'))
+                @if(!Auth::user()->hasRole('doctor'))
                     
                 <div class="form-group">
                     <label >Change Client Name</label>
@@ -74,14 +74,14 @@
                 @endif
 
              </div>
+             <!-- /.card-body -->
+ 
+             <div class="card-footer">
+                 <button type="submit" class="btn btn-dark w-100">Update</button>
+             </div>
 
             @endif
                 
-            <!-- /.card-body -->
-
-            <div class="card-footer">
-                <button type="submit" class="btn btn-dark w-100">Update</button>
-            </div>
         </form>
     </div>
 

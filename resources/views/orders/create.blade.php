@@ -35,7 +35,6 @@
                     <option>{{$user->name}}</option>
                     @endforeach
                   </select>
-                  <!-- </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-o8pk-container"><span class="select2-selection__rendered" id="select2-o8pk-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
                 </div>
 
                 <div class="form-group" data-select2-id="13">
@@ -46,13 +45,12 @@
                     <option>No</option>
                    
                   </select>
-                  <!-- </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-o8pk-container"><span class="select2-selection__rendered" id="select2-o8pk-container" role="textbox" aria-readonly="true" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
                 </div>
 
                 <div class="form-group">
                   <label for="med[]" class="form-label">Medicine</label>
 
-                  <select class="js-example-basic-multiple select2 @error('med[]') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
+                  <select class="js-example-basic-multiple select2 @error('med') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
                       
                     @foreach($medicine as $med)
 
@@ -62,7 +60,7 @@
 
                   </select>
 
-                  @error('med[]')
+                  @error('med')
                       <span class="invalid-feedback fs-6" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
@@ -72,14 +70,15 @@
                   <div class="form-group">
                     <label for="qty[]" class="form-label">Qty</label>
 
-                    <select class="js-example-basic-multiple select2 @error('qty[]') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
+                    <select class="js-example-basic-multiple select2 @error('qty') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
                         
                     @for($x=1;$x<=10;$x++)
                         <option value="{{$x}}">{{$x}}</option>
                     @endfor
+                    
                     </select>
 
-                    @error('qty[]')
+                    @error('qty')
                       <span class="invalid-feedback fs-6" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
@@ -110,6 +109,7 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-dark w-100">Create</button>
             </div>
+
         </form>
     </div>
 

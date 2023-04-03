@@ -20,33 +20,50 @@ class OrdersDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
+
+    function action ($id) {
+        if (auth()->user()->hasRole('admin')) {
+
+            return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit",$id).'"> edit </a>
+                    <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show",$id).'"> show </a>
+                    <form method="post" class="delete_item"  id="option_a3" action="'.Route("orders.destroy",$id).'">
+                    <input type="hidden" name="_token" value="' .csrf_token(). '">
+                    <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_'.$id.'" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                    </form>
+                    </div>' ;
+
+        }else {
+
+           return  '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit",$id).'"> edit </a>
+                    <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show",$id).'"> show </a>
+                    </div>' ;
+
+        }
+    }
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-        ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <a class="btn btn-success" id="option_a1" href="{{Route("orders.edit",$id)}}"> edit </a>
-        <a class="btn btn-primary" id="option_a2" href="{{Route("orders.show",$id)}}"> show </a>
-        <form method="post" class="delete_item"  id="option_a3" action="{{Route("orders.destroy",$id)}}">
-            @csrf
-            @method("DELETE")
-            <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
-        </form>
-        </div>')
-            ->addColumn('Pharmacy', function(Order $order){
+        
+        return(new EloquentDataTable($query))
+
+            ->addColumn('action', function (Order $order) {
+                return $this->action($order->id);
+            })
+
+            ->addColumn('Pharmacy', function (Order $order) {
                 return $order->pharmacy->name ?? "";
             })
-            ->addColumn('User', function(Order $order){
+            ->addColumn('User', function (Order $order) {
                 return $order->user->name;
             })
-            ->addColumn('creatorType', function(Order $order){
+            ->addColumn('creatorType', function (Order $order) {
                 return $order->user->getRoleNames()[0];
             })
-            // ->addColumn('Address', function(Order $order){
-            //     return $order->user->addresses->street_name;
-            // })
-            // ->addColumn('Doctor', function(Order $order){
-            //     return $order->doctor->user_id;
-            // })
+            ->addColumn('Address', function (Order $order) {
+                return $order->user->addresses()->where('is_main' , 1)->first()->street_name ?? "";
+            })
             ->setRowId('id');
     }
 
@@ -90,23 +107,24 @@ class OrdersDataTable extends DataTable
     {
 
         $isAdmin = Auth::user()->hasRole('admin') ??  false ;
+        
             return [
 
                 Column::make('id')->addClass('text-center'),
                 Column::make('status')->addClass('text-center'),
                 Column::make('is_insured')->addClass('text-center'),
-                Column::computed('User' , 'Client Name')->addClass('text-center'),
-                Column::computed('Pharmacy' , 'Assigned Pharmacy')->visible($isAdmin)->addClass('text-center'),
-                Column::computed('creatorType' , 'Creator Type')->visible($isAdmin)->addClass('text-center'),
-                // Column::computed('Address' , 'User Address')->addClass('text-center'),
+                Column::computed('User', 'Client Name')->addClass('text-center'),
+                Column::computed('Pharmacy', 'Assigned Pharmacy')->visible($isAdmin)->addClass('text-center'),
+                Column::computed('creatorType', 'Creator Type')->visible($isAdmin)->addClass('text-center'),
+                Column::computed('Address', 'User Address')->addClass('text-center'),
                 Column::make('doctor_id')->addClass('text-center'),
                 Column::make('created_at')->addClass('text-center'),
+
                 Column::computed('action')
                       ->exportable(false)
                       ->printable(false)
                       ->width(70)
                       ->addClass('text-center')
-                      ->visible($isAdmin),
             ];
 
     }
