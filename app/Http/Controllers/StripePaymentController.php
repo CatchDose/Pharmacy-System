@@ -30,9 +30,9 @@ class StripePaymentController extends Controller
             'status' => 5
         ]);
 
-        Session::flash('success', 'Payment successful!');
+//        Session::flash('success', 'Payment successful!');
 
-        return back();
+        return redirect()->route("index");
     }
 
 }
