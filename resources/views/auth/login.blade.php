@@ -92,7 +92,7 @@
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
-                <a href="#">I forgot my password</a>
+                <a href="{{route('forgot')}}">I forgot my password</a>
             </p>
 
         </div>
