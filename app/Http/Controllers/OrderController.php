@@ -186,7 +186,7 @@ class OrderController extends Controller
         $order->update([
 
             'status' => 3,
-            'doctor_id' => auth()->user()->hasRole('doctor')  ? auth()->id : null,
+            'doctor_id' => auth()->user()->hasRole('doctor')  ? auth()->id() : null,
         ]);
     }
 
