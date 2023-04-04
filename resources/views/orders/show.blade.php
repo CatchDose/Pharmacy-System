@@ -51,15 +51,15 @@
                 </div>
 
                 
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselExampleControls" class="carousel slide w-50 h-50" data-bs-ride="carousel">
                 <label>Client Prescription</label>
                     <div class="carousel-indicators">
                     @foreach($prescriptions as $prescription)
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$loop->index}}" @if ($loop->first) aria-current="true" class="active" @endif aria-label="Slide {{$loop->iteration}}"></button>
                     @endforeach
                     </div>
-                    <div class="carousel-inner">
-                        @foreach($prescriptions as $prescription)
+                    <div class="carousel-inner ">
+                        @foreach($prescriptions as $prescription) 
                         <div class="carousel-item @if($loop->first) active @endif">
                             <img src="{{asset($prescription->path)}}" class="d-block w-100" alt="prescription image">
                         </div>
@@ -86,7 +86,7 @@
 
                   <label for="med[]" class="form-label">Medicine</label>
 
-                  <select class="js-example-basic-multiple select2 @error('med[]') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
+                  <select class="js-example-basic-multiple select2 @error('med') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
                       
                     @foreach($medicines as $medicine)
 
@@ -96,7 +96,7 @@
 
                   </select>
 
-                  @error('med[]')
+                  @error('med')
                       <span class="invalid-feedback fs-6" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
@@ -106,14 +106,14 @@
                   <div class="form-group">
                     <label for="qty[]" class="form-label">Qty</label>
 
-                    <select class="js-example-basic-multiple select2 @error('qty[]') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
+                    <select class="js-example-basic-multiple select2 @error('qty') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
                         
                     @for($x=1;$x<=10;$x++)
                         <option value="{{$x}}">{{$x}}</option>
                     @endfor
                     </select>
 
-                    @error('qty[]')
+                    @error('qty')
                       <span class="invalid-feedback fs-6" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>

@@ -59,7 +59,7 @@ class OrdersDataTable extends DataTable
                 return $order->user->name;
             })
             ->addColumn('creatorType', function (Order $order) {
-                return $order->user->getRoleNames()[0];
+                return $order->user->getRoleNames()[0] ?? "";
             })
             ->addColumn('Address', function (Order $order) {
                 return $order->user->addresses()->where('is_main' , 1)->first()->street_name ?? "";

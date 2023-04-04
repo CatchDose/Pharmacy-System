@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreAddressRequest;
+use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class AddressController extends Controller
             $previousAddressIsMain->is_main = 0;
             $previousAddressIsMain->save();
         }
-        Address::create([
+       $address= Address::create([
             'street_name' => $request->street_name,
             'building_number' => $request->building_number,
             'floor_number' => $request->floor_number,
@@ -38,7 +39,7 @@ class AddressController extends Controller
             'area_id' => $request->area,
             'user_id' => Auth::user()->id
         ]);
-
+return new AddressResource ($address);
     }
 
     public function show (Address $address) {

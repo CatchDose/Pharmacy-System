@@ -20,11 +20,10 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)
 
-                ->whereHas('roles',function($role){
+            ->whereHas('roles', function ($role) {
 
-                    return $role->where('name','client');
-
-                })->first();
+                return $role->where('name', 'client');
+            })->first();
 
 
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -39,22 +38,25 @@ class AuthController extends Controller
 
 
         return $user->createToken($request->device_name)->plainTextToken;
-
     }
 
 
     public function register(RegisterUserRequest $request)
     {
+        $data = $request->validated();
 
-        $user = User::create($request->validated());
+        if ($request->hasFile("avatar_image")) {
+            $path = $request->file("avatar_image")
+                ->store('', ["disk" => "avatars"]);
+
+            $data["avatar_image"] = $path;
+        }
+
+        $user = User::create($data);
         SendVerifyEmailJob::dispatch($user);
         $user->assignRole("client");
 
 
-        $user->assignRole("client");
         return new UserResource($user);
     }
-
-
 }
-
