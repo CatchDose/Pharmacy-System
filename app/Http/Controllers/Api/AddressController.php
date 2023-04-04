@@ -42,8 +42,8 @@ class AddressController extends Controller
     }
 
     public function show (Address $address) {
-        if (!$address->id){
-            return response()->json(["message" => "This User does not have any addresses"],404);
+        if ( $address->user->id != auth()->user()->id ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else {
             return $address;
@@ -51,12 +51,11 @@ class AddressController extends Controller
     }
 
     public function update (Address $address , UpdateAddressRequest $request){
-
-        if(!$address->id) {
-            return response()->json(["message" => "This Address does not exists"],404);
+        $userId = Auth::user()->id;
+        if ( $address->user->id != $userId ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else {
-            $userId = Auth::user()->id;
             $previousAddressIsMain = Address::where('user_id',$userId)->where('is_main', 1)->first();
             if ( $request->input('is_main') == 1 && !empty($previousAddressIsMain) ) {
                 $previousAddressIsMain->is_main = 0;
@@ -76,8 +75,8 @@ class AddressController extends Controller
     }
 
     public function destroy (Address $address) {
-        if (!$address->id) {
-            return response()->json(["message" => "This address does not exists for this user"],404);
+        if ( $address->user->id != auth()->user()->id ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else{
             $address->delete();
