@@ -9,6 +9,7 @@ use App\Jobs\SendMailJob;
 use App\Jobs\SendVerifyEmailJob;
 use App\Mail\NotificationEmail;
 use App\Models\User;
+use http\Env\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Registered;
@@ -160,5 +161,19 @@ class UserController extends Controller
 
         return redirect()->route("doctors.index");
 
+    }
+    /**
+     * Show the form for Entring User email for sending the reset message .
+     */
+    public function resetPasswordWithEmail () {
+
+        return view ('auth.passwords.email');
+
+    }
+
+    public function sendResetLink (Request $request) {
+
+        // Check if this email exists first in the database
+        dd($request->email);
     }
 }

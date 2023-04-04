@@ -40,6 +40,8 @@ Route::get("/test2", function () {
 })->name('test');
 
 
+Route::get('/forgot/password' , [UserController::class , 'resetPasswordWithEmail'])->name('forgot');
+
 Route::get('stripe/{order}', [StripePaymentController::class,'stripe'])->name("stripe.confirm");
 Route::post('stripe/{order}', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
 
