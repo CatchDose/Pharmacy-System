@@ -171,9 +171,4 @@ class UserController extends Controller
 
     }
 
-    public function sendResetLink (Request $request) {
-
-        // Check if this email exists first in the database
-        dd($request->email);
-    }
 }
