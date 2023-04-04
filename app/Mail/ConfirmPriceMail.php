@@ -41,7 +41,7 @@ class ConfirmPriceMail extends Mailable
         return new Content(
             markdown: 'mails.confirm-order',
             with: [
-                'url' => $this->confirmUrl,
+                'confirmUrl' => $this->confirmUrl,
                 'cancelUrl' => $this->cancelUrl,
                 'orderInfo'=> $this->orderInfo,
                 'totalPrice'=> $this->totalPrice,

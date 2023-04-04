@@ -151,13 +151,13 @@ class OrderController extends Controller
         $totalPrice = $this::totalPrice($qty, $med);
         $orderInfo = self::buildOrderInfo($med ,$qty);
 
-        Mail::to("omaralaa0989@gmail.com")
+
+        $mail =  Mail::to("omaralaa0989@gmail.com")
         ->queue(new ConfirmPriceMail(
             $confirmUrl
             ,$cancelUrl
             ,$orderInfo,
             $totalPrice));
-
         return to_route('orders.index');
     }
 
@@ -209,6 +209,10 @@ class OrderController extends Controller
     {
         $order->update([
             'status' => 4
+        ]);
+
+        return response()->json([
+            "messsage" => "thanks"
         ]);
 
     }

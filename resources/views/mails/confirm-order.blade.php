@@ -13,9 +13,13 @@ Your Order Info:
 </x-mail::table>
 
 
-@component('mail::button', ['url' => $url])
-    Confirm
-@endcomponent
+<x-mail::button :url="$confirmUrl" color="success">
+    View Order
+</x-mail::button>
+
+<x-mail::button :url="$cancelUrl" color="success">
+    View Order
+</x-mail::button>
 
 
 </x-mail::message>
