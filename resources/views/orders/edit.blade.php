@@ -36,7 +36,9 @@
                         <option value="2" {{$order->status == 'Processing' ? 'selected': ""}}>Processing</option>
                         <option value='3' {{$order->status == 'Waiting' ? 'selected': ""}}>Waiting</option>
                         <option value='4' {{$order->status == 'Cancelled' ? 'selected': ""}} >Cancelled</option>
+                        <option value='5' {{$order->status == 'Confirmed' ? 'selected': ""}} >Confirmed</option>
                         <option value='6' {{$order->status == 'Delivered' ? 'selected': ""}}>Delivered</option>
+
                     </select>
                 </div>
                 @endif

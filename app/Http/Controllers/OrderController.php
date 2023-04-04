@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Rules\SameArraySize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -61,12 +62,19 @@ class OrderController extends Controller
 
         self::createOrderMedicine($order, $med, $qty);
 
-        // $url = route('test');
-        // $totalPrice = $this::totalPrice($qty, $med);
-        // $orderInfo = self::buildOrderInfo($med ,$qty );
+        $confirmUrl = url("stripe/$order->id");
+        $cancelUrl = url("/orders/$order->id/cancel");
 
-        // Mail::to("hoda.yossiv@gmail.com")
-        // ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
+        $totalPrice = $this::totalPrice($qty, $med);
+        $orderInfo = self::buildOrderInfo($med ,$qty);
+
+
+          Mail::to("omaralaa0989@gmail.com")
+        ->queue(new ConfirmPriceMail(
+            $confirmUrl
+            ,$cancelUrl
+            ,$orderInfo,
+            $totalPrice));
 
 
         return to_route('orders.index');
@@ -97,7 +105,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
 
         $data = $request->all();
@@ -110,7 +118,7 @@ class OrderController extends Controller
         $order->update([
 
             'is_insured' => $data['is_insured'],
-            // 'pharmacy_id'=>$data['pharmacy_id'],
+            
             'user_id' => $data['user_id'],
 
         ]);
