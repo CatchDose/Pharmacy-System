@@ -67,7 +67,7 @@ class OrderController extends Controller
 
         // Mail::to("hoda.yossiv@gmail.com")
         // ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
-        
+
 
         return to_route('orders.index');
     }
@@ -136,6 +136,7 @@ class OrderController extends Controller
     public function assign(StoreOrderRequest $request, Order $order)
     {
 
+
         $size = count($request->med);
         $request->validate([
             'qty[]' => 'size:' . $size,
@@ -144,12 +145,18 @@ class OrderController extends Controller
         $qty = $request->qty;
         self::createOrderMedicine($order, $med, $qty);
 
-        $url = url('/');
+        $confirmUrl = url("stripe/$order->id");
+        $cancelUrl = url("/orders/$order->id/cancel");
+
         $totalPrice = $this::totalPrice($qty, $med);
-        $orderInfo = self::buildOrderInfo($med ,$qty );
+        $orderInfo = self::buildOrderInfo($med ,$qty);
 
         Mail::to("omaralaa0989@gmail.com")
-        ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
+        ->queue(new ConfirmPriceMail(
+            $confirmUrl
+            ,$cancelUrl
+            ,$orderInfo,
+            $totalPrice));
 
         return to_route('orders.index');
     }
@@ -195,5 +202,14 @@ class OrderController extends Controller
             ];
         }
         return $orderInfo ;
+    }
+
+
+    public function cancel(Order $order)
+    {
+        $order->update([
+            'status' => 4
+        ]);
+
     }
 }

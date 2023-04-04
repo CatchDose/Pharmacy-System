@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +23,7 @@ class Order extends Model
 
     public function medicines()
     {
-        return $this->belongsToMany(Medicine::class,'medicines_orders','order_id','medicine_id')->withPivot('quantity');
+        return $this->belongsToMany(Medicine::class, 'medicines_orders', 'order_id', 'medicine_id')->withPivot('quantity');
     }
 
     public function pharmacy()
@@ -45,14 +44,24 @@ class Order extends Model
 
     public function prescription()
     {
-        return $this->hasMany(Prescription::class,'order_id');
+        return $this->hasMany(Prescription::class, 'order_id');
+    }
+
+    public function totalPrice()
+    {
+        $total = 0;
+        foreach ($this->medicines as $med) {
+            $total += $med->price * $med->pivot->quantity;
+        }
+
+        return $total;
     }
 
     protected function createdAt(): Attribute
     {
         return Attribute::make(
 
-            get: fn (string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
+            get: fn(string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
 
         );
     }
@@ -61,8 +70,8 @@ class Order extends Model
     {
         return Attribute::make(
 
-            set: fn (string $value) => $value =  $value == "Yes" ? 1 : 0,
-            get: fn (string $value) => $value =  $value == 0 ? "No" : "Yes",
+            set: fn(string $value) => $value = $value == "Yes" ? 1 : 0,
+            get: fn(string $value) => $value = $value == 0 ? "No" : "Yes",
         );
     }
 

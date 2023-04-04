@@ -16,9 +16,11 @@ class ConfirmPriceMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(protected $url , protected $orderInfo, protected $totalPrice)
+    public function __construct(protected $confirmUrl ,
+                                protected $cancelUrl,
+                                protected $orderInfo,
+                                protected $totalPrice)
     {
-        
     }
 
     /**
@@ -39,9 +41,10 @@ class ConfirmPriceMail extends Mailable
         return new Content(
             markdown: 'mails.confirm-order',
             with: [
-                'url' => $this->url,
+                'url' => $this->confirmUrl,
+                'cancelUrl' => $this->cancelUrl,
                 'orderInfo'=> $this->orderInfo,
-                'totalPrice'=>$this->totalPrice,
+                'totalPrice'=> $this->totalPrice,
             ],
         );
     }
