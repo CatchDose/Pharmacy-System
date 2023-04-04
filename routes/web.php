@@ -8,6 +8,7 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\UserController;
 use App\Models\Order;
 use App\Models\Pharmacy;
@@ -37,6 +38,11 @@ Route::get("/test2", function () {
         $order->save();
     }
 })->name('test');
+
+
+Route::get('stripe/{order}', [StripePaymentController::class,'stripe'])->name("stripe.confirm");
+Route::post('stripe/{order}', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -104,6 +110,7 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
     Route::post('/orders/{order}/assign', [OrderController::class, 'assign'])->name("orders.assign");
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name("orders.cancel");
 
     /*================================== start doctors route ================================= */
 
