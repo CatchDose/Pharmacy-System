@@ -78,20 +78,22 @@
                 <div class="form-group">
                     <label for="is_main">Is this your main Address?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault1" value="1">
+                        <input class="form-check-input @error('is_main') is-invalid @enderror" type="radio" name="is_main" id="flexRadioDefault1"
+                               value="1" {{$address->is_main === "Yes" ? 'checked="checked"' : '' }}>
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="is_main" id="flexRadioDefault2" value="0">
+                        <input class="form-check-input @error('is_main') is-invalid @enderror" type="radio" name="is_main" id="flexRadioDefault2"
+                               value="0" {{$address->is_main === "No" ? 'checked="checked"' : '' }}>
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>
                     </div>
 
                     @error('is_main')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
@@ -102,7 +104,7 @@
 
                     <select class="js-example-basic-multiple select2 @error('area') is-invalid @enderror" name="area"  style="width: 100%;" >
                         @foreach($areas as $area)
-                            <option value="{{$area->id}}">{{$area->name}}</option>
+                            <option value="{{$area->id}}" {{ $area->id === $address->area_id ? 'selected' : '' }}>{{$area->name}}</option>
                         @endforeach
                     </select>
 
@@ -118,7 +120,7 @@
 
                     <select class="js-example-basic-multiple select2 @error('user') is-invalid @enderror" name="user"  style="width: 100%;" >
                         @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            <option value="{{$user->id}}" {{ $address->user_id === $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                         @endforeach
                     </select>
 

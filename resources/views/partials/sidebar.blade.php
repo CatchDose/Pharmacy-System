@@ -146,7 +146,7 @@
 
 
                 {{-- Orders Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('orders.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                     <i class="bi bi-cart4"></i>
@@ -157,13 +157,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('orders.index')}}" class="nav-link active">
+                            <a href="{{route('orders.index')}}" class="nav-link {{Route::is('orders.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('orders.create')}}" class="nav-link">
+                            <a href="{{route('orders.create')}}" class="nav-link {{Route::is('orders.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add</p>
                             </a>
@@ -290,15 +290,6 @@
                 </li>
                 @endhasanyrole
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
