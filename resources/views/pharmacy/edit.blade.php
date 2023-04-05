@@ -32,7 +32,7 @@
         </ul>
     </div>
 @endif
- 
+
     <form method="POST" action="{{route("pharmacies.update",$pharmacy->id)}}" class="needs-validation">
         @csrf
         @method("PUT")
@@ -45,7 +45,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-                
+
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
@@ -90,7 +90,7 @@
             </div>
             @endrole
             <div class="form-group">
-                <label for="exampleInputFile">File input</label>
+                <label for="exampleInputFile">Avatar image</label>
                 <div class="input-group">
                     <div class="custom-file">
                         <input type="file"name="avatar_image" class="custom-file-input" id="exampleInputFile">
