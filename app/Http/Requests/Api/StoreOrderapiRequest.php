@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
@@ -27,7 +27,7 @@ class StoreOrderapiRequest extends FormRequest
         return [
 
             'is_insured'=>['required'],
-            'prescription.*'=>['required' , 'mimes:jpg,png' ],
+            'prescription[]'=>['required|file' , 'mimes:jpg,png' ],
             'delivering_address_id'=>['required', Rule::in(auth()->user()->addresses->pluck("id")->toArray())] ,
             
         ];

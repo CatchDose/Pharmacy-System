@@ -61,7 +61,7 @@
                     <div class="carousel-inner ">
                         @foreach($prescriptions as $prescription) 
                         <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{asset($prescription->path)}}" class="d-block w-100" alt="prescription image">
+                            <img src="{{asset($prescription->path)}}" class="d-block cus-img" alt="prescription image">
                         </div>
                         @endforeach
                         
