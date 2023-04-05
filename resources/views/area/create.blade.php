@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label for="user-name">Area Name</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="areaname" placeholder="Enter area name">
-                
+
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label for="address">Address</label>
                 <input type="text" value="" class="form-control   @error('name') is-invalid @enderror" name="address" id="address" placeholder="Enter Address">
-                
+
                 @error('address')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
