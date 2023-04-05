@@ -50,8 +50,8 @@
                     <input type="text" value="{{$order->status}}" class="form-control" disabled>
                 </div>
 
-                
-                <div id="carouselExampleControls" class="carousel slide w-50 h-50" data-bs-ride="carousel">
+                <div class="row d-flex justify-content-center ">
+                <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <label>Client Prescription</label>
                     <div class="carousel-indicators">
                     @foreach($prescriptions as $prescription)
@@ -61,7 +61,7 @@
                     <div class="carousel-inner ">
                         @foreach($prescriptions as $prescription) 
                         <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{asset($prescription->path)}}" class="d-block cus-img" alt="prescription image">
+                            <img src="{{asset($prescription->path)}}" class="cus-img" alt="prescription image">
                         </div>
                         @endforeach
                         
@@ -75,7 +75,7 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                     </div>
-
+                </div>
                 @if(count($order->medicines)== 0)
                 <label class="text-danger fs-4 mt-4">Please Insert client Medicine</label>
                 <form action="{{route('orders.assign' , $order->id)}}" method="POST" enctype="multipart/form-data">
