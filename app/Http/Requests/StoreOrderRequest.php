@@ -28,7 +28,7 @@ class StoreOrderRequest extends FormRequest
 
 
         return [
-            'med' => ['required',],
+            'med' => ['required'],
             'qty' => ['required', 'size:' . $size],
         ];
     }

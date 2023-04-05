@@ -1,0 +1,6 @@
+
+.cus-img{
+    width: 50%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}

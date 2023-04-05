@@ -48,7 +48,6 @@ class OrderController extends Controller
         $userId = User::all()->where('name', $data['userName'])->first()->id;
         $pharmacyId = Pharmacy::all()->where('name', $data['PharmacyName'])->first()->id;
 
-
         $med = $data['med'];
         $qty = $data['qty'];
 
@@ -60,14 +59,6 @@ class OrderController extends Controller
         ]);
 
         self::createOrderMedicine($order, $med, $qty);
-
-        // $url = route('test');
-        // $totalPrice = $this::totalPrice($qty, $med);
-        // $orderInfo = self::buildOrderInfo($med ,$qty );
-
-        // Mail::to("hoda.yossiv@gmail.com")
-        // ->queue(new ConfirmPriceMail($url, $orderInfo, $totalPrice));
-
 
         return to_route('orders.index');
     }
@@ -110,7 +101,6 @@ class OrderController extends Controller
         $order->update([
 
             'is_insured' => $data['is_insured'],
-            // 'pharmacy_id'=>$data['pharmacy_id'],
             'user_id' => $data['user_id'],
 
         ]);
@@ -135,12 +125,6 @@ class OrderController extends Controller
 
     public function assign(StoreOrderRequest $request, Order $order)
     {
-
-
-        $size = count($request->med);
-        $request->validate([
-            'qty[]' => 'size:' . $size,
-        ]);
         $med = $request->med;
         $qty = $request->qty;
         self::createOrderMedicine($order, $med, $qty);
@@ -149,15 +133,16 @@ class OrderController extends Controller
         $cancelUrl = url("/orders/$order->id/cancel");
 
         $totalPrice = $this::totalPrice($qty, $med);
-        $orderInfo = self::buildOrderInfo($med ,$qty);
+        $orderInfo = self::buildOrderInfo($med,$qty);
 
 
-        $mail =  Mail::to("omaralaa0989@gmail.com")
+        Mail::to("omaralaa0989@gmail.com")
         ->queue(new ConfirmPriceMail(
             $confirmUrl
             ,$cancelUrl
             ,$orderInfo,
-            $totalPrice));
+            $totalPrice
+        ));
         return to_route('orders.index');
     }
 
@@ -190,7 +175,7 @@ class OrderController extends Controller
         ]);
     }
 
-    private static function buildOrderInfo ($medicines, $quantity)
+    private static function buildOrderInfo($medicines, $quantity)
     {
         $orderInfo = [];
         foreach ($medicines as $index => $medicine) {
@@ -212,7 +197,7 @@ class OrderController extends Controller
         ]);
 
         return response()->json([
-            "messsage" => "thanks"
+            "message" => "Your order cancelled successfully, thanks for using our app"
         ]);
 
     }
