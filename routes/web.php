@@ -31,6 +31,7 @@ use App\Http\Controllers\AddressController;
 */
 
 Route::get("/test2", function () {
+    dd(auth()->user('sanctum'));
     $orders = Order::where("status", 1)->get();
     foreach ($orders as $order) {
         $orderArea = $order->user->addresses()->where("is_main", 1)->first()->id;
