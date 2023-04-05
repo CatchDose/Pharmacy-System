@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -24,7 +25,33 @@ Route::post("register",[AuthController::class, 'register']);
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
 
+
+
+
+
+
+
+
 Route::group(["middleware"=>"auth:sanctum"],function (){
+
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+
+        $request->fulfill();
+        return response()->json([
+            "message" => "your email has been verified"
+        ]);
+    })->middleware(['signed'])->name('api.verification.verify');
+
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotificationApi();
+
+        return response()->json([
+            'message' => 'Verification link sent!'
+            ]);
+    })->middleware(['throttle:6,1'])->name('verification.send');
+
+
     Route::put('/users/{user}',[UserController::class, 'update']);
 
     Route::get('/addresses', [AddressController::class, 'index']);

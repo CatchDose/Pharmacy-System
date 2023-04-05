@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\Notifications\VerifyEmailApi;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -88,6 +90,12 @@ class User extends Authenticatable implements BannableInterface,MustVerifyEmail
         return Attribute::make(
             set: fn (string $value) => Hash::make($value),
         );
+    }
+
+
+    public function sendEmailVerificationNotificationApi()
+    {
+        $this->notify(new VerifyEmailApi);
     }
 
 
