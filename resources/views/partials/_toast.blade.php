@@ -1,5 +1,5 @@
 
-<div class="toast-container p-3 top-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
+<div class="toast-container mt-5 p-3 top-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
     <div class="toast bg-succes fade" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body d-flex align-items-center"></div>
     </div>
