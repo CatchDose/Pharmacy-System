@@ -22,20 +22,24 @@
 
     <div class="row d-flex justify-content-between align-items-center align-content-evenly" style="min-height:100vh ;">
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 mb-3">
+
+          <label>Orders</label>
 
             <canvas id="first"></canvas>
 
         </div>
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 mb-3">
 
+            <label>Profit</label>
             <canvas id="second"></canvas>
 
         </div>
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 ">
 
+            <label>Attendance</label>
             <canvas id="third"></canvas>
 
         </div>
