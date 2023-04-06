@@ -4,7 +4,6 @@
 
 @section('style')
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @endsection
 
@@ -48,7 +47,7 @@
     </div>
 </div>
 
-   
+
 
 @endsection
 
@@ -56,7 +55,7 @@
 
 @section('scripts')
 
-<script>
+<script type="module">
   const first = document.getElementById('first');
   const second = document.getElementById('second');
 
@@ -119,7 +118,7 @@
         }]
         },
   });
-  
+
   new Chart(fourth, {
     type: 'bar',
     data: {
