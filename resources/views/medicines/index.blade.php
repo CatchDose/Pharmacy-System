@@ -34,24 +34,16 @@
                     Are you sure you want to delete this medicine?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">no</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="modalNo">no</button>
                     <button type="button" class="btn btn-danger">yes</button>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
 {{ $dataTable->scripts() }}
-   <script>
-    function modalShow(event){
-        event.preventDefault();
-        event.stopPropagation();
-        document.querySelector(".modal-footer").lastElementChild.addEventListener("click",(e)=>{
-            event.target.closest("form").submit();
-        })
-    }
-   </script>
 
 @endsection
