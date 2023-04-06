@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
-
+use App\Http\Controllers\StatisticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +126,10 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
 
     Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
+
+    /*================================== start statistic route ================================== */
+
+    Route::get('/statistic', [\App\Http\Controllers\StatisticController::class , 'index'])->name('statistics.index');
 });
 
 Auth::routes(['register' => false, 'verify' => true]);
