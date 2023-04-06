@@ -75,7 +75,15 @@ class AddressController extends Controller
     }
 
     public function destroy(Address $address) {
+
+        if($address->is_main=="Yes"){
+            return response()->json([
+                'error' => "you can't delete the Main Address of the user.",
+            ], 200);
+        }
         $address->delete();
-        return redirect()->route('addresses.index');
+        return response()->json([
+            'success' => "you deleted this Address successfully.",
+        ], 200);
     }
 }

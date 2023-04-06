@@ -48,7 +48,7 @@ class AreaController extends Controller
     {
         $Countries_data=Country::all();
         // dd($Countries_data);
-      
+
         return view("area.edit",["area" => $area,'countries'=>$Countries_data]);
     }
 
@@ -67,11 +67,20 @@ class AreaController extends Controller
      */
     public function destroy(Area $area)
     {
+        if( $area->addresses()->count() && $area->pharmacies()->count() ){
+            return response()->json([
+                'error' => "you can't delete the Area of the user.",
+            ], 200);
+        }
         $area->delete();
+        return response()->json([
+            'success' => "you deleted this Address successfully.",
+        ], 200);
 
-        return redirect()->route("areas.index");
+
+
     }
-  
+
 }
 
 

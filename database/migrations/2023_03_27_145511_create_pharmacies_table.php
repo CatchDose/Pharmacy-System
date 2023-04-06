@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger("owner_id");
             $table->tinyInteger("priority");
             $table->timestamps();
+            $table->timestamp("deleted_at")->nullable();
         });
     }
 

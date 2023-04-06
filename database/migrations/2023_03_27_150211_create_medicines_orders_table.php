@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("medicine_id");
             $table->integer("quantity");
             $table->timestamps();
+            $table->timestamp("deleted_at")->nullable();
         });
     }
 

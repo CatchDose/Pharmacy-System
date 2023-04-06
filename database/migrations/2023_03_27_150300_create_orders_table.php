@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("doctor_id")->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->timestamp("deleted_at")->nullable();
         });
     }
 
