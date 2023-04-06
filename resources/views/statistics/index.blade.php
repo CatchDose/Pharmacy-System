@@ -4,7 +4,6 @@
 
 @section('style')
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @endsection
 
@@ -12,7 +11,8 @@
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="#">Order</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="">Order</a></li>
 
 @endsection
 
@@ -48,26 +48,27 @@
     </div>
 </div>
 
-   
+
 
 @endsection
 
 
 
 @section('scripts')
-
-<script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--}}
+    <script src="{{asset("/dist/js/chart.umd.js")}}"></script>
+<script type="module">
   const first = document.getElementById('first');
   const second = document.getElementById('second');
-
+  const third = document.getElementById('third');
+  const fourth = document.getElementById('fourth');
   new Chart(first, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
+        labels: [@foreach($topUsers as $user) "{{"$user->user"}}", @endforeach],
+        datasets: [{
+        label: '# of Orders',
+        data: [@foreach($topUsers as $user) {{"$user->count"}}, @endforeach],
       }]
     },
     options: {
@@ -83,10 +84,10 @@
     type: 'line',
 
     data: {
-        labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+        labels: [@foreach($revenue as $key=>$Value) {{"$key ,"}} @endforeach],
         datasets: [{
             label: 'Profit',
-            data: [65, 59, 80, 81, 56, 55, 40 , 200 , 10 , 30 , 500 , 5],
+            data: [@foreach($revenue as $key=>$Value) {{"$Value ,"}} @endforeach],
             fill: true,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,
@@ -110,16 +111,17 @@
         ],
         datasets: [{
             label: 'Attendance',
-            data: [100 , 50],
+            data: [{{$gender["male"]}} , {{$gender["female"]}}],
             backgroundColor: [
-            'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
+            'rgb(255, 99, 132)',
+
             ],
             hoverOffset: 4
         }]
         },
   });
-  
+
   new Chart(fourth, {
     type: 'bar',
     data: {
