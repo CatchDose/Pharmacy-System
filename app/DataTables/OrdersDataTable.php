@@ -45,7 +45,7 @@ class OrdersDataTable extends DataTable
     }
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        
+
         return(new EloquentDataTable($query))
 
             ->addColumn('action', function (Order $order) {
@@ -53,7 +53,7 @@ class OrdersDataTable extends DataTable
             })
 
             ->addColumn('Pharmacy', function (Order $order) {
-                return $order->pharmacy->name ?? "";
+                return $order->pharmacy->name ?? "N/A";
             })
             ->addColumn('User', function (Order $order) {
                 return $order->user->name;
@@ -63,6 +63,8 @@ class OrdersDataTable extends DataTable
             })
             ->addColumn('Address', function (Order $order) {
                 return $order->user->addresses()->where('is_main' , 1)->first()->street_name ?? "";
+            })->addColumn('doctor_name', function (Order $order) {
+                return $order->doctor()->name?? "N/A";
             })
             ->setRowId('id');
     }
@@ -107,7 +109,7 @@ class OrdersDataTable extends DataTable
     {
 
         $isAdmin = Auth::user()->hasRole('admin') ??  false ;
-        
+
             return [
 
                 Column::make('id')->addClass('text-center'),
@@ -117,7 +119,7 @@ class OrdersDataTable extends DataTable
                 Column::computed('Pharmacy', 'Assigned Pharmacy')->visible($isAdmin)->addClass('text-center'),
                 Column::computed('creatorType', 'Creator Type')->visible($isAdmin)->addClass('text-center'),
                 Column::computed('Address', 'User Address')->addClass('text-center'),
-                Column::make('doctor_id')->addClass('text-center'),
+                Column::make('doctor_name')->addClass('text-center'),
                 Column::make('created_at')->addClass('text-center'),
 
                 Column::computed('action')
