@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">edit medicine</a></li>
+    <li class="breadcrumb-item"><a href="{{route("medicines.index")}}">medicines</a></li>
+    <li class="breadcrumb-item">edit medicine</li>
 
 @endsection
 
@@ -78,5 +79,5 @@
         });
     $('[data-mask]').inputmask()
     </script>
-    
+
 @endsection
