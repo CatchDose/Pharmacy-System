@@ -15,7 +15,7 @@
 @endsection
 
 @section("content")
-    <h1>Pharmacy System {{auth()->user()->name}}</h1>
+    <h1>Pharmacy System</h1>
 @endsection
 
 @section("script")
