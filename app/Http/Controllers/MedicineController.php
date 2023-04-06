@@ -67,6 +67,15 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
-        return Redirect::route('medicines.index');
+
+        if($medicine->orders()->count()){
+            return response()->json([
+                'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
+            ], 200);
+        }
+        $medicine->delete();
+        return response()->json([
+            'success' => "you deleted this Medicine successfully.",
+        ], 200);
     }
 }
