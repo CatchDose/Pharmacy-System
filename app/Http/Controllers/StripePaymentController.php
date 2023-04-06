@@ -11,6 +11,9 @@ class StripePaymentController extends Controller
 {
     public function stripe(Order $order)
     {
+        if($order->status !== "Waiting" && auth()->id() !== $order->user_id)
+            abort(404);
+
         return view('stripes.stripe',compact("order"));
     }
 
@@ -23,16 +26,16 @@ class StripePaymentController extends Controller
             "amount" => $order->totalPrice(),
             "currency" => "usd",
             "source" => $request->stripeToken,
-            "description" => "Test payment from itsolutionstuff.com."
+            "description" => "payment"
         ]);
 
         $order->update([
             'status' => 5
         ]);
 
-//        Session::flash('success', 'Payment successful!');
+        session()->flash('success', 'Payment successful!');
 
-        return redirect()->route("index");
+        return redirect()->back();
     }
 
 }

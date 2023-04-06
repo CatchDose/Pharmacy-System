@@ -3,19 +3,21 @@
 <head>
     <title>Laravel - Stripe Payment Gateway Integration Example - ItSolutionStuff.com</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{asset("plugins/fontawesome-free/css/all.css")}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-
-    <h1>Laravel - Stripe Payment Gateway Integration Example <br/> ItSolutionStuff.com</h1>
+<div class="container" style="margin-top: 50px">
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default credit-card-box">
                 <div class="panel-heading display-table" >
-                    <h3 class="panel-title" >Payment Details</h3>
+                    <h3 class="panel-title" style="display: inline">Payment Details</h3>
+                    <a  href="{{route("index")}}" style="float: right;color:black">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                    </a>
                 </div>
                 <div class="panel-body">
 
