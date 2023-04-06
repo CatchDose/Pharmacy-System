@@ -114,6 +114,7 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
     Route::resource('orders', OrderController::class);
     Route::post('/orders/{order}/assign', [OrderController::class, 'assign'])->name("orders.assign");
     Route::get('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name("orders.cancel");
+    Route::put('/orders/{order}/delivered', [OrderController::class, 'delivered'])->name("orders.delivered");
 
     /*================================== start doctors route ================================= */
 
