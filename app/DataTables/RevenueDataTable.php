@@ -23,11 +23,7 @@ class RevenueDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-//            ->addColumn('action', 'revenue.action')
             ->setRowId('id')
-//            ->addColumn('Pharmacy_Logo', function (Pharmacy $pharmacy) {
-//                return '<img src="{{asset("storage/avatars/" . $pharmacy->owner->avatar_image)}}" class="img-circle elevation-2" alt="User Image">';
-//            })
             ->addColumn('Pharmacy_Name', function (Pharmacy $pharmacy) {
                 return $pharmacy->name;
             })->addColumn('Total_Orders', function (Pharmacy $pharmacy) {
@@ -59,7 +55,6 @@ class RevenueDataTable extends DataTable
             ->setTableId('Revenues-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -79,15 +74,12 @@ class RevenueDataTable extends DataTable
     {
         return [
             Column::make('id'),
-//            Column::make('Pharmacy_Logo'),
-            Column::make('Pharmacy_Name')->visible(auth()->user()->hasRole("admin")),
+            Column::make('Pharmacy_Name')
+                ->visible(
+                    auth()->user()->hasRole("admin")
+                ),
             Column::make('Total_Orders'),
             Column::make('Total_Revenue'),
-//            Column::computed('action')
-//                ->exportable(false)
-//                ->printable(false)
-//                ->width(60)
-//                ->addClass('text-center'),
         ];
     }
 

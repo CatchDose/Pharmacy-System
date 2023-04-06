@@ -41,8 +41,6 @@ class AddressesDataTable extends DataTable
             ->addColumn('ismain', function (Address $address) {
                 return $address->is_main;
             })
-
-
             ->setRowId('id');
     }
 
@@ -63,7 +61,6 @@ class AddressesDataTable extends DataTable
                     ->setTableId('addresses-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -90,9 +87,6 @@ class AddressesDataTable extends DataTable
             Column::computed('ismain',"Is Main"),
             Column::computed('area',"Area"),
             Column::computed('user',"User name"),
-
-//            Column::make('created_at'),
-//            Column::make('updated_at')
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -100,7 +94,6 @@ class AddressesDataTable extends DataTable
                 ->addClass('text-center'),
         ];
 
-        // ADDing Commit to check Naming
     }
 
     /**
