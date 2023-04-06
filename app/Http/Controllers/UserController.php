@@ -102,9 +102,24 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if($user->hasRole("admin")){
+            return response()->json([
+                'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
+            ], 200);
+        }
+        if($user->orders()->count()){
+            return response()->json([
+                'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
+            ], 200);
+        }
         $user->delete();
+        return response()->json([
+            'success' => "you deleted this Medicine successfully.",
+        ], 200);
 
-        return redirect()->route("users.index");
+
+
+//        return redirect()->route("users.index");
     }
 
 

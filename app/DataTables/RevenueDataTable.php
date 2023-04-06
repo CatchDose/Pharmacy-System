@@ -35,7 +35,7 @@ class RevenueDataTable extends DataTable
                 return json_decode($test->toJson())->Total_Orders;
             })->addColumn('Total_Revenue', function (Pharmacy $pharmacy) {
                 $test=new RevenueResource($pharmacy);
-                return json_decode($test->toJson())->Total_Revenue;
+                return "$ ".json_decode($test->toJson())->Total_Revenue;
             });
     }
 

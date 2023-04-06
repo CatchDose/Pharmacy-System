@@ -22,8 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger("area_id");
             $table->unsignedBigInteger("user_id");
             $table->timestamps();
-
-
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('user_id')->references('id')->on('users');
 
