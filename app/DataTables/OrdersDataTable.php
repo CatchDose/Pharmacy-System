@@ -21,35 +21,62 @@ class OrdersDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
 
-    function action ($id) {
+    function action ($id, $status) {
+        
         if (auth()->user()->hasRole('admin')) {
 
-            return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit",$id).'"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show",$id).'"> show </a>
-                    <form method="post" class="delete_item"  id="option_a3" action="'.Route("orders.destroy",$id).'">
-                    <input type="hidden" name="_token" value="' .csrf_token(). '">
-                    <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_'.$id.'" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
-                    </form>
-                    </div>' ;
+            if ($status == 'Confirmed') {
 
+                return '<div>
+                        <form method="post" id="option_a3" action="'.Route("orders.delivered",$id).'">
+                        <input type="hidden" name="_token" value="' .csrf_token(). '">
+                        <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-dark w-100">Delivered</button>
+                        </form>
+                        </div>' ;
+    
+            } else {
+
+                return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit", $id).'"> edit </a>
+                                <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show", $id).'"> show </a>
+                                <form method="post" class="delete_item"  id="option_a3" action="'.Route("orders.destroy", $id).'">
+                                <input type="hidden" name="_token" value="' .csrf_token(). '">
+                                <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_'.$id.'" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                                </form>
+                                </div>' ;
+                    }
         }else {
 
-           return  '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit",$id).'"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show",$id).'"> show </a>
-                    </div>' ;
+            if ($status == 'Confirmed') {
+
+                return '<div>
+                        <form method="post" id="option_a3" action="'.Route("orders.delivered",$id).'">
+                        <input type="hidden" name="_token" value="' .csrf_token(). '">
+                        <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-dark">Delivered</button>
+                        </form>
+                        </div>' ;
+    
+            } else {
+
+                return  '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <a class="btn btn-success" id="option_a1" href="'.Route("orders.edit", $id).'"> edit </a>
+                                <a class="btn btn-primary" id="option_a2" href="'.Route("orders.show", $id).'"> show </a>
+                                </div>' ;
+            }
 
         }
     }
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
 
         return(new EloquentDataTable($query))
 
             ->addColumn('action', function (Order $order) {
-                return $this->action($order->id);
+                return $this->action($order->id , $order->status );
             })
 
             ->addColumn('Pharmacy', function (Order $order) {
@@ -64,7 +91,7 @@ class OrdersDataTable extends DataTable
             ->addColumn('Address', function (Order $order) {
                 return $order->user->addresses()->where('is_main' , 1)->first()->street_name ?? "";
             })->addColumn('doctor_name', function (Order $order) {
-                return $order->doctor()->name?? "N/A";
+                return $order->doctor->name ?? "N/A";
             })
             ->setRowId('id');
     }
@@ -118,14 +145,13 @@ class OrdersDataTable extends DataTable
                 Column::computed('User', 'Client Name')->addClass('text-center'),
                 Column::computed('Pharmacy', 'Assigned Pharmacy')->visible($isAdmin)->addClass('text-center'),
                 Column::computed('creatorType', 'Creator Type')->visible($isAdmin)->addClass('text-center'),
-                Column::computed('Address', 'User Address')->addClass('text-center'),
+                Column::computed('Address', 'Client Address')->addClass('text-center'),
                 Column::make('doctor_name')->addClass('text-center'),
-                Column::make('created_at')->addClass('text-center'),
+                // Column::make('created_at')->addClass('text-center'),
 
                 Column::computed('action')
                       ->exportable(false)
                       ->printable(false)
-                      ->width(70)
                       ->addClass('text-center')
             ];
 

@@ -216,4 +216,12 @@ class OrderController extends Controller
         ]);
 
     }
+    public function delivered(Order $order)
+    {
+        $order->update([
+            'status' => 6
+        ]);
+
+        return to_route('orders.index');
+    }
 }
