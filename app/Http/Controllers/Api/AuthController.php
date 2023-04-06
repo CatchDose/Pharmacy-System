@@ -53,8 +53,10 @@ class AuthController extends Controller
         }
 
         $user = User::create($data);
-        SendVerifyEmailJob::dispatch($user);
+//        SendVerifyEmailJob::dispatch($user);
         $user->assignRole("client");
+
+        $user->sendEmailVerificationNotificationApi();
 
 
         return new UserResource($user);

@@ -121,7 +121,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="avatar-image">File input</label>
+                    <label for="avatar-image">Avatar image</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" name="avatar_image"
