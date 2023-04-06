@@ -104,9 +104,21 @@ class UserController extends Controller
     {
         if($user->hasRole("admin")){
             return response()->json([
-                'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
+                'error' => "sorry you can't delete admin.",
             ], 200);
         }
+
+        if( $user->hasRole("pharmacy") && $user->pharmacy()->count() ){
+            return response()->json([
+                'error' => "sorry you can't delete pharmacy owner before deleting his pharmacy first.",
+            ], 200);
+        }
+        if($user->hasRole("doctor")){
+            return response()->json([
+                'success' => "you deleted this user successfully.",
+            ], 200);
+        }
+
         if($user->orders()->count()){
             return response()->json([
                 'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
@@ -114,7 +126,7 @@ class UserController extends Controller
         }
         $user->delete();
         return response()->json([
-            'success' => "you deleted this Medicine successfully.",
+            'success' => "you deleted user $user->name successfully.",
         ], 200);
 
 
