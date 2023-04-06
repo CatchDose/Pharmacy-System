@@ -91,9 +91,10 @@ class DoctorDataTable extends DataTable
             Column::make('name'),
             Column::make('national_id'),
             Column::make('email'),
-            Column::computed('pharmacy')->visible(auth()->user()->hasRole("admin")),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('pharmacy')
+                ->visible(
+                    auth()->user()->hasRole("admin")
+                ),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
