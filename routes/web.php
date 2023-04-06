@@ -133,3 +133,7 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
 });
 
 Auth::routes(['register' => false, 'verify' => true]);
+
+//Route::fallback(function (){
+//    abort(404);
+//});

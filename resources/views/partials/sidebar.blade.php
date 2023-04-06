@@ -289,7 +289,7 @@
                     </ul>
                 </li>
                 @endhasanyrole
-                
+
                 @role("admin")
                 {{-- Revenue Menu--}}
                 <li class="nav-item">
@@ -301,7 +301,7 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-    
+
                 </li>
                 @endrole
 
