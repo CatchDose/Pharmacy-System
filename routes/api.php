@@ -49,7 +49,7 @@ Route::group(["middleware"=>"auth:sanctum"],function (){
         return response()->json([
             'message' => 'Verification link sent!'
             ]);
-    })->middleware(['throttle:6,1'])->name('verification.send');
+    })->middleware(['throttle:6,1'])->name('api.verification.send');
 
 
     Route::put('/users/{user}',[UserController::class, 'update']);

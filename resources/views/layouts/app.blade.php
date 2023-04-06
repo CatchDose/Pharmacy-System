@@ -29,9 +29,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 @yield("style")
 
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
 
+<body class="hold-transition sidebar-mini">
+
+<div class="wrapper">
+    <div class="preloader flex-column justify-content-center align-items-center" style="height: 100vh; width:100%; background-color: white;">
+        <img class="animation__shake" src="{{asset("dist/img/AdminLTELogo.png")}}" alt="AdminLTELogo" style=" z-index:5;" width="60" height="60">
+    </div>
+    <script>
+        document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                setTimeout(()=>{
+                    document.querySelector(".preloader").style.display="none";
+                },2000)
+            }
+        };
+    </script>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -113,6 +126,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 @yield("extra")
 @yield('scripts')
-
+@include("partials._toast")
 </body>
 </html>
