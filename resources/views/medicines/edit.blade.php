@@ -29,7 +29,7 @@
                     @method("PUT")
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputName1">asdasdasdasd Name</label>
+                            <label for="exampleInputName1">Medicine Name</label>
                             <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Enter medicine Name" value="{{old("name")??$medicine->name}}">
                             @error('name')
                                 <div class="invalid-feedback" @style(["display: block"])>
@@ -59,6 +59,7 @@
                                 </div>
                             @enderror
                         </div>
+                    </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
