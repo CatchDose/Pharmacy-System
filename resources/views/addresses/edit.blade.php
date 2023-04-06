@@ -18,9 +18,9 @@
 @section("content")
 
     <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Edit Address</h3>
-        </div>
+{{--        <div class="card-header">--}}
+{{--            <h3 class="card-title">Edit Address</h3>--}}
+{{--        </div>--}}
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("addresses.update",$address->id)}}" method="post">
@@ -134,7 +134,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-dark w-100">Edit</button>
             </div>
         </form>
     </div>
