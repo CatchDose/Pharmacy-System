@@ -17,10 +17,6 @@
 
 @section("content")
 
-<div class="card card-primary">
-<div class="card-header">
-<h3 class="card-title"> Pharmacy info</h3>
-</div>
 
 <div class="card-body">
 <strong><i class="fas fa-book mr-1"></i> Pharmacy Name</strong>
@@ -53,7 +49,7 @@
 
 </div>
 @hasanyrole("admin|pharmacy")
-<a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-block btn-primary">edit Pharmacy</a>
+<a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-dark w-100">edit Pharmacy</a>
 @endhasanyrole
 
 @endsection

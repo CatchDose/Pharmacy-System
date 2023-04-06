@@ -6,7 +6,7 @@
 
 @endsection
 
-@section("header","edit pharmacy")
+@section("header","Edit pharmacy")
 
 @section("breadcrumb")
 
@@ -17,10 +17,6 @@
 
 @section("content")
 
-<div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">edit pharmacy</h3>
-    </div>
     <!-- /.card-header -->
     <!-- form start -->
     @if ($errors->any())
@@ -106,7 +102,7 @@
         <!-- /.card-body -->
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-dark w-100">Submit</button>
         </div>
     </form>
 </div>

@@ -6,21 +6,17 @@
 <link rel="stylesheet" href="{{asset("plugins/daterangepicker/daterangepicker.css")}}">
 @endsection
 
-@section("header","add pharmacy")
+@section("header","Add pharmacy")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Add pharmacy</a></li>
+    <li class="breadcrumb-item"><a href="#">add pharmacy</a></li>
 
 @endsection
 
 @section("content")
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add pharmacy</h3>
-                </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="POST" action="{{route("pharmacies.store")}}" class="needs-validation">
@@ -34,7 +30,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            
+
                         </div>
                         <div class="form-group">
                             <label for="exampleInputName1">Your Name</label>
@@ -44,7 +40,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            
+
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
@@ -109,8 +105,8 @@
                                 </span>
                             @enderror
                         </div>
-                        
-                        
+
+
                         <div class="form-group">
                             <label for="exampleInputAreaId1">Area</label>
                             <select name="area_id" class="form-select @error('area_id') is-invalid @enderror">
@@ -145,12 +141,12 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>
                 </form>
             </div>
@@ -168,5 +164,5 @@
         });
     $('[data-mask]').inputmask()
     </script>
-    
+
 @endsection
