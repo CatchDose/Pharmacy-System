@@ -28,7 +28,7 @@
                 <label for="user-name">COUNTRY</label>
             <select name="country_id" class="form-control mb-2" id="country">
                 @foreach($countries as $country)
-                <option value="{{$country->id}}">{{$country->name}}</option>
+                <option value="{{$country->id}}" {{$area->country->id === $country->id ? 'selected' : ''}}>{{$country->name}}</option>
                 @endforeach
             </select>
 
