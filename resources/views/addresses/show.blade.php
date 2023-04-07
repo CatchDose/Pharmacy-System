@@ -11,6 +11,7 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("addresses.index")}}">addresses</a></li>
     <li class="breadcrumb-item"><a href="#">show address</a></li>
 
 @endsection
@@ -18,7 +19,6 @@
 @section("content")
 
     <div class="card card-primary">
-
         <div class="card-body">
             <strong> User Name</strong>
             <p class="text-muted">

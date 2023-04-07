@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">add medicine</a></li>
+    <li class="breadcrumb-item"><a href="{{route("medicines.index")}}">medicines</a></li>
+    <li class="breadcrumb-item">add medicine</li>
 
 @endsection
 
@@ -54,7 +55,7 @@
                                 </div>
                             @enderror
                         </div>
-                    <!-- /.card-body -->
+                      </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>

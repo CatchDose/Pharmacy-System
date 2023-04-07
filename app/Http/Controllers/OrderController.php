@@ -128,10 +128,20 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        if (auth()->user()->hasRole('admin')) {
-            $order->delete();
+        if( !auth()->user()->hasRole('admin')){
+            return response()->json([
+                'error' => "sorry only the admins are allowed delete Orders.",
+            ], 200);
         }
-        return to_route('orders.index');
+        $order->delete();
+        return response()->json([
+            'success' => "you deleted this Order successfully.",
+        ], 200);
+
+//        if (auth()->user()->hasRole('admin')) {
+//            $order->delete();
+//        }
+//        return to_route('orders.index');
     }
 
     /**
@@ -215,5 +225,13 @@ class OrderController extends Controller
             "message" => "Your order cancelled successfully, thanks for using our app"
         ]);
 
+    }
+    public function delivered(Order $order)
+    {
+        $order->update([
+            'status' => 6
+        ]);
+
+        return to_route('orders.index');
     }
 }

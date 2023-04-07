@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">add Address</a></li>
+    <li class="breadcrumb-item"><a href="{{route("addresses.index")}}">addresses</a></li>
+    <li class="breadcrumb-item"><a href="#">add address</a></li>
 
 @endsection
 

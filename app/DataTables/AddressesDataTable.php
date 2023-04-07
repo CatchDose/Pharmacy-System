@@ -24,12 +24,12 @@ class AddressesDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("addresses.edit",$id)}}"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="{{Route("addresses.show",$id)}}"> show </a>
+                    <a class="btn btn-success" id="option_a1" href="{{Route("addresses.edit",$id)}}"> <i class="bi bi-pencil-square"></i> </a>
+                    <a class="btn btn-primary" id="option_a2" href="{{Route("addresses.show",$id)}}" title="show"><i class="bi bi-file-earmark-text-fill"></i> </a>
                     <form method="post" class="delete_item"  id="option_a3" action="{{Route("addresses.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-trash3"></i></button>
                     </form>
                 </div>')
             ->addColumn('area', function (Address $address) {
@@ -41,8 +41,6 @@ class AddressesDataTable extends DataTable
             ->addColumn('ismain', function (Address $address) {
                 return $address->is_main;
             })
-
-
             ->setRowId('id');
     }
 
@@ -63,7 +61,6 @@ class AddressesDataTable extends DataTable
                     ->setTableId('addresses-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -90,9 +87,6 @@ class AddressesDataTable extends DataTable
             Column::computed('ismain',"Is Main"),
             Column::computed('area',"Area"),
             Column::computed('user',"User name"),
-
-//            Column::make('created_at'),
-//            Column::make('updated_at')
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -100,7 +94,6 @@ class AddressesDataTable extends DataTable
                 ->addClass('text-center'),
         ];
 
-        // ADDing Commit to check Naming
     }
 
     /**

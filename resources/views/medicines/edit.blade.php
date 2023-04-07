@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">edit medicine</a></li>
+    <li class="breadcrumb-item"><a href="{{route("medicines.index")}}">medicines</a></li>
+    <li class="breadcrumb-item">edit medicine</li>
 
 @endsection
 
@@ -25,7 +26,7 @@
                     @method("PUT")
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputName1">asdasdasdasd Name</label>
+                            <label for="exampleInputName1">Medicine Name</label>
                             <input type="text" name="name" class="form-control" id="exampleInputName1" placeholder="Enter medicine Name" value="{{old("name")??$medicine->name}}">
                             @error('name')
                                 <div class="invalid-feedback" @style(["display: block"])>
@@ -55,6 +56,7 @@
                                 </div>
                             @enderror
                         </div>
+                    </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-dark w-100">Update</button>

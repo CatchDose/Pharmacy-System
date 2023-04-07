@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <div class="wrapper">
     <div class="preloader flex-column justify-content-center align-items-center" style="height: 100vh; width:100%; background-color: white;">
-        <img class="animation__shake" src="{{asset("dist/img/AdminLTELogo.png")}}" alt="AdminLTELogo" style=" z-index:5;" width="60" height="60">
+        <img class="animation__shake" src="{{asset("dist/img/catch.png")}}" alt="AdminLTELogo" style=" z-index:5;" width="80" height="80">
     </div>
     <script>
         document.onreadystatechange = () => {
@@ -105,10 +105,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <footer class="main-footer">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
-            Anything you want
+          <strong>Free Palastine</strong>  
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014- {{ now()->format('Y') }} <a href="{{route("index")}}">Pharmacy System</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2020- {{ now()->format('Y') }} <a href="{{route("index")}}">Catch Dose</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

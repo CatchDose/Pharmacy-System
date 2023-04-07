@@ -22,20 +22,24 @@
 
     <div class="row d-flex justify-content-between align-items-center align-content-evenly" style="min-height:100vh ;">
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 mb-3">
+
+          <label>Orders</label>
 
             <canvas id="first"></canvas>
 
         </div>
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 mb-3">
 
+            <label>Profit</label>
             <canvas id="second"></canvas>
 
         </div>
 
-        <div class="col-md-5 col-12">
+        <div class="col-md-5 col-12 ">
 
+            <label>Attendance</label>
             <canvas id="third"></canvas>
 
         </div>
@@ -55,8 +59,8 @@
 
 
 @section('scripts')
-{{--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--}}
-    <script src="{{asset("/dist/js/chart.umd.js")}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{--    <script src="{{asset("/dist/js/chart.umd.js")}}"></script>--}}
 <script type="module">
   const first = document.getElementById('first');
   const second = document.getElementById('second');

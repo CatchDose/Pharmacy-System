@@ -10,7 +10,9 @@
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="#">Order</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("orders.index")}}">orders</a></li>
+    <li class="breadcrumb-item">show order</li>
 
 @endsection
 

@@ -11,7 +11,7 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Medicines</a></li>
+    <li class="breadcrumb-item">medicines</li>
 
 @endsection
 

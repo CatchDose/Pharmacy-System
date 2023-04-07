@@ -10,7 +10,8 @@
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="{{route('areas.index')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("areas.index")}}">areas</a></li>
     <li class="breadcrumb-item"><a href="#">edit area</a></li>
 
 @endsection
@@ -21,13 +22,10 @@
             <div class="card-body">
                 @csrf
                 @method("put")
-
-
-
                 <label for="user-name">COUNTRY</label>
             <select name="country_id" class="form-control mb-2" id="country">
                 @foreach($countries as $country)
-                <option value="{{$country->id}}">{{$country->name}}</option>
+                <option value="{{$country->id}}" {{$area->country->id === $country->id ? 'selected' : ''}}>{{$country->name}}</option>
                 @endforeach
             </select>
 

@@ -12,7 +12,7 @@
 
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Revenues</a></li>
+    <li class="breadcrumb-item">Revenues</li>
 
 @endsection
 

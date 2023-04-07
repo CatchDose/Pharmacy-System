@@ -25,9 +25,10 @@ class UpdateOrderapiRequest extends FormRequest
         return [
 
             'is_insured'=>['required'],
+            'status'=>['required',Rule::in([1,4])],
             'prescription.*'=>['required','mimes:jpg,png' ],
             'delivering_address_id'=>['required', Rule::in(auth()->user()->addresses->pluck("id")->toArray())] ,
-            
+
         ];
     }
 }
