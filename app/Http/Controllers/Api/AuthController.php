@@ -36,8 +36,8 @@ class AuthController extends Controller
             "last_login" => now()
         ]);
 
-
-        return $user->createToken($request->device_name)->plainTextToken;
+//        $user->createToken($request->device_name)->plainTextToken
+        return new UserResource($user);
     }
 
 

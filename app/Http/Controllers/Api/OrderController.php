@@ -25,9 +25,12 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $orders = Auth::user()->orders();
+        if($orders->count())
+            return OrderResource::collection($orders->get());
 
-        $orders = Auth::user()->order ?? Order::all();
-        return OrderResource::collection($orders);
+        return response()->json([ "message" => "There is no orders"]);
+
     }
 
     /**
@@ -35,8 +38,14 @@ class OrderController extends Controller
     */
     public function show(Order $order)
     {
+        if($order->user_id === auth()->id())
+            return new OrderResource($order);
 
-        return new OrderResource($order);
+        return response()->json(
+            [
+                "message" => "Sorry, There is no orders with this id"
+            ]
+        );
     }
 
     /**
@@ -45,11 +54,9 @@ class OrderController extends Controller
     public function store(StoreOrderapiRequest $request)
     {
         $order = Order::Create([
-
             'status'=> 1,
             'is_insured'=> $request->is_insured,
-            'user_id'=> auth()->id() ?? 1,
-
+            'user_id'=> auth()->id(),
         ]);
 
         $files = $request->file('prescription');
@@ -98,9 +105,28 @@ class OrderController extends Controller
                 'is_insured'=> $request->is_insured,
             ]);
 
-            return new OrderResource($order);
+            return $this->jsonMessage(new OrderResource($order), $request->status);
         }
 
         return response()->json(['message'=>"your order is ".$order->status." you cant change it"] , 406);
+    }
+
+
+    private function jsonMessage($data,$status)
+    {
+        switch ($status){
+            case 1:
+                return response()->json([
+                    "message" => "The order has been updated successfully",
+                    "data" => $data
+                ]);
+                break;
+            case 4:
+                return response()->json([
+                    "message" => "The order has been cancelled successfully",
+                    "data" => $data
+                ]);
+                break;
+        }
     }
 }
