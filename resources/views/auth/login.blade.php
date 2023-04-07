@@ -16,13 +16,16 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b class>Catch</b>Dose</a>
+    <div class="login-logo d-flex flex-column align-items-center justify-content-center">
+        <img src="{{asset("dist/img/catch.png")}}" alt="Logo" class="brand-image w-50" style="opacity: .9">
+        <h1 class="mb-0 mt-2"><b>Catch</b>Dose</h1>
     </div>
+
+
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body  rounded">
-            
+
 
             @error("login")
                 <div class="alert alert-danger">
@@ -64,7 +67,7 @@
                     @enderror
                 </div>
                 <div class="row">
-                    
+
                     <!-- /.col -->
                     <div class="col-12">
                         <button type="submit" class="btn btn-dark btn-block">Sign In</button>
@@ -81,7 +84,7 @@
                 </div>
             </form>
 
-            
+
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
