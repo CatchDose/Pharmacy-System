@@ -6,21 +6,18 @@
 <link rel="stylesheet" href="{{asset("plugins/daterangepicker/daterangepicker.css")}}">
 @endsection
 
-@section("header","add medicine")
+@section("header","Add medicine")
 
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Add medicine</a></li>
+    <li class="breadcrumb-item"><a href="#">add medicine</a></li>
 
 @endsection
 
 @section("content")
 
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add medicine</h3>
-                </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="POST" action="{{route("medicines.store")}}" class="needs-validation">
@@ -59,7 +56,7 @@
                         </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>
                 </form>
             </div>
@@ -77,5 +74,5 @@
         });
     $('[data-mask]').inputmask()
     </script>
-    
+
 @endsection
