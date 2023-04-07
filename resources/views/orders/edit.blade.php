@@ -15,9 +15,6 @@
 @section('content')
 
 <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Update Order Number {{$order->id}}</h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route('orders.update' , $order->id)}}" method="post" enctype="multipart/form-data">
@@ -44,11 +41,11 @@
                 @endif
 
                 @if(!Auth::user()->hasRole('doctor'))
-                    
+
                 <div class="form-group">
                     <label >Change Client Name</label>
                     <select name="user_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                        
+
                         @foreach($users as $user)
                         <option value="{{$user->id}}" {{$order->user->id === $user->id ? 'selected' : ''}}>{{$user->name}}</option>
                         @endforeach
@@ -67,7 +64,7 @@
                 <div class="form-group">
                     <label for="pharmacy_id">Change Pharmacy Name</label>
                     <select name="pharmacy_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                        
+
                         @foreach($pharmacy as $phar)
                         <option value="{{$phar->id}}" {{$order->pharmacy->id === $phar->id ? 'selected': ''}}>{{$phar->name}}</option>
                         @endforeach
@@ -77,13 +74,13 @@
 
              </div>
              <!-- /.card-body -->
- 
+
              <div class="card-footer">
                  <button type="submit" class="btn btn-dark w-100">Update</button>
              </div>
 
             @endif
-                
+
         </form>
     </div>
 
