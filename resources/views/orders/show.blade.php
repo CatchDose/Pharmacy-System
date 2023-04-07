@@ -17,12 +17,9 @@
 @section('content')
 
 <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Show Order Number {{$order->id}} </h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
-        
+
             <div class="card-body">
 
                 <div class="form-group">
@@ -59,12 +56,12 @@
                     @endforeach
                     </div>
                     <div class="carousel-inner ">
-                        @foreach($prescriptions as $prescription) 
+                        @foreach($prescriptions as $prescription)
                         <div class="carousel-item @if($loop->first) active @endif">
                             <img src="{{asset($prescription->path)}}" class="cus-img" alt="prescription image">
                         </div>
                         @endforeach
-                        
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -87,7 +84,7 @@
                   <label for="med[]" class="form-label">Medicine</label>
 
                   <select class="js-example-basic-multiple select2 @error('med') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
-                      
+
                     @foreach($medicines as $medicine)
 
                       <option value="{{$medicine->id}}">{{$medicine->name}}</option>
@@ -107,7 +104,7 @@
                     <label for="qty[]" class="form-label">Qty</label>
 
                     <select class="js-example-basic-multiple select2 @error('qty') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
-                        
+
                     @for($x=1;$x<=10;$x++)
                         <option value="{{$x}}">{{$x}}</option>
                     @endfor
