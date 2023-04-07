@@ -53,25 +53,25 @@ class OrdersDataTable extends DataTable
                              <form method="post" id="option_a3" action="' . Route("orders.delivered", $id) . '">
                              <input type="hidden" name="_token" value="' . csrf_token() . '">
                              <input type="hidden" name="_method" value="PUT">
-                                 <button type="submit" class="btn btn-dark w-100">Delivered</button>
+                                 <button type="submit" class="btn btn-success" title="deliver"><i class="bi bi-truck text-dark"></i></button>
                              </form>
                          </div>';
  
              case 'Processing' :
  
-                 return '<div class="btn-group btn-group-toggle gap-3" data-toggle="buttons">
-                             <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
+                 return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                             <a class="btn btn-primary rounded mx-1" id="option_a2" href="' . Route("orders.show", $id) . '"> <i class="bi bi-file-earmark-text-fill"></i></a>
                              <form method="post" id="option_a3" action="' . Route("orders.update", $id) . '">
                                  <input type="hidden" name="_token" value="' . csrf_token() . '">
                                  <input type="hidden" name="_method" value="PUT">
-                                 <button type="submit" class="btn btn-dark w-100">Cancel</button>
+                                 <button type="submit" class="btn btn-warning" title="cancel"><i class="bi bi-x-circle"></i></button>
                              </form>
                          </div>';
  
              default:
  
-                 return '<div class="btn-group btn-group-toggle w-75" data-toggle="buttons">
-                             <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
+                 return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
+                             <a class="btn btn-primary rounded mx-1" id="option_a2" href="' . Route("orders.show", $id) . '"> <i class="bi bi-file-earmark-text-fill"></i> </a>
                          </div>';
          } 
      }

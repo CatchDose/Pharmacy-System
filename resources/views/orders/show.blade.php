@@ -40,15 +40,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Doctor ID</label>
-                    <input type="text" value="{{$order->doctor->id ?? ''}}" class="form-control" disabled>
+                    <label>Doctor Name</label>
+                    <input type="text" value="{{$order->doctor->name ?? 'N/A'}}" class="form-control" disabled>
                 </div>
 
                 <div class="form-group">
                     <label>Status</label>
                     <input type="text" value="{{$order->status}}" class="form-control" disabled>
                 </div>
-
+                @if($order->user->hasRole('client'))
                 <div class="row d-flex justify-content-center ">
                 <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <label>Client Prescription</label>
@@ -75,7 +75,8 @@
                     </button>
                     </div>
                 </div>
-                @if(count($order->medicines)== 0)
+                @endif
+                @if($order->status == 'Processing')
                 <label class="text-danger fs-4 mt-4">Please Insert client Medicine</label>
                 <form action="{{route('orders.assign' , $order->id)}}" method="POST" enctype="multipart/form-data">
 
