@@ -17,19 +17,9 @@
 @endsection
 
 @section("content")
-
+    <div class="card card-primary">
     <!-- /.card-header -->
     <!-- form start -->
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
     <form method="POST" action="{{route("pharmacies.update",$pharmacy->id)}}" class="needs-validation">
         @csrf
         @method("PUT")
@@ -106,7 +96,7 @@
             <button type="submit" class="btn btn-dark w-100">Submit</button>
         </div>
     </form>
-
+</div>
 @endsection
 
 
