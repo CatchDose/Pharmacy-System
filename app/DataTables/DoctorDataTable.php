@@ -28,11 +28,11 @@ class DoctorDataTable extends DataTable
 
             ->addColumn('action', function (User $doctor){
                 return $this->toggleBan($doctor->id) . '
-                    <a class="btn btn-success" id="option_a1" href="' .route("doctors.edit",$doctor->id).'"> edit </a>
+                    <a class="btn btn-success" id="option_a1" href="' .route("doctors.edit",$doctor->id).'"> <i class="bi bi-pencil-square"></i> </a>
                     <form method="post" class="delete_item"  id="option_a3" action="' .route("doctors.destroy",$doctor->id).'">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_ ' . $doctor->id . '" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_ ' . $doctor->id . '" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-trash3"></i></button>
                     </form>
                 </div>';
             })
@@ -118,7 +118,7 @@ class DoctorDataTable extends DataTable
                       <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.unban",$id).'">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
                         <input type="hidden" name="_method" value="PUT">
-                      <button type="submit" class="btn btn-secondary">unban</button>
+                      <button type="submit" class="btn btn-secondary"title="Unban doctor"><i class="bi bi-unlock-fill"></i></button>
                     </form>';
         }
 
@@ -126,7 +126,7 @@ class DoctorDataTable extends DataTable
                       <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.ban",$id).'">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
                         <input type="hidden" name="_method" value="PUT">
-                      <button type="submit" class="btn btn-info">ban</button>
+                      <button type="submit" class="btn btn-info" title="Ban doctor"><i class="bi bi-person-lock"></i></button>
                     </form>';
 
 
