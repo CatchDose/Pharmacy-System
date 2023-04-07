@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MedicineController;
@@ -47,23 +48,9 @@ Route::get('stripe/{order}', [StripePaymentController::class,'stripe'])->name("s
 Route::post('stripe/{order}', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
 
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-
-    $request->fulfill();
-    return Redirect()->route("index");
-})->middleware(["auth", 'signed'])->name('verification.verify');
-
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::get('/email/verify', [VerificationController::class,"notice"])->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(["auth", 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', [VerificationController::class,"sendVerifyEmail"])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-banned-user", "verified"]], function () {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -41,21 +41,18 @@ class VerificationController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
-    public function notice(){
-        return view('auth.verify-email');
-    }
 
     public function verifyEmail(EmailVerificationRequest $request) {
 
         $request->fulfill();
-        return response()->json([
-            "message" => "your email has been verified"
-        ]);
+        return Redirect()->route("index");
     }
 
     function sendVerifyEmail(Request $request) {
-        $request->user()->sendEmailVerificationNotification();
+        $request->user()->sendEmailVerificationNotificationApi();
 
-        return back()->with('message', 'Verification link sent!');
+        return response()->json([
+            'message' => 'Verification link sent!'
+        ]);
     }
 }
