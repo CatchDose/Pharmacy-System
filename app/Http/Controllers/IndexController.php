@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RevenueResource;
+use App\Http\Services\RevenueService;
 use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
@@ -16,7 +17,9 @@ class IndexController extends Controller
      *
      * @return void
      */
-
+    public function __construct(protected RevenueService $revenueService)
+    {
+    }
 
     /**
      * Show the application dashboard.
@@ -27,32 +30,44 @@ class IndexController extends Controller
     {
 
         if(auth()->user()->hasRole("admin")){
-            $total_orders=Order::count();
-            $new_orders=Order::where("status","new")->count();
-            $clients=User::whereHas("roles", function (Builder $query) {
-                $query->where('name', '=', 'client');
-            })->get()->unique()->count();
-            $revenues=RevenueResource::collection(Pharmacy::all());
-            $sumRevenues=0;
-            foreach ($revenues as $revenue){
-                $sumRevenues+=json_decode($revenue->toJson())->Total_Revenue;
-            }
-            return view('index',["total_orders"=>$total_orders,"new_orders"=>$new_orders,"clients"=>$clients,"sumRevenues"=> $sumRevenues]);
-
+            $dashboardData=$this->getAdminDashboardData();
         }else if(auth()->user()->hasRole("pharmacy")){
-            $pharmacy=auth()->user()->pharmacy;
-            $revenue=new RevenueResource(Pharmacy::find($pharmacy->id));
-            $sumRevenues=json_decode($revenue->toJson())->Total_Revenue;
-            $total_orders=$pharmacy->orders()->count();
-            $new_orders=$pharmacy->orders()->where("status","new")->count();
-            $clients=Order::where("pharmacy_id",$pharmacy->id)->whereHas("user",function ($user){
-                $user->whereHas('roles',function ($role){
-                    $role->where('name','client');
-                });
-            })->distinct("user_id")->count();
-
-            return view('index',["total_orders"=>$total_orders,"new_orders"=>$new_orders,"clients"=>$clients,"sumRevenues"=> $sumRevenues]);
+            $dashboardData=$this->getPharmacyDashboardData();
         }
-        return view('index');
+        return view('index',$dashboardData);
+    }
+
+
+    public function getAdminDashboardData()
+    {
+        $total_orders = Order::count();
+        $new_orders = Order::where("status", "new")->count();
+        $clients = User::whereHas("roles", function (Builder $query) {
+            $query->where('name', 'client');
+        })->distinct()->count();
+        $sumRevenues = 0;
+        foreach (Pharmacy::all() as $pharmacy) {
+            $sumRevenues += $this->revenueService->calcRevenue($pharmacy)["Total_Revenue"];
+        }
+        return ["total_orders"=>$total_orders,"new_orders"=>$new_orders,"clients"=>$clients,"sumRevenues"=> $sumRevenues];
+    }
+
+
+    public function getPharmacyDashboardData(){
+        $pharmacy=auth()->user()->pharmacy;
+        $revenue=new RevenueResource(Pharmacy::find($pharmacy->id));
+        $sumRevenues=$this->revenueService->calcRevenue($pharmacy)["Total_Revenue"];
+        $total_orders=$pharmacy->orders()->count();
+        $new_orders=$pharmacy->orders()->where("status","new")->count();
+        $clients=Order::where("pharmacy_id",$pharmacy->id)->whereHas("user",function ($user){
+            $user->whereHas('roles',function ($role){
+                $role->where('name','client');
+            });
+        })->distinct("user_id")->count();
+        return ["total_orders"=>$total_orders,"new_orders"=>$new_orders,"clients"=>$clients,"sumRevenues"=> $sumRevenues];
     }
 }
+
+
+
+
