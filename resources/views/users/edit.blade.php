@@ -19,9 +19,6 @@
 @section("content")
 
     <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Add user</h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("users.update",$user->id)}}" method="post" enctype="multipart/form-data">
@@ -152,7 +149,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">update</button>
+                <button type="submit" class="btn btn-dark w-100">Update</button>
             </div>
 
         </form>
