@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,25 +27,10 @@ Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
 Route::group(["middleware"=>["auth:sanctum"]],function (){
 
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-
-        $request->fulfill();
-        return response()->json([
-            "message" => "your email has been verified"
-        ]);
-    })->middleware(['signed'])->name('api.verification.verify');
+    Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(['signed'])->name('api.verification.verify');
 
 
-    Route::post('/email/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotificationApi();
-
-        return response()->json([
-            'message' => 'Verification link sent!'
-        ]);
-    })->middleware(['throttle:6,1'])->name('api.verification.send');
-
-    Route::group(["middleware" => "verified"],function (){
-
+    Route::post('/email/verification-notification', [VerificationController::class,"sendVerifyEmail"])->middleware(['throttle:6,1'])->name('api.verification.send');
 
     Route::put('/users/{user}',[UserController::class, 'update']);
 
