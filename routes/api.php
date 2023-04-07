@@ -25,15 +25,7 @@ use App\Http\Controllers\Api\AddressController;
 Route::post("register",[AuthController::class, 'register']);
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
-
-
-
-
-
-
-
-
-Route::group(["middleware"=>"auth:sanctum"],function (){
+Route::group(["middleware"=>["auth:sanctum"]],function (){
 
     Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(['signed'])->name('api.verification.verify');
 
@@ -52,7 +44,7 @@ Route::group(["middleware"=>"auth:sanctum"],function (){
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::put('/orders/{order}' , [OrderController::class , 'update']);
-
+    });
 });
 
 

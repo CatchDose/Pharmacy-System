@@ -46,6 +46,7 @@ Route::get('/forgot/password' , [UserController::class , 'resetPasswordWithEmail
 
 Route::get('stripe/{order}', [StripePaymentController::class,'stripe'])->name("stripe.confirm");
 Route::post('stripe/{order}', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+Route::get('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name("orders.cancel");
 
 
 Route::get('/email/verify', [VerificationController::class,"notice"])->middleware('auth')->name('verification.notice');
@@ -100,7 +101,6 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
     Route::resource('addresses', AddressController::class);
     Route::resource('orders', OrderController::class);
     Route::post('/orders/{order}/assign', [OrderController::class, 'assign'])->name("orders.assign");
-    Route::get('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name("orders.cancel");
     Route::put('/orders/{order}/delivered', [OrderController::class, 'delivered'])->name("orders.delivered");
 
     /*================================== start doctors route ================================= */
