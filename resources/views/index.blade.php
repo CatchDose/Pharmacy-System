@@ -15,7 +15,7 @@
 @endsection
 
 @section("content")
-    <h1>Pharmacy System</h1>
+    <h1 class="mb-4">Pharmacy System</h1>
     @hasanyrole("admin|pharmacy")
     <div class="container-fluid">
 
