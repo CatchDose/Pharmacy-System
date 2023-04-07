@@ -11,16 +11,17 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">add Address</a></li>
+    <li class="breadcrumb-item"><a href="{{route("addresses.index")}}">addresses</a></li>
+    <li class="breadcrumb-item"><a href="#">add address</a></li>
 
 @endsection
 
 @section("content")
 
     <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Add Address</h3>
-        </div>
+{{--        <div class="card-header">--}}
+{{--            <h3 class="card-title">Add Address</h3>--}}
+{{--        </div>--}}
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("addresses.store")}}" method="post">
@@ -131,7 +132,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-dark w-100">Submit</button>
             </div>
         </form>
     </div>

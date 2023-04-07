@@ -24,7 +24,7 @@ class AreasDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
             <a class="btn btn-success" id="option_a1" href="{{Route("areas.edit",$id)}}"> edit </a>
-            
+
             <form method="post" class="delete_item"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
                 @csrf
                 @method("DELETE")
@@ -54,7 +54,6 @@ class AreasDataTable extends DataTable
                     ->setTableId('areas-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -73,17 +72,15 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            
+
             Column::make('name'),
             Column::make('address'),
             Column::make('Country'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center'),
+                  ->addClass('text-center')
         ];
     }
 

@@ -10,7 +10,9 @@
 
 @section("breadcrumb")
 
-    <li class="breadcrumb-item"><a href="#">Order</a></li>
+    <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{route("orders.index")}}">orders</a></li>
+    <li class="breadcrumb-item">show order</li>
 
 @endsection
 
@@ -22,7 +24,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        
+
             <div class="card-body">
 
                 <div class="form-group">
@@ -50,8 +52,8 @@
                     <input type="text" value="{{$order->status}}" class="form-control" disabled>
                 </div>
 
-                
-                <div id="carouselExampleControls" class="carousel slide w-50 h-50" data-bs-ride="carousel">
+                <div class="row d-flex justify-content-center ">
+                <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <label>Client Prescription</label>
                     <div class="carousel-indicators">
                     @foreach($prescriptions as $prescription)
@@ -59,12 +61,12 @@
                     @endforeach
                     </div>
                     <div class="carousel-inner ">
-                        @foreach($prescriptions as $prescription) 
+                        @foreach($prescriptions as $prescription)
                         <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{asset($prescription->path)}}" class="d-block w-100" alt="prescription image">
+                            <img src="{{asset($prescription->path)}}" class="cus-img" alt="prescription image">
                         </div>
                         @endforeach
-                        
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -75,7 +77,7 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                     </div>
-
+                </div>
                 @if(count($order->medicines)== 0)
                 <label class="text-danger fs-4 mt-4">Please Insert client Medicine</label>
                 <form action="{{route('orders.assign' , $order->id)}}" method="POST" enctype="multipart/form-data">
@@ -87,7 +89,7 @@
                   <label for="med[]" class="form-label">Medicine</label>
 
                   <select class="js-example-basic-multiple select2 @error('med') is-invalid @enderror" name="med[]" multiple="multiple" style="width: 100%;" >
-                      
+
                     @foreach($medicines as $medicine)
 
                       <option value="{{$medicine->id}}">{{$medicine->name}}</option>
@@ -107,7 +109,7 @@
                     <label for="qty[]" class="form-label">Qty</label>
 
                     <select class="js-example-basic-multiple select2 @error('qty') is-invalid @enderror" name="qty[]" multiple="multiple" style="width: 100%;">
-                        
+
                     @for($x=1;$x<=10;$x++)
                         <option value="{{$x}}">{{$x}}</option>
                     @endfor

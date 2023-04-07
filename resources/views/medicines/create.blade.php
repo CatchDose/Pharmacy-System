@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Add medicine</a></li>
+    <li class="breadcrumb-item"><a href="{{route("medicines.index")}}">medicines</a></li>
+    <li class="breadcrumb-item">add medicine</li>
 
 @endsection
 
@@ -57,7 +58,7 @@
                                 </div>
                             @enderror
                         </div>
-                    <!-- /.card-body -->
+                      </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
@@ -77,5 +78,5 @@
         });
     $('[data-mask]').inputmask()
     </script>
-    
+
 @endsection

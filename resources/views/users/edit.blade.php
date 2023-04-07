@@ -11,7 +11,8 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">add user</a></li>
+    <li class="breadcrumb-item"><a href="{{route("users.index")}}">users</a></li>
+    <li class="breadcrumb-item">edit user</li>
 
 @endsection
 
@@ -121,7 +122,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="avatar-image">File input</label>
+                    <label for="avatar-image">Avatar image</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" name="avatar_image"

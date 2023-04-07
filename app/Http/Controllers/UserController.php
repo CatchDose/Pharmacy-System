@@ -9,6 +9,7 @@ use App\Jobs\SendMailJob;
 use App\Jobs\SendVerifyEmailJob;
 use App\Mail\NotificationEmail;
 use App\Models\User;
+use http\Env\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Registered;
@@ -101,9 +102,36 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        if($user->hasRole("admin")){
+            return response()->json([
+                'error' => "sorry you can't delete admin.",
+            ], 200);
+        }
 
-        return redirect()->route("users.index");
+        if( $user->hasRole("pharmacy") && $user->pharmacy()->count() ){
+            return response()->json([
+                'error' => "sorry you can't delete pharmacy owner before deleting his pharmacy first.",
+            ], 200);
+        }
+        if($user->hasRole("doctor")){
+            return response()->json([
+                'success' => "you deleted this user successfully.",
+            ], 200);
+        }
+
+        if($user->orders()->count()){
+            return response()->json([
+                'error' => "you can't delete This Medicine This Medicine has Orders Assigned to this order.",
+            ], 200);
+        }
+        $user->delete();
+        return response()->json([
+            'success' => "you deleted user $user->name successfully.",
+        ], 200);
+
+
+
+//        return redirect()->route("users.index");
     }
 
 
@@ -161,4 +189,13 @@ class UserController extends Controller
         return redirect()->route("doctors.index");
 
     }
+    /**
+     * Show the form for Entring User email for sending the reset message .
+     */
+    public function resetPasswordWithEmail () {
+
+        return view ('auth.passwords.email');
+
+    }
+
 }

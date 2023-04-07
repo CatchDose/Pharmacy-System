@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{route("index")}}" class="brand-link">
-        <img src="{{asset("dist/img/AdminLTELogo.png")}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Pharmacy System</span>
+        <img src="{{asset("dist/img/catch.png")}}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+        <span class="brand-text font-weight-light">Catch Dose</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -56,14 +56,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("users.index")}}" class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}">
-                                <i class="bi bi-person-lines-fill"></i>
-                                <p>All Users</p>
+                                <i class="bi bi-person-lines-fill nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("users.create")}}" class="nav-link {{ Route::currentRouteNamed('users.create') ? 'active' : '' }}">
-                                <i class="bi bi-person-add"></i>
-                                <p>Add User</p>
+                                <i class="bi bi-person-add nav-icon"></i>
+                                <p>Add </p>
                             </a>
                         </li>
 
@@ -79,8 +79,8 @@
                     <a href="#" class="nav-link ">
                         <i class="bi bi-building"></i>
                         <p>
-                            @role("admin") pharmacies @endrole
-                            @role("pharmacy") pharmacy @endrole
+                            @role("admin") Pharmacies @endrole
+                            @role("pharmacy") Pharmacy @endrole
 
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -89,14 +89,14 @@
                         @role("admin")
                         <li class="nav-item">
                             <a href="{{route("pharmacies.index")}}" class="nav-link {{Route::is('pharmacies.index') ? 'active' : '' }}">
-                                <i class="bi bi-list-columns"></i>
-                                <p>All Pharmacies</p>
+                                <i class="bi bi-list-columns nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("pharmacies.create")}}" class="nav-link {{Route::is('pharmacies.create') ? 'active' : '' }}">
-                                <i class="bi bi-building-fill-add"></i>
-                                <p>Add Pharmacy</p>
+                                <i class="bi bi-building-fill-add nav-icon"></i>
+                                <p>Add</p>
                             </a>
                         </li>
                         @endrole
@@ -104,7 +104,7 @@
                         <li class="nav-item">
                             <a href="{{route("pharmacies.show",Auth::user()->pharmacy->id)}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Show Pharmacy</p>
+                                <p>Show</p>
                             </a>
                         </li>
                         @endrole
@@ -127,14 +127,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("doctors.index")}}" class="nav-link {{Route::is('doctors.index') ? 'active' : '' }}">
-                                <i class="bi bi-person-vcard"></i>
-                                <p>All Doctors</p>
+                                <i class="bi bi-person-vcard nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("doctors.create")}}" class="nav-link {{Route::is('doctors.create') ? 'active' : '' }}">
-                                <i class="bi bi-person-add"></i>
-                                <p>Add Doctor</p>
+                                <i class="bi bi-person-add nav-icon"></i>
+                                <p>Add</p>
                             </a>
                         </li>
 
@@ -146,7 +146,7 @@
 
 
                 {{-- Orders Menu--}}
-                <li class="nav-item">
+                <li class="nav-item {{ Route::currentRouteNamed('orders.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
                         <i class="bi bi-cart4"></i>
@@ -157,14 +157,14 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('orders.index')}}" class="nav-link active">
-                                <i class="bi bi-bag-fill"></i>
+                            <a href="{{route('orders.index')}}" class="nav-link {{Route::is('orders.index') ? 'active' : '' }}">
+                                <i class="bi bi-bag-fill nav-icon"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('orders.create')}}" class="nav-link">
-                                <i class="bi bi-bag-plus"></i>
+                            <a href="{{route('orders.create')}}" class="nav-link {{Route::is('orders.create') ? 'active' : '' }}">
+                                <i class="bi bi-bag-plus nav-icon"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -187,14 +187,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("areas.index")}}" class="nav-link {{ Route::currentRouteNamed('areas.index') ? 'active' : '' }}">
-                                <i class="bi bi-globe-americas"></i>
-                                <p>All Areas</p>
+                                <i class="bi bi-globe-americas nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('areas.create')}}" class="nav-link {{ Route::currentRouteNamed('areas.create') ? 'active' : '' }}">
-                                <i class="bi bi-patch-plus"></i>
-                                <p>Add Area</p>
+                                <i class="bi bi-patch-plus nav-icon"></i>
+                                <p>Add</p>
                             </a>
                         </li>
 
@@ -218,14 +218,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('addresses.index')}}" class="nav-link {{ Route::currentRouteNamed('addresses.index') ? 'active' : '' }}">
-                                <i class="bi bi-pin-map"></i>
-                                <p>All Addresses</p>
+                                <i class="bi bi-pin-map nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('addresses.create')}}" class="nav-link {{ Route::currentRouteNamed('addresses.create') ? 'active' : '' }}">
-                                <i class="bi bi-node-plus"></i>
-                                <p>Add Address</p>
+                                <i class="bi bi-node-plus nav-icon"></i>
+                                <p>Add</p>
                             </a>
                         </li>
                     </ul>
@@ -238,21 +238,21 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-capsule"></i>
                         <p>
-                            Medicines
+                            Medicine
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("medicines.index")}}" class="nav-link {{Route::is('medicines.index') ? 'active' : '' }}">
-                                <i class="bi bi-capsule-pill"></i>
-                                <p>All Medicines</p>
+                                <i class="bi bi-capsule-pill nav-icon"></i>
+                                <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("medicines.create")}}" class="nav-link {{Route::is('medicines.create') ? 'active' : '' }}">
-                                <i class="bi bi-plus-square"></i>
-                                <p>Add Medicine</p>
+                                <i class="bi bi-plus-square nav-icon"></i>
+                                <p>Add</p>
                             </a>
                         </li>
                     </ul>
@@ -273,15 +273,15 @@
                         <li class="nav-item">
                             <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Pharmacies Revenues</p>
+                                <p>Pharmacies</p>
                             </a>
                         </li>
                         @endrole
                         @role("pharmacy")
                         <li class="nav-item">
                             <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
-                                <i class="bi bi-cash-stack"></i>
-                                <p>Pharmacy Revenue</p>
+                                <i class="bi bi-cash-stack nav-icon"></i>
+                                <p>Pharmacy</p>
                             </a>
                         </li>
                         @endrole
@@ -290,15 +290,20 @@
                 </li>
                 @endhasanyrole
 
+                @role("admin")
+                {{-- Revenue Menu--}}
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+
+                    <a href="{{route('statistics.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
+                            Statistics
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+
                 </li>
+                @endrole
 
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();

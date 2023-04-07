@@ -16,20 +16,21 @@ class AddressController extends Controller
 
     public function index () {
 
-        $userId = Auth::user()->id;
-        $userAddresses = User::find($userId)->addresses;
-        return $userAddresses;
+        $userAddresses = auth()->user()->addresses;
+
+        return AddressResource::collection($userAddresses);
 
     }
 
     public function store (StoreAddressRequest $request){
 
-        $userId = Auth::user()->id;
-        $previousAddressIsMain = Address::where('user_id',$userId)->where('is_main', 1)->first();
+        $previousAddressIsMain = Address::where('user_id', auth()->id())->where('is_main', 1)->first();
+
         if ( $request->input('is_main') == 1 && !empty($previousAddressIsMain) ) {
             $previousAddressIsMain->is_main = 0;
             $previousAddressIsMain->save();
         }
+
        $address= Address::create([
             'street_name' => $request->street_name,
             'building_number' => $request->building_number,
@@ -37,51 +38,57 @@ class AddressController extends Controller
             'flat_number' => $request->flat_number,
             'is_main' => $request->is_main,
             'area_id' => $request->area,
-            'user_id' => Auth::user()->id
+            'user_id' => auth()->id()
         ]);
-return new AddressResource ($address);
+
+        return response()->json([
+            "message" => "Address created successfully",
+            "data" => new AddressResource($address)
+        ]);
     }
 
     public function show (Address $address) {
-        if (!$address->id){
-            return response()->json(["message" => "This User does not have any addresses"],404);
+        if ( $address->user->id != auth()->user()->id ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else {
-            return $address;
+            return new AddressResource($address);
         }
     }
 
     public function update (Address $address , UpdateAddressRequest $request){
 
-        if(!$address->id) {
-            return response()->json(["message" => "This Address does not exists"],404);
+        if ( $address->user->id != auth()->id() ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else {
-            $userId = Auth::user()->id;
-            $previousAddressIsMain = Address::where('user_id',$userId)->where('is_main', 1)->first();
+
+            $previousAddressIsMain = Address::where('user_id',auth()->id())->where('is_main', 1)->first();
             if ( $request->input('is_main') == 1 && !empty($previousAddressIsMain) ) {
                 $previousAddressIsMain->is_main = 0;
                 $previousAddressIsMain->save();
             }
-            $address->update([
-                'street_name' => $request->street_name,
-                'building_number' => $request->building_number,
-                'floor_number' => $request->floor_number,
-                'flat_number' => $request->flat_number,
-                'is_main' => $request->is_main,
-                'area_id' => $request->area,
-                'user_id' => $userId
+
+            $address->update($request->validated());
+
+            return response()->json([
+                "message" => "Address updated successfully",
+                "data" => new AddressResource($address)
             ]);
 
         }
     }
 
     public function destroy (Address $address) {
-        if (!$address->id) {
-            return response()->json(["message" => "This address does not exists for this user"],404);
+        if ( $address->user->id != auth()->user()->id ) {
+            return response()->json(["message" => "This user does not have this address please provide a valid address id for this user"],404);
         }
         else{
             $address->delete();
+            return response()->json([
+                "message" => "Address has been deleted successfully",
+                "data" => new AddressResource($address)
+            ],200);
         }
     }
 }

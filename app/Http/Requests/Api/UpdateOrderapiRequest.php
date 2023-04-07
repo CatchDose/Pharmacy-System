@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
-use Illuminate\Database\Query\Builder;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreOrderapiRequest extends FormRequest
+class UpdateOrderapiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +22,13 @@ class StoreOrderapiRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
 
             'is_insured'=>['required'],
-            'prescription.*'=>['required' , 'mimes:jpg,png' ],
+            'status'=>['required',Rule::in([1,4])],
+            'prescription.*'=>['required','mimes:jpg,png' ],
             'delivering_address_id'=>['required', Rule::in(auth()->user()->addresses->pluck("id")->toArray())] ,
-            
+
         ];
     }
-
-
 }

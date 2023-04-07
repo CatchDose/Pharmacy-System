@@ -11,7 +11,7 @@
 @section("breadcrumb")
 
     <li class="breadcrumb-item"><a href="{{route("index")}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{route("users.index")}}">users</a></li>
+    <li class="breadcrumb-item">users</li>
 
 @endsection
 
@@ -33,7 +33,7 @@
                     Are you sure you want to delete this user?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">no</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="modalNo">no</button>
                     <button type="button" class="btn btn-danger">yes</button>
                 </div>
             </div>
@@ -44,14 +44,5 @@
 @section('scripts')
     {{ $dataTable->scripts() }}
 
-    <script>
-        function modalShow(event){
-            event.preventDefault();
-            event.stopPropagation();
-            document.querySelector(".modal-footer").lastElementChild.addEventListener("click",(e)=>{
-                event.target.closest("form").submit();
-            })
-        }
-    </script>
 
 @endsection

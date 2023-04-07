@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAddressRequest extends FormRequest
 {
@@ -26,8 +27,8 @@ class UpdateAddressRequest extends FormRequest
             'building_number' => ["required" , "numeric" , "max:999" , "min:1"],
             'floor_number' => ["required" , "numeric" , "max:40" , "min:1"],
             'flat_number' => ["required" , "numeric" , "max:999" , "min:1"],
-            'is_main' => ["required"],
-            'area' => ["required"]
+            'is_main' => ["required",Rule::in([0,1])],
+            'area' => ["required","exists:areas,id"]
         ];
     }
 }

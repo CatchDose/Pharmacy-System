@@ -36,8 +36,8 @@ class AuthController extends Controller
             "last_login" => now()
         ]);
 
-
-        return $user->createToken($request->device_name)->plainTextToken;
+//        $user->createToken($request->device_name)->plainTextToken
+        return new UserResource($user);
     }
 
 
@@ -53,8 +53,10 @@ class AuthController extends Controller
         }
 
         $user = User::create($data);
-        SendVerifyEmailJob::dispatch($user);
+//        SendVerifyEmailJob::dispatch($user);
         $user->assignRole("client");
+
+        $user->sendEmailVerificationNotificationApi();
 
 
         return new UserResource($user);

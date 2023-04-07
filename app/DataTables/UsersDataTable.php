@@ -39,10 +39,6 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-//        return $model->newQuery()->whereHas('roles',function($q){
-//            return $q->where("name","admin");
-//        });
-
         return $model->newQuery();
     }
 
@@ -55,11 +51,9 @@ class UsersDataTable extends DataTable
                     ->setTableId('users-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-//                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
-
-            ->buttons([
+                    ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
                         Button::make('pdf'),
@@ -79,14 +73,10 @@ class UsersDataTable extends DataTable
             Column::make('name'),
             Column::make('national_id'),
             Column::make('email'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
-
         ];
     }
 

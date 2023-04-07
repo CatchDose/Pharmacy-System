@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
-
+use App\Http\Controllers\StatisticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +31,7 @@ use App\Http\Controllers\AddressController;
 */
 
 Route::get("/test2", function () {
+    dd(auth()->user('sanctum'));
     $orders = Order::where("status", 1)->get();
     foreach ($orders as $order) {
         $orderArea = $order->user->addresses()->where("is_main", 1)->first()->id;
@@ -39,6 +40,8 @@ Route::get("/test2", function () {
     }
 })->name('test');
 
+
+Route::get('/forgot/password' , [UserController::class , 'resetPasswordWithEmail'])->name('forgot');
 
 Route::get('stripe/{order}', [StripePaymentController::class,'stripe'])->name("stripe.confirm");
 Route::post('stripe/{order}', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
@@ -111,6 +114,7 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
     Route::resource('orders', OrderController::class);
     Route::post('/orders/{order}/assign', [OrderController::class, 'assign'])->name("orders.assign");
     Route::get('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name("orders.cancel");
+    Route::put('/orders/{order}/delivered', [OrderController::class, 'delivered'])->name("orders.delivered");
 
     /*================================== start doctors route ================================= */
 
@@ -123,6 +127,14 @@ Route::group(["middleware" => ["auth", "role:admin|pharmacy|doctor", "logs-out-b
 
     Route::get('/profiles/{profile}/edit', [ProfileController::class, 'edit'])->name("profiles.edit");
     Route::put('/profiles/{profile}', [ProfileController::class, 'update'])->name("profiles.update");
+
+    /*================================== start statistic route ================================== */
+
+    Route::get('/statistic', [\App\Http\Controllers\StatisticController::class , 'index'])->name('statistics.index');
 });
 
 Auth::routes(['register' => false, 'verify' => true]);
+
+Route::fallback(function (){
+    abort(404);
+});
