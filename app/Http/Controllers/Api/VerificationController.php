@@ -45,10 +45,13 @@ class VerificationController extends Controller
     public function verifyEmail(EmailVerificationRequest $request) {
 
         $request->fulfill();
-        return Redirect()->route("index");
+        return response()->json([
+            'message' => 'Email verified successfully'
+        ]);
     }
 
     function sendVerifyEmail(Request $request) {
+
         $request->user()->sendEmailVerificationNotificationApi();
 
         return response()->json([
