@@ -150,15 +150,17 @@ class OrderController extends Controller
         return to_route('orders.index');
     }
 
-    
+
     /**
      * change order status to cancelled.
      */
     public function cancel(Order $order)
     {
-        $order->update([
-            'status' => 4
-        ]);
+        if($order->status === "Waiting"){
+            $order->update([
+                'status' => 4
+            ]);
+        }
 
         return response()->json([
             "message" => "Your order cancelled successfully, thanks for using our app"

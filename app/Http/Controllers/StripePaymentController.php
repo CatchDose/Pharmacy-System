@@ -11,9 +11,6 @@ class StripePaymentController extends Controller
 {
     public function stripe(Order $order)
     {
-        if($order->status !== "Waiting" && auth()->id() !== $order->user_id)
-            abort(404);
-
         return view('stripes.stripe',compact("order"));
     }
 

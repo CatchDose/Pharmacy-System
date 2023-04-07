@@ -14,11 +14,11 @@ Your Order Info:
 
 
 <x-mail::button :url="$confirmUrl" color="success">
-    View Order
+    Confirm Order
 </x-mail::button>
 
-<x-mail::button :url="$cancelUrl" color="success">
-    View Order
+<x-mail::button :url="$cancelUrl" color="error">
+    cancel order
 </x-mail::button>
 
 
