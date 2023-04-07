@@ -25,12 +25,12 @@ use App\Http\Controllers\Api\AddressController;
 Route::post("register",[AuthController::class, 'register']);
 Route::post('/sanctum/token', [AuthController::class, 'getToken']);
 
-Route::group(["middleware"=>["auth:sanctum"]],function (){
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(["auth:sanctum",'signed'])->name('api.verification.verify');
 
-    Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(['signed'])->name('api.verification.verify');
+Route::post('/email/verification-notification', [VerificationController::class,"sendVerifyEmail"])->middleware(["auth:sanctum",'throttle:6,1'])->name('api.verification.send');
 
+Route::group(["middleware"=>["auth:sanctum","verified"]],function (){
 
-    Route::post('/email/verification-notification', [VerificationController::class,"sendVerifyEmail"])->middleware(['throttle:6,1'])->name('api.verification.send');
 
     Route::put('/users/{user}',[UserController::class, 'update']);
 
@@ -44,7 +44,7 @@ Route::group(["middleware"=>["auth:sanctum"]],function (){
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::put('/orders/{order}' , [OrderController::class , 'update']);
-    
+
 });
 
 
