@@ -150,7 +150,6 @@
                         <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>
                 </form>
-            </div>
 
 @endsection
 
