@@ -18,9 +18,6 @@
 @section("content")
 
     <div class="card card-primary">
-{{--        <div class="card-header">--}}
-{{--            <h3 class="card-title">Edit Address</h3>--}}
-{{--        </div>--}}
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("addresses.update",$address->id)}}" method="post">
