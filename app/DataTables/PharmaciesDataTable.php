@@ -26,12 +26,12 @@ class PharmaciesDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> edit </a>
-                    <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}"> show </a>
+                    <a class="btn btn-success" id="option_a1" href="{{Route("pharmacies.edit",$id)}}"> <i class="bi bi-pencil-square"></i> </a>
+                    <a class="btn btn-primary" id="option_a2" href="{{Route("pharmacies.show",$id)}}" title="show"> <i class="bi bi-file-earmark-text-fill"></i> </a>
                     <form method="post" class="delete_item"  id="option_a3" action="{{Route("pharmacies.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-trash3"></i></button>
                     </form>
                 </div>')->setRowId('id')
             ->addColumn('owner_name', function (Pharmacy $pharmacy) {
