@@ -131,7 +131,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-dark w-100">Edit</button>
+                <button type="submit" class="btn btn-dark w-100">Update</button>
             </div>
         </form>
     </div>
