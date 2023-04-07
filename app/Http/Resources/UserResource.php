@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class UserResource extends JsonResource
 {
@@ -15,9 +16,12 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name'=>$this->name,
-            'email'=>$this->email,
-            'phone'=>$this->phone
+            "data"=> [
+                'name'=>$this->name,
+                'email'=>$this->email,
+                'phone'=>$this->phone,
+            ],
+            "access_token" => $this->createToken(Str::random(5))->plainTextToken
         ];
     }
 }

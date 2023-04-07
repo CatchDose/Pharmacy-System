@@ -25,11 +25,9 @@ class StoreOrderapiRequest extends FormRequest
     {
 
         return [
-
-            'is_insured'=>['required'],
-            'prescription[]'=>['required|file' , 'mimes:jpg,png' ],
+            'is_insured'=>['required',Rule::in([0,1])],
+            'prescription.*'=>['required' , 'mimes:jpg,png' ],
             'delivering_address_id'=>['required', Rule::in(auth()->user()->addresses->pluck("id")->toArray())] ,
-            
         ];
     }
 
