@@ -66,6 +66,9 @@
   const second = document.getElementById('second');
   const third = document.getElementById('third');
   const fourth = document.getElementById('fourth');
+  const dataPie =  function () {
+
+  }
   new Chart(first, {
     type: 'bar',
     data: {
@@ -115,7 +118,7 @@
         ],
         datasets: [{
             label: 'Attendance',
-            data: [{{$gender["male"]}} , {{$gender["female"]}}],
+            data: [{{ count($gender[1]) }} , {{ count($gender[2]) }}],
             backgroundColor: [
             'rgb(54, 162, 235)',
             'rgb(255, 99, 132)',

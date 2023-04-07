@@ -57,15 +57,6 @@ class Order extends Model
         return $total;
     }
 
-    protected function createdAt(): Attribute
-    {
-        return Attribute::make(
-
-            get: fn(string $value) => Carbon::parse($value)->format('d/m/Y h:m A'),
-
-        );
-    }
-
     protected function isInsured(): Attribute
     {
         return Attribute::make(
