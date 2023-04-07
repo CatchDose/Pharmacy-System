@@ -48,7 +48,7 @@
 <hr>
 </div>
 
-</div>
+
 @hasanyrole("admin|pharmacy")
 <a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-dark w-100">edit Pharmacy</a>
 @endhasanyrole
