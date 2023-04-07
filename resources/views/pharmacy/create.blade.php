@@ -17,7 +17,7 @@
 @endsection
 
 @section("content")
-
+    <div class="card card-primary">
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="POST" action="{{route("pharmacies.store")}}" class="needs-validation">
@@ -150,8 +150,7 @@
                         <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>
                 </form>
-            </div>
-
+    </div>
 @endsection
 
 

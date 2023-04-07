@@ -19,9 +19,6 @@
 @section("content")
 
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">edit medicine</h3>
-                </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="post" action="{{route("medicines.update",$medicine->id)}}" class="needs-validation">
@@ -62,7 +59,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark w-100">Update</button>
                     </div>
                 </form>
             </div>

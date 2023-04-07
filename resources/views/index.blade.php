@@ -15,10 +15,9 @@
 @endsection
 
 @section("content")
-    <h1>Pharmacy System</h1>
-    @hasanyrole("admin|pharmacy")
+    <h1 class="mb-4">Pharmacy System</h1>
     <div class="container-fluid">
-
+        @hasanyrole("admin|pharmacy")
         <div class="row">
             <div class="col-lg-3 col-6">
 
@@ -30,7 +29,7 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route("orders.index")}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -42,7 +41,7 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route("orders.index")}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -55,10 +54,9 @@
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route("revenues.index")}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
             <div class="col-lg-3 col-6">
 
                 <div class="small-box bg-danger">
@@ -69,12 +67,19 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+                    <a href="@role('admin') {{route('users.index')}} @else # @endrole" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+
                 </div>
             </div>
         </div>
+        @endhasanyrole
+        <div class="d-flex justify-content-center align-items-center">
+            <img class="animation__shake img-fluid w-25" src="{{asset("dist/img/catch.png")}}" style="z-index:5;">
+        </div>
+
     </div>
-    @endhasanyrole
+
 @endsection
 
 @section("script")

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Http\Resources\RevenueResource;
+use App\Http\Services\RevenueService;
 use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -15,6 +16,10 @@ use Yajra\DataTables\Services\DataTable;
 
 class RevenueDataTable extends DataTable
 {
+    public function __construct(protected RevenueService $revenueService)
+    {
+    }
+
     /**
      * Build the DataTable class.
      *
@@ -28,10 +33,10 @@ class RevenueDataTable extends DataTable
                 return $pharmacy->name;
             })->addColumn('Total_Orders', function (Pharmacy $pharmacy) {
                 $test=new RevenueResource($pharmacy);
-                return json_decode($test->toJson())->Total_Orders;
+                return $this->revenueService->calcRevenue($pharmacy)["Total_Orders"];
             })->addColumn('Total_Revenue', function (Pharmacy $pharmacy) {
                 $test=new RevenueResource($pharmacy);
-                return "$ ".json_decode($test->toJson())->Total_Revenue;
+                return "$ ".$this->revenueService->calcRevenue($pharmacy)["Total_Revenue"];
             });
     }
 

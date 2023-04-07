@@ -23,12 +23,12 @@ class MedicinesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <a class="btn btn-success" id="option_a1" href="{{Route("medicines.edit",$id)}}"> edit </a>
+                <div class="btn-group btn-group-toggle gap-1" data-toggle="buttons">
+                    <a class="btn btn-success rounded" id="option_a1" href="{{Route("medicines.edit",$id)}}" title="edit"> <i class="bi bi-pencil-square"></i> </a>
                     <form method="post" class="delete_item"  id="option_a3" action="{{Route("medicines.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal" title="delete"><i class="bi bi-trash3"></i></button>
                     </form>
                 </div>')
             ->setRowId('id')->addColumn('name', function (Medicine $medicine) {
