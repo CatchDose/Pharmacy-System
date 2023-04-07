@@ -22,13 +22,13 @@ class AreasDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <a class="btn btn-success" id="option_a1" href="{{Route("areas.edit",$id)}}"> edit </a>
+            ->addColumn('action', '<div class="btn-group btn-group-toggle gap-1" data-toggle="buttons">
+            <a class="btn btn-success rounded " id="option_a1" href="{{Route("areas.edit",$id)}}" > <i class="bi bi-pencil-square"></i> </a>
 
             <form method="post" class="delete_item"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
                 @csrf
                 @method("DELETE")
-                <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
+                <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-trash3"></i></button>
             </form>
         </div>')
            ->addColumn('Country', function (Area $area) {

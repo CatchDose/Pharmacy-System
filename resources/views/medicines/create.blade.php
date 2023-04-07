@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{asset("plugins/daterangepicker/daterangepicker.css")}}">
 @endsection
 
-@section("header","add medicine")
+@section("header","Add medicine")
 
 @section("breadcrumb")
 
@@ -19,9 +19,6 @@
 @section("content")
 
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add medicine</h3>
-                </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="POST" action="{{route("medicines.store")}}" class="needs-validation">
@@ -60,7 +57,7 @@
                         </div>
                       </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark w-100">Submit</button>
                     </div>
                 </form>
             </div>

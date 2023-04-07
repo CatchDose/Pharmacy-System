@@ -19,9 +19,6 @@
 @section("content")
 
     <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Add Doctor</h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route("doctors.store")}}" method="post" enctype="multipart/form-data">
@@ -173,7 +170,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-dark w-100">Submit</button>
             </div>
 
         </form>

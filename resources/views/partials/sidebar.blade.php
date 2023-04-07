@@ -292,7 +292,7 @@
                 <li class="nav-item">
 
                     <a href="{{route('statistics.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="bi bi-bar-chart-fill"></i>
                         <p>
                             Statistics
                             <i class="right fas fa-angle-left"></i>

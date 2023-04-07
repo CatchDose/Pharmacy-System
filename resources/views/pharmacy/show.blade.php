@@ -18,7 +18,7 @@
 
 @section("content")
 
-
+    <div class="card card-primary">
 <div class="card-body">
 <strong><i class="fas fa-book mr-1"></i> Pharmacy Name</strong>
 <p class="text-muted">
@@ -46,12 +46,14 @@
 
 </p>
 <hr>
+    @hasanyrole("admin|pharmacy")
+    <a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-dark w-100">edit Pharmacy</a>
+    @endhasanyrole
 </div>
 
-</div>
-@hasanyrole("admin|pharmacy")
-<a href="{{route("pharmacies.edit",$pharmacy->id)}}" class="btn btn-dark w-100">edit Pharmacy</a>
-@endhasanyrole
+    </div>
+
+
 
 @endsection
 

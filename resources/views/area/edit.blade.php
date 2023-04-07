@@ -18,9 +18,6 @@
 
 @section("content")
 <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Add area</h3>
-        </div>
 <form action='{{route("areas.update",$area->id)}}' method="post" enctype="multipart/form-data">
             <div class="card-body">
                 @csrf
@@ -60,7 +57,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark w-100">Update</button>
                     </div>
                 </form>
             </div>
