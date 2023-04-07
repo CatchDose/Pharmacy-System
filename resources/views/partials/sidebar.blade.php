@@ -47,7 +47,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('users.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-people-fill nav-icon d-inline-block"></i>
                         <p>
                             Users
                             <i class="right fas fa-angle-left"></i>
@@ -56,13 +56,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("users.index")}}" class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}">
-                                <i class="bi bi-person-lines-fill nav-icon"></i>
+                                <i class="bi bi-person-lines-fill nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("users.create")}}" class="nav-link {{ Route::currentRouteNamed('users.create') ? 'active' : '' }}">
-                                <i class="bi bi-person-add nav-icon"></i>
+                                <i class="bi bi-person-add nav-icon d-inline-block"></i>
                                 <p>Add </p>
                             </a>
                         </li>
@@ -77,7 +77,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('pharmacies.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link ">
-                        <i class="bi bi-building"></i>
+                        <i class="bi bi-building nav-icon d-inline-block"></i>
                         <p>
                             @role("admin") Pharmacies @endrole
                             @role("pharmacy") Pharmacy @endrole
@@ -89,13 +89,13 @@
                         @role("admin")
                         <li class="nav-item">
                             <a href="{{route("pharmacies.index")}}" class="nav-link {{Route::is('pharmacies.index') ? 'active' : '' }}">
-                                <i class="bi bi-list-columns nav-icon"></i>
+                                <i class="bi bi-list-columns nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("pharmacies.create")}}" class="nav-link {{Route::is('pharmacies.create') ? 'active' : '' }}">
-                                <i class="bi bi-building-fill-add nav-icon"></i>
+                                <i class="bi bi-building-fill-add nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -103,7 +103,7 @@
                         @role("pharmacy")
                         <li class="nav-item">
                             <a href="{{route("pharmacies.show",Auth::user()->pharmacy->id)}}" class="nav-link {{Route::is('pharmacies.show') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-circle nav-icon d-inline-block"></i>
                                 <p>Show</p>
                             </a>
                         </li>
@@ -118,7 +118,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('doctors.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link ">
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-people-fill nav-icon d-inline-block"></i>
                         <p>
                             Doctors
                             <i class="right fas fa-angle-left"></i>
@@ -127,13 +127,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("doctors.index")}}" class="nav-link {{Route::is('doctors.index') ? 'active' : '' }}">
-                                <i class="bi bi-person-vcard nav-icon"></i>
+                                <i class="bi bi-person-vcard nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("doctors.create")}}" class="nav-link {{Route::is('doctors.create') ? 'active' : '' }}">
-                                <i class="bi bi-person-add nav-icon"></i>
+                                <i class="bi bi-person-add nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -149,7 +149,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('orders.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-cart4"></i>
+                        <i class="bi bi-cart4 nav-icon d-inline-block"></i>
                         <p>
                             Orders
                             <i class="right fas fa-angle-left"></i>
@@ -158,13 +158,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('orders.index')}}" class="nav-link {{Route::is('orders.index') ? 'active' : '' }}">
-                                <i class="bi bi-bag-fill nav-icon"></i>
+                                <i class="bi bi-bag-fill nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('orders.create')}}" class="nav-link {{Route::is('orders.create') ? 'active' : '' }}">
-                                <i class="bi bi-bag-plus nav-icon"></i>
+                                <i class="bi bi-bag-plus nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -178,7 +178,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('areas.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-geo-alt"></i>
+                        <i class="bi bi-geo-alt nav-icon d-inline-block"></i>
                         <p>
                             Areas
                             <i class="right fas fa-angle-left"></i>
@@ -187,19 +187,16 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("areas.index")}}" class="nav-link {{ Route::currentRouteNamed('areas.index') ? 'active' : '' }}">
-                                <i class="bi bi-globe-americas nav-icon"></i>
+                                <i class="bi bi-globe-americas nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('areas.create')}}" class="nav-link {{ Route::currentRouteNamed('areas.create') ? 'active' : '' }}">
-                                <i class="bi bi-patch-plus nav-icon"></i>
+                                <i class="bi bi-patch-plus nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
-
-
-
                     </ul>
                 </li>
                 @endrole
@@ -209,7 +206,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('addresses.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-map"></i>
+                        <i class="bi bi-map nav-icon d-inline-block"></i>
                         <p>
                             Addresses
                             <i class="right fas fa-angle-left"></i>
@@ -218,13 +215,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('addresses.index')}}" class="nav-link {{ Route::currentRouteNamed('addresses.index') ? 'active' : '' }}">
-                                <i class="bi bi-pin-map nav-icon"></i>
+                                <i class="bi bi-pin-map nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('addresses.create')}}" class="nav-link {{ Route::currentRouteNamed('addresses.create') ? 'active' : '' }}">
-                                <i class="bi bi-node-plus nav-icon"></i>
+                                <i class="bi bi-node-plus nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -236,7 +233,7 @@
                 <li class="nav-item {{ Route::currentRouteNamed('medicines.*') ? 'menu-open' : '' }}">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-capsule"></i>
+                        <i class="bi bi-capsule nav-icon d-inline-block"></i>
                         <p>
                             Medicine
                             <i class="right fas fa-angle-left"></i>
@@ -245,13 +242,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("medicines.index")}}" class="nav-link {{Route::is('medicines.index') ? 'active' : '' }}">
-                                <i class="bi bi-capsule-pill nav-icon"></i>
+                                <i class="bi bi-capsule-pill nav-icon d-inline-block"></i>
                                 <p>All</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("medicines.create")}}" class="nav-link {{Route::is('medicines.create') ? 'active' : '' }}">
-                                <i class="bi bi-plus-square nav-icon"></i>
+                                <i class="bi bi-plus-square nav-icon d-inline-block"></i>
                                 <p>Add</p>
                             </a>
                         </li>
@@ -262,7 +259,7 @@
                 <li class="nav-item">
 
                     <a href="#" class="nav-link">
-                        <i class="bi bi-currency-exchange"></i>
+                        <i class="bi bi-currency-exchange nav-icon d-inline-block"></i>
                         <p>
                             Revenues
                             <i class="right fas fa-angle-left"></i>
@@ -272,7 +269,7 @@
                         @role("admin")
                         <li class="nav-item">
                             <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-circle nav-icon d-inline-block"></i>
                                 <p>Pharmacies</p>
                             </a>
                         </li>
@@ -280,7 +277,7 @@
                         @role("pharmacy")
                         <li class="nav-item">
                             <a href="{{route("revenues.index")}}" class="nav-link {{Route::is('revenues.index') ? 'active' : '' }}">
-                                <i class="bi bi-cash-stack nav-icon"></i>
+                                <i class="bi bi-cash-stack nav-icon d-inline-block"></i>
                                 <p>Pharmacy</p>
                             </a>
                         </li>
@@ -309,7 +306,7 @@
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
 
-                        <i class="bi bi-box-arrow-right"></i>
+                        <i class="bi bi-box-arrow-right nav-icon d-inline-block"></i>
                         <p>logout</p>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
