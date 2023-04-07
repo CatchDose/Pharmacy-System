@@ -61,12 +61,12 @@ class OrdersDataTable extends DataTable
             } else {
 
                 return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <a class="btn btn-success rounded" id="option_a1" href="' . Route("orders.edit", $id) . '" title="edit"> <i class="bi bi-pencil-square"></i> </a>
-                                <a class="btn btn-primary rounded mx-1" id="option_a2" href="' . Route("orders.show", $id) . '"title="show"> <i class="bi bi-file-earmark-text-fill"></i>  </a>
+                                <a class="btn btn-success" id="option_a1" href="' . Route("orders.edit", $id) . '"> edit </a>
+                                <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
                                 <form method="post" class="delete_item"  id="option_a3" action="' . Route("orders.destroy", $id) . '">
                                 <input type="hidden" name="_token" value="' . csrf_token() . '">
                                 <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_' . $id . '" data-bs-toggle="modal" data-bs-target="#exampleModal" title="delete"><i class="bi bi-trash3"></i></button>
+                                    <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_' . $id . '" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
                                 </form>
                                 </div>';
             }
@@ -84,8 +84,8 @@ class OrdersDataTable extends DataTable
             } else {
 
                 return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <a class="btn btn-success rounded" id="option_a1" href="' . Route("orders.edit", $id) . '"> edit </a>
-                                <a class="btn btn-primary rounded" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
+                                <a class="btn btn-success" id="option_a1" href="' . Route("orders.edit", $id) . '"> edit </a>
+                                <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
                                 </div>';
             }
 

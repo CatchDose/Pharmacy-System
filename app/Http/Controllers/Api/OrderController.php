@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Auth::user()->orders();
-        if($orders->count())
+        if ($orders->count())
             return OrderResource::collection($orders->get());
 
         return response()->json([ "message" => "There is no orders"]);
@@ -38,7 +38,7 @@ class OrderController extends Controller
     */
     public function show(Order $order)
     {
-        if($order->user_id === auth()->id())
+        if ($order->user_id === auth()->id())
             return new OrderResource($order);
 
         return response()->json(
@@ -112,9 +112,9 @@ class OrderController extends Controller
     }
 
 
-    private function jsonMessage($data,$status)
+    private function jsonMessage($data, $status)
     {
-        switch ($status){
+        switch ($status) {
             case 1:
                 return response()->json([
                     "message" => "The order has been updated successfully",
