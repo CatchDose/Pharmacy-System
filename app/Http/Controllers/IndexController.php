@@ -31,10 +31,11 @@ class IndexController extends Controller
 
         if(auth()->user()->hasRole("admin")){
             $dashboardData=$this->getAdminDashboardData();
-        }else if(auth()->user()->hasRole("pharmacy")){
+        }
+        if(auth()->user()->hasRole("pharmacy")){
             $dashboardData=$this->getPharmacyDashboardData();
         }
-        return view('index',$dashboardData);
+        return view('index',$dashboardData??[]);
     }
 
 
