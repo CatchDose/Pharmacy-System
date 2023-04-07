@@ -19,9 +19,6 @@
 @section('content')
 
 <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Show Order Number {{$order->id}} </h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
 

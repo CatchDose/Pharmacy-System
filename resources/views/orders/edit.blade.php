@@ -18,9 +18,6 @@
 @section('content')
 
 <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Update Order Number {{$order->id}}</h3>
-        </div>
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{route('orders.update' , $order->id)}}" method="post" enctype="multipart/form-data">
