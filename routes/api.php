@@ -44,7 +44,7 @@ Route::group(["middleware"=>["auth:sanctum"]],function (){
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::put('/orders/{order}' , [OrderController::class , 'update']);
-    });
+    
 });
 
 
