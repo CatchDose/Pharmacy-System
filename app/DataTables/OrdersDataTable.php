@@ -43,54 +43,38 @@ class OrdersDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
 
-    function action($id, $status)
-    {
-
-        if (auth()->user()->hasRole('admin')) {
-
-            if ($status == 'Confirmed') {
-
-                return '<div>
-                        <form method="post" id="option_a3" action="' . Route("orders.delivered", $id) . '">
-                        <input type="hidden" name="_token" value="' . csrf_token() . '">
-                        <input type="hidden" name="_method" value="PUT">
-                            <button type="submit" class="btn btn-dark w-100">Delivered</button>
-                        </form>
-                        </div>';
-
-            } else {
-
-                return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <a class="btn btn-success" id="option_a1" href="' . Route("orders.edit", $id) . '"> edit </a>
-                                <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
-                                <form method="post" class="delete_item"  id="option_a3" action="' . Route("orders.destroy", $id) . '">
-                                <input type="hidden" name="_token" value="' . csrf_token() . '">
-                                <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" onclick="modalShow(event)" id="delete_' . $id . '" data-bs-toggle="modal" data-bs-target="#exampleModal">delete</button>
-                                </form>
-                                </div>';
-            }
-        } else {
-
-            if ($status == 'Confirmed') {
-
-                return '<div>
-                        <form method="post" id="option_a3" action="' . Route("orders.delivered", $id) . '">
-                        <input type="hidden" name="_token" value="' . csrf_token() . '">
-                        <input type="hidden" name="_method" value="PUT">
-                            <button type="submit" class="btn btn-dark">Delivered</button>
-                        </form>
-                        </div>';
-            } else {
-
-                return '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <a class="btn btn-success" id="option_a1" href="' . Route("orders.edit", $id) . '"> edit </a>
-                                <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
-                                </div>';
-            }
-
-        }
-    }
+     private function action($id, $status)
+     {
+         switch ($status) {
+ 
+             case 'Confirmed':
+ 
+                 return '<div>
+                             <form method="post" id="option_a3" action="' . Route("orders.delivered", $id) . '">
+                             <input type="hidden" name="_token" value="' . csrf_token() . '">
+                             <input type="hidden" name="_method" value="PUT">
+                                 <button type="submit" class="btn btn-dark w-100">Delivered</button>
+                             </form>
+                         </div>';
+ 
+             case 'Processing' :
+ 
+                 return '<div class="btn-group btn-group-toggle gap-3" data-toggle="buttons">
+                             <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
+                             <form method="post" id="option_a3" action="' . Route("orders.update", $id) . '">
+                                 <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                 <input type="hidden" name="_method" value="PUT">
+                                 <button type="submit" class="btn btn-dark w-100">Cancel</button>
+                             </form>
+                         </div>';
+ 
+             default:
+ 
+                 return '<div class="btn-group btn-group-toggle w-75" data-toggle="buttons">
+                             <a class="btn btn-primary" id="option_a2" href="' . Route("orders.show", $id) . '"> show </a>
+                         </div>';
+         } 
+     }
 
     /**
      * Get the query source of dataTable.
