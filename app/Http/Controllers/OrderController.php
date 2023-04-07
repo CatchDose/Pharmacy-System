@@ -88,37 +88,21 @@ class OrderController extends Controller
         return view('orders.show', ['order' => $order, 'medicines' => $medicine, 'prescriptions' => $prescriptions]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
-    {
-
-        $users = User::all();
-        $doctors = User::Role('doctor')->get();
-        $pharmacy = Pharmacy::all();
-        return view('orders.edit', ['order' => $order, 'users' => $users, 'pharmacy' => $pharmacy, 'doctors' => $doctors]);
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Order $order)
     {
 
-        $data = $request->all();
+        if ($order->status == 'Processing') {
 
-        if (isset($data['status'])) {
+            $order->update([
 
-            $order->status = $data['status'];
+                'status' => '4',
+            ]);
+
         }
-
-        $order->update([
-
-            'is_insured' => $data['is_insured'],
-            'user_id' => $data['user_id'],
-
-        ]);
 
         return to_route('orders.index');
     }
@@ -137,11 +121,6 @@ class OrderController extends Controller
         return response()->json([
             'success' => "you deleted this Order successfully.",
         ], 200);
-
-//        if (auth()->user()->hasRole('admin')) {
-//            $order->delete();
-//        }
-//        return to_route('orders.index');
     }
 
     /**
@@ -171,9 +150,51 @@ class OrderController extends Controller
         return to_route('orders.index');
     }
 
+    
+    /**
+     * change order status to cancelled.
+     */
+    public function cancel(Order $order)
+    {
+        $order->update([
+            'status' => 4
+        ]);
+
+        return response()->json([
+            "message" => "Your order cancelled successfully, thanks for using our app"
+        ]);
+
+    }
+
+    /**
+    * change order status to delivered.
+    */
+    public function delivered(Order $order)
+    {
+        $order->update([
+            'status' => 6
+        ]);
+
+        return to_route('orders.index');
+    }
+
+
+    private static function buildOrderInfo($medicines, $quantity)
+    {
+        $orderInfo = [];
+        foreach ($medicines as $index => $medicine) {
+            $medicine = Medicine::find($medicine);
+            $orderInfo[] = [
+                'medicine' => $medicine->name,
+                'quantity'=> $quantity[$index],
+                'price'=> $medicine->price * $quantity[$index],
+            ];
+        }
+        return $orderInfo ;
+    }
+
     private static function totalPrice($qty, $medicines)
     {
-
         $total = 0;
 
         foreach ($medicines as $index => $medicine) {
@@ -198,40 +219,5 @@ class OrderController extends Controller
             'status' => 3,
             'doctor_id' => auth()->user()->hasRole('doctor')  ? auth()->id() : null,
         ]);
-    }
-
-    private static function buildOrderInfo($medicines, $quantity)
-    {
-        $orderInfo = [];
-        foreach ($medicines as $index => $medicine) {
-            $medicine = Medicine::find($medicine);
-            $orderInfo[] = [
-                'medicine' => $medicine->name,
-                'quantity'=> $quantity[$index],
-                'price'=> $medicine->price * $quantity[$index],
-            ];
-        }
-        return $orderInfo ;
-    }
-
-
-    public function cancel(Order $order)
-    {
-        $order->update([
-            'status' => 4
-        ]);
-
-        return response()->json([
-            "message" => "Your order cancelled successfully, thanks for using our app"
-        ]);
-
-    }
-    public function delivered(Order $order)
-    {
-        $order->update([
-            'status' => 6
-        ]);
-
-        return to_route('orders.index');
     }
 }
