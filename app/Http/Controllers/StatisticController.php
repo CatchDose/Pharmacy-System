@@ -22,11 +22,11 @@ class StatisticController extends Controller
 
         $topUsers=Order::select("user_id as user",DB::raw('COUNT(user_id) as count'))->whereIn('status', [5,6])->groupby("user")->get();
 
-        $topUsers->each(function ($user){
+        $topUsers=$topUsers->each(function ($user){
             return $user->user=User::find($user->user)->name;
 
-        });
+        })->sortByDesc("count");
 
-        return view('statistics.index' , ['gender'=>$gender,"revenue"=>$revenue,"topUsers"=>$topUsers]);
+        return view('statistics.index' , ['gender'=>$gender,"revenue"=>$revenue,"topUsers"=>$topUsers->sortByDesc("count")]);
     }
 }
