@@ -108,7 +108,6 @@
         }
     },
   });
-
   new Chart(third, {
     type: 'pie',
     data : {
@@ -118,7 +117,7 @@
         ],
         datasets: [{
             label: 'Attendance',
-            data: [{{ count($gender[1]) }} , {{ count($gender[2]) }}],
+            data: [{{ isset($gender[1]) ? count($gender[1]) : 0  }} , {{ isset($gender[2]) ? count($gender[2]) : 0 }}],
             backgroundColor: [
             'rgb(54, 162, 235)',
             'rgb(255, 99, 132)',
