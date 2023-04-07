@@ -2,21 +2,6 @@
 
 
 
-@section('title' , 'Create')
-
-@section('style')
-
-@endsection
-
-
-@section("header","Orders")
-
-
-@section("breadcrumb")
-
-    <li class="breadcrumb-item"><a href="#">404 page not found</a></li>
-
-@endsection
 
 
 @section("content")
