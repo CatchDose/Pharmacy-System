@@ -22,8 +22,8 @@ use App\Http\Controllers\Api\AddressController;
 |
 */
 
-Route::post("register",[AuthController::class, 'register']);
-Route::post('/sanctum/token', [AuthController::class, 'getToken']);
+Route::post("/register",[AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class,"verifyEmail"])->middleware(["auth:sanctum",'signed'])->name('api.verification.verify');
 
