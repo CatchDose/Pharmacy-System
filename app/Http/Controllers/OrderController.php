@@ -31,12 +31,15 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $clients = User::Role('client')->get();
+        if(!cache()->has("users"))
+            cache(["users" => User::Role('client')->get()]);
+
         $doctors = User::Role('doctor')->get();
+
         $medicine = Medicine::all();
         $pharmacy = Pharmacy::all();
 
-        return view('orders.create', ['users' => $clients, 'medicine' => $medicine, 'pharmacy' => $pharmacy, 'doctors' => $doctors]);
+        return view('orders.create', ['users' => cache('users'), 'medicine' => $medicine, 'pharmacy' => $pharmacy, 'doctors' => $doctors]);
     }
 
     /**
