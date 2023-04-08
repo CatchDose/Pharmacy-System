@@ -59,8 +59,6 @@
 
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{{--    <script src="{{asset("/dist/js/chart.umd.js")}}"></script>--}}
 <script type="module">
   const first = document.getElementById('first');
   const second = document.getElementById('second');

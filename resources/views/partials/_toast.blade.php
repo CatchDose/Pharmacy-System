@@ -4,10 +4,11 @@
         <div class="toast-body d-flex align-items-center"></div>
     </div>
 </div>
-<script>
-    var toast=new bootstrap.Toast(document.querySelector(".toast"),{"delay":5000});
 
+<script>
     function modalShow(event){
+        var toast=new bootstrap.Toast(document.querySelector(".toast"),{"delay":5000});
+
         event.preventDefault();
         event.stopPropagation();
 
@@ -34,5 +35,4 @@
                 })
         })
     }
-
 </script>
