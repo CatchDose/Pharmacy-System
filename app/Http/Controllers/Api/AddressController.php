@@ -44,7 +44,7 @@ class AddressController extends Controller
         return response()->json([
             "message" => "Address created successfully",
             "data" => new AddressResource($address)
-        ]);
+        ], 200);
     }
 
     public function show (Address $address) {
@@ -74,7 +74,7 @@ class AddressController extends Controller
             return response()->json([
                 "message" => "Address updated successfully",
                 "data" => new AddressResource($address)
-            ]);
+            ],200);
 
         }
     }
