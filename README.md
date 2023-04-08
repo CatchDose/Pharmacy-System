@@ -25,7 +25,7 @@ The `client` is the end user who can make any Order.</br>
 
 ## INSTALLATION
 <pre>
-- git clone 
+- git clone https://github.com/CatchDose/Pharmacy-System.git
 - Composer install
 - npm install
 - cp .env-example .env
@@ -35,7 +35,8 @@ The `client` is the end user who can make any Order.</br>
 - npm run build
 - npm run dev
 - php artisan serve
-- php artisan schedule:work
+- php artisan schedule:run
+- php artisan queue:work
 </pre>
 
  ## CREATE ADMIN 
