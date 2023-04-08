@@ -42,7 +42,7 @@ class IndexController extends Controller
     public function getAdminDashboardData()
     {
         $total_orders = Order::count();
-        $new_orders = Order::where("status", "new")->count();
+        $new_orders = Order::where("status", 1)->count();
         $clients = User::whereHas("roles", function (Builder $query) {
             $query->where('name', 'client');
         })->distinct()->count();
