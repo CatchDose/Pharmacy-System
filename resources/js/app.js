@@ -1,7 +1,8 @@
-import './bootstrap';
+import 'bootstrap';
 import 'laravel-datatables-vite';
 import select2 from 'select2';
-
+import Chart from 'chart.js/auto';
+window.Chart = Chart;
 select2();
 
 $(document).ready(function() {
@@ -13,7 +14,7 @@ $(document).ready(function() {
     $("select").on("select2:select", function (evt) {
         var element = evt.params.data.element;
         var $element = $(element);
-        
+
         $element.detach();
         $(this).append($element);
         $(this).trigger("change");
@@ -32,3 +33,5 @@ $(document).ready(function() {
         }
     });
 });
+
+import 'admin-lte';

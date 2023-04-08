@@ -1,11 +1,14 @@
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
+
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
 
 // DataTables
 @import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -21,3 +24,4 @@
 @import "node_modules/select2-bootstrap-5-theme/src/select2-bootstrap-5-theme";
 // Or if you have already imported Bootstrap:
 @import "node_modules/select2-bootstrap-5-theme/src/include-all";
+
