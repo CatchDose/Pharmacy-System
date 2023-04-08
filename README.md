@@ -49,6 +49,7 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 |  METHODS      |         URI              | ACTIONS | 
 | :---:         |         :---:            | :---: |   
 | POST          | `/api/register`          | `Register` | 
+| POST           | `/api/login`            | `login` | 
 | GET           | `/api/email/verify/{id}` | `Send Email Verification` |
 | GET           | `/api/client/{id}`       | `Get Client By ID` | 
 | PUT           | `/api/client/{id}`       | `Update Client` | 
@@ -89,7 +90,7 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 ## DEMO
 🎬
 We Hope That You are enjoying Watching Our Demo Video 
-[Click Here]()
+[Click Here](https://youtu.be/y0YarbomBV4)
 
 ## Contributers
 
@@ -98,15 +99,3 @@ We Hope That You are enjoying Watching Our Demo Video
 - [Mahmoud Basiouny](https://github.com/mahmoud-elbasiony)
 - [Mohammed Yousef](https://github.com/Mohamedyousef44)
 - [Omar Alaa](https://github.com/omar1896)
-
-
-
-
-
-
-
-
-
-
-
-
