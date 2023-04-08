@@ -21,11 +21,11 @@ class UserController extends Controller
             return response()->json([
                 "message" => "User updated successfully",
                 "data" => new UserResource($user)
-            ]);
+            ],200);
         }
 
         return response()->json([
             "message" => "Sorry, You are not authorized to update user"
-        ]);
+        ],403);
     }
 }
