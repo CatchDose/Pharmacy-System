@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function getToken(SanctumTokenRequest $request)
+    public function login(SanctumTokenRequest $request)
     {
 
         $user = User::where('email', $request->email)
