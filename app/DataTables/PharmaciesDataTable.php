@@ -88,7 +88,7 @@ class PharmaciesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::computed("avatar_image"),
+            Column::computed("avatar_image")->exportable(false)->printable(false),
             Column::make('name'),
             Column::make('area_name'),
             Column::make('owner_name'),
