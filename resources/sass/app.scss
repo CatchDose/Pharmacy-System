@@ -25,3 +25,7 @@
 // Or if you have already imported Bootstrap:
 @import "node_modules/select2-bootstrap-5-theme/src/include-all";
 
+$fa-font-path: "/node_modules/fontawesome-free/webfonts";
+
+@import "node_modules/fontawesome-free/scss/fontawesome";
+@import "node_modules/fontawesome-free/scss/solid";
