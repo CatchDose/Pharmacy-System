@@ -113,22 +113,14 @@ class DoctorDataTable extends DataTable
 
     private function toggleBan($id)
     {
-        if(User::find($id)->isBanned()){
+        $isBan = User::find($id)->isBanned();
+
          return     '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.unban",$id).'">
+                      <form method="post" class="ban_doctor"  id="option_a3" action="' . ($isBan ? route("doctors.unban",$id) : route("doctors.ban",$id)) .'">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
                         <input type="hidden" name="_method" value="PUT">
-                      <button type="submit" class="btn btn-secondary rounded"title="Unban doctor"><i class="bi bi-unlock-fill"></i></button>
+                      <button type="submit" class="btn btn-secondary rounded" title="Unban doctor"><i class="bi ' .  ($isBan ?  "bi-unlock-fill" :  "bi-person-lock") .'"></i></button>
                     </form>';
-        }
-
-        return   '<div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      <form method="post" class="ban_doctor"  id="option_a3" action="' .route("doctors.ban",$id).'">
-                        <input type="hidden" name="_token" value="' .csrf_token(). '">
-                        <input type="hidden" name="_method" value="PUT">
-                      <button type="submit" class="btn btn-info rounded" title="Ban doctor"><i class="bi bi-person-lock"></i></button>
-                    </form>';
-
 
     }
 }
